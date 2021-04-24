@@ -8,3 +8,4 @@ public class ArcheryRange extends MilitaryBuilding{
 	}
 	
 }
+
