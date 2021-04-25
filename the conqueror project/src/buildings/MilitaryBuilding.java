@@ -1,10 +1,10 @@
 package buildings;
 
-public class MilitaryBuilding extends Building{
+public abstract class MilitaryBuilding extends Building{
 
 	private int recruitmentCost;
 	private int currentRecruit;
-	private int maxRecruit = 3;
+	final private int maxRecruit = 3;	//read only
 	
 	public MilitaryBuilding(int cost, int upgradeCost,int recruitmentCost)
 	{
