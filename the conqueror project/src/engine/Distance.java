@@ -13,4 +13,17 @@ public class Distance {
 		this.to = to;
 		this.distance = distance;
 	}
+
+	//getters and setters
+	public String getFrom() {
+		return from;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public int getDistance() {
+		return distance;
+	}
 }

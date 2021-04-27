@@ -22,4 +22,34 @@ public class Game {
 		//incomplete, check milestone description
 		//"Carefully think about how will you initialize the army of the defending cities"
 	}
+
+	//getters and setters
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public int getCurrentTurnCount() {
+		return currentTurnCount;
+	}
+
+	public void setCurrentTurnCount(int currentTurnCount) {
+		this.currentTurnCount = currentTurnCount;
+	}
+
+	public ArrayList<City> getAvailableCities() {
+		return availableCities;
+	}
+
+	public ArrayList<Distance> getDistances() {
+		return distances;
+	}
+
+	public int getMaxTurnCount() {
+		return maxTurnCount;
+	}
+	
 }
