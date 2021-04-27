@@ -24,7 +24,6 @@ public class City {
 
 
 	//getters and setters
-	
 	public Army getDefendingArmy() {
 		return defendingArmy;
 	}

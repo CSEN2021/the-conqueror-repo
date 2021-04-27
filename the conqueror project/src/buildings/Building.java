@@ -2,17 +2,20 @@ package buildings;
 
 public abstract class Building {
 	
+	//instance variables
 	private int cost;
 	private int level = 1;
 	private int upgradeCost;
 	private boolean coolDown = true;
 	
+	//constructor
 	public Building(int cost ,int upgradeCost)
 	{
 		this.cost = cost;
 		this.upgradeCost = upgradeCost;
 	}
 
+	//getters and setters
 	public int getLevel() {
 		return level;
 	}

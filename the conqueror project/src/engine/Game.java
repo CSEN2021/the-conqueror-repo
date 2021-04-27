@@ -9,8 +9,8 @@ public class Game {
 	
 	//instance variables
 	private Player player;
-	private ArrayList<City> availableCities;	//read only
-	private ArrayList<Distance> distances;	//read only
+	private ArrayList<City> availableCities = new ArrayList<>();	//read only
+	private ArrayList<Distance> distances = new ArrayList<>();	//read only
 	final private int maxTurnCount = 30;	//read only
 	private int currentTurnCount = 1;
 	

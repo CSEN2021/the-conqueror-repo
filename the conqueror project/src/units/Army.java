@@ -3,17 +3,21 @@ package units;
 import java.util.ArrayList;
 
 public class Army {
+	
+	//instance variables
 	private Status currentStatus = Status.IDLE;
-	private  ArrayList<Unit> units;
+	private  ArrayList<Unit> units = new ArrayList<>();
 	private int distancetoTarget = -1;
 	private String target = "";
 	private String currentLocation;
-	private final int maxToHold = 10;
+	private final int maxToHold = 10;	//READ ONLY
 	
+	//constructor
 	public Army(String currentLocation) {
 		this.currentLocation = currentLocation;
 	}
 	
+	//getters and setters
 	public Status getCurrentStatus() {
 		return currentStatus;
 	}
