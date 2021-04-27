@@ -20,37 +20,29 @@ public abstract class Unit {
 	public int getCurrentSoldierCount() {
 		return currentSoldierCount;
 	}
-
-
+	
 	public void setCurrentSoldierCount(int currentSoldierCount) {
 		this.currentSoldierCount = currentSoldierCount;
 	}
-
 
 	public int getLevel() {
 		return level;
 	}
 
-
 	public int getMaxSoldierCount() {
 		return maxSoldierCount;
 	}
-
 
 	public double getIdleUpkeep() {
 		return idleUpkeep;
 	}
 
-
 	public double getMarchingUpkeep() {
 		return marchingUpkeep;
 	}
 
-
 	public double getSiegeUpkeep() {
 		return siegeUpkeep;
 	}
-
-
 	
 }
