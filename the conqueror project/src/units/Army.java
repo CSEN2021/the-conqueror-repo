@@ -15,6 +15,16 @@ public class Army {
 	//constructor
 	public Army(String currentLocation) {
 		this.currentLocation = currentLocation;
+		//initialize all types of units
+		units.add(Archer.archer("1"));
+		units.add(Archer.archer("2"));
+		units.add(Archer.archer("3"));
+		units.add(Cavalry.cavalry("1"));
+		units.add(Cavalry.cavalry("2"));
+		units.add(Cavalry.cavalry("3"));
+		units.add(Infantry.infantry("1"));
+		units.add(Infantry.infantry("2"));
+		units.add(Infantry.infantry("3"));
 	}
 	
 	//getters and setters

@@ -3,7 +3,7 @@ package engine;
 import java.util.*;
 import buildings.*;
 import units.*;
-import java.io.IOException; //new import for me
+import java.io.IOException; // new import for me
 
 public class Game {
 
@@ -18,20 +18,25 @@ public class Game {
 	public Game(String playerName, String playerCity) throws IOException {
 
 		this.player = new Player(playerName);
-
+		/* FIX THIS SHIT
 		// fill the lists
 		loadCitiesAndDistances();
-
-		// incomplete, check milestone description
-		// "Carefully think about how will you initialize the army of the defending
-		// cities"
+		for(int i = 0; i < availableCities.size(); i++)
+		{
+			if(availableCities.get(i).getName() != playerCity)
+				loadArmy(availableCities.get(i).getName(), availableCities.get(i).getName() + "_city");
+		}*/
 	}
 
 	// methods
 
 	// initializes the defending army of the defending cities
 	public void loadArmy(String cityName, String path) throws IOException {
-
+		for(int i = 0; i < availableCities.size(); i++)
+		{
+			if(availableCities.get(i).getName() != cityName)
+				ReadCSV.readFile(availableCities.get(i));
+		}
 	}
 
 	private void loadCitiesAndDistances() throws IOException {
