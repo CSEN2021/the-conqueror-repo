@@ -5,7 +5,7 @@ public abstract class Unit {
 	//instance variables
 	private int level;	//READ ONLY
 	private int maxSoldierCount;	//READ ONLY
-	private int currentSoldierCount;
+	private int currentSoldierCount = 0;	//needs to be set when initializing the defending city army
 	private double idleUpkeep;	//READ ONLY
 	private double marchingUpkeep;  //READ ONLY
 	private double siegeUpkeep;  //READ ONLY

@@ -15,14 +15,28 @@ public class Game {
 	private int currentTurnCount = 1;
 	
 	//constructor
-	public Game(String playerName,String playerCity) throws IOException{
+	public Game(String playerName,String playerCity) throws IOException {
+		
 		this.player = new Player(playerName);
-		availableCities.add(new City(playerCity));
+		
+		//fill the lists
+		loadCitiesAndDistances();
 		
 		//incomplete, check milestone description
 		//"Carefully think about how will you initialize the army of the defending cities"
 	}
-
+	
+	//methods
+	
+	//initializes the defending army of the defending cities
+	public void loadArmy(String cityName,String path) throws IOException {
+		
+	}
+	
+	private void loadCitiesAndDistances() throws IOException {
+		ReadCSV.readFile("distances", availableCities, distances);
+	}
+	
 	//getters and setters
 	public Player getPlayer() {
 		return player;

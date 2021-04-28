@@ -6,7 +6,7 @@ public class Army {
 	
 	//instance variables
 	private Status currentStatus = Status.IDLE;
-	private  ArrayList<Unit> units = new ArrayList<>();
+	private ArrayList<Unit> units = new ArrayList<>();
 	private int distancetoTarget = -1;
 	private String target = "";
 	private String currentLocation;
