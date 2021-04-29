@@ -8,7 +8,7 @@ public class Infantry extends Unit {
 	}
 
 	// make an infantry given the level only
-	public static Infantry infantry(String level) {
+	public static Infantry create(String level) {
 		switch (level) {
 		case "1":
 			return new Infantry(1, 50, 0.5, 0.6, 0.7);

@@ -8,7 +8,7 @@ public class Cavalry extends Unit {
 	}
 
 	// make a cavalry given the level only
-	public static Cavalry cavalry(String level) {
+	public static Cavalry create(String level) {
 		switch (level) {
 		case "1":
 			return new Cavalry(1, 40, 0.6, 0.7, 0.75);

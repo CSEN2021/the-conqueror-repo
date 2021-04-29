@@ -73,13 +73,13 @@ public class ReadCSV {
 			{
 			// initialize units with corresponding level
 			case "Archer":
-				units.add(Archer.archer(result[1]));
+				units.add(Archer.create(result[1]));
 				break;
 			case "Infantry":
-				units.add(Infantry.infantry(result[1]));
+				units.add(Infantry.create(result[1]));
 				break;
 			case "Cavalry":
-				units.add(Cavalry.cavalry(result[1]));
+				units.add(Cavalry.create(result[1]));
 				break;
 			}
 		}

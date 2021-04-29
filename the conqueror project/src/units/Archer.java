@@ -8,7 +8,7 @@ public class Archer extends Unit {
 	}
 
 	// make an archer given the level only
-	public static Archer archer(String level) {
+	public static Archer create(String level) {
 		switch (level) {
 		case "1":
 			return new Archer(1, 60, 0.4, 0.5, 0.6);
