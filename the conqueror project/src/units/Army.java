@@ -6,7 +6,7 @@ public class Army {
 	
 	//instance variables
 	private Status currentStatus = Status.IDLE;
-	private ArrayList<Unit> units = new ArrayList<>();
+	private ArrayList<Unit> units;
 	private int distancetoTarget = -1;
 	private String target = "";
 	private String currentLocation;
@@ -15,16 +15,7 @@ public class Army {
 	//constructor
 	public Army(String currentLocation) {
 		this.currentLocation = currentLocation;
-		//initialize all types of units
-		units.add(Archer.archer("1"));
-		units.add(Archer.archer("2"));
-		units.add(Archer.archer("3"));
-		units.add(Cavalry.cavalry("1"));
-		units.add(Cavalry.cavalry("2"));
-		units.add(Cavalry.cavalry("3"));
-		units.add(Infantry.infantry("1"));
-		units.add(Infantry.infantry("2"));
-		units.add(Infantry.infantry("3"));
+		units = new ArrayList<>();
 	}
 	
 	//getters and setters

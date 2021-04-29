@@ -41,7 +41,7 @@ public class Game {
 		for(int i = 0; i < availableCities.size(); i++)
 		{
 			if(availableCities.get(i).getName() == cityName)
-				ReadCSV.readFile(availableCities.get(i), path + "_army.csv");
+				ReadCSV.readFile(availableCities.get(i), path);
 		}
 	}
 

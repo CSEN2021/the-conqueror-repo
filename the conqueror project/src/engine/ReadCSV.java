@@ -59,7 +59,6 @@ public class ReadCSV {
 	// Load the army of specific city
 	public static void readFile(City city, String path) throws IOException {
 		String currentLine = "";
-		//String path = city.getName() + "_army.csv"; // set path to the naming scheme of the file
 		FileReader fileReader = new FileReader(path); // open file "path"
 		BufferedReader br = new BufferedReader(fileReader); // read from it
 
@@ -74,16 +73,13 @@ public class ReadCSV {
 			{
 			// initialize units with corresponding level
 			case "Archer":
-				int x = units.get(-1 + Integer.parseInt(result[1])).getCurrentSoldierCount();
-				units.get(-1 + Integer.parseInt(result[1])).setCurrentSoldierCount(x++);
+				units.add(Archer.archer(result[1]));
 				break;
 			case "Infantry":
-				int y = units.get(2 + Integer.parseInt(result[1])).getCurrentSoldierCount();
-				units.get(-1 + Integer.parseInt(result[1])).setCurrentSoldierCount(y++);
+				units.add(Infantry.infantry(result[1]));
 				break;
 			case "Cavalry":
-				int z = units.get(5 + Integer.parseInt(result[1])).getCurrentSoldierCount();
-				units.get(-1 + Integer.parseInt(result[1])).setCurrentSoldierCount(z++);
+				units.add(Cavalry.cavalry(result[1]));
 				break;
 			}
 
