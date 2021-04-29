@@ -21,6 +21,7 @@ public class Game {
 		this.player = new Player(playerName);
 		this.player.getControlledCities().add(new City(playerCity));
 		this.player.getControlledCities().get(0).setDefendingArmy(null);
+		this.player.getControlledArmies().add(null);	// is this correct ?????
 		
 		// fill the lists
 		loadCitiesAndDistances();
@@ -28,7 +29,7 @@ public class Game {
 		//initialize all defending armies
 		for(int i = 0; i < availableCities.size(); i++)
 		{
-			if(availableCities.get(i).getName() != playerCity)
+			if(!availableCities.get(i).getName().equals(playerCity))
 				loadArmy(availableCities.get(i).getName(), availableCities.get(i).getName().toLowerCase() + "_army.csv");
 		}
 	}

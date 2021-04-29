@@ -82,7 +82,6 @@ public class ReadCSV {
 				units.add(Cavalry.cavalry(result[1]));
 				break;
 			}
-
 		}
 	}
 }
