@@ -26,12 +26,11 @@ public class Game {
 		loadCitiesAndDistances();
 		
 		//initialize all defending armies
-		/*
 		for(int i = 0; i < availableCities.size(); i++)
 		{
 			if(availableCities.get(i).getName() != playerCity)
-				loadArmy(availableCities.get(i).getName(), availableCities.get(i).getName() + "_city");
-		}*/
+				loadArmy(availableCities.get(i).getName(), availableCities.get(i).getName().toLowerCase() + "_army.csv");
+		}
 	}
 
 	// methods
