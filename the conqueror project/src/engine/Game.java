@@ -17,10 +17,10 @@ public class Game {
 	// constructor
 	public Game(String playerName, String playerCity) throws IOException {
 		
-		//add to playerCity controlled cities and controlled armies
+		//add to playerCity controlled cities and its army should be null since no one will attack it
 		this.player = new Player(playerName);
 		this.player.getControlledCities().add(new City(playerCity));
-		this.player.getControlledArmies().add(new Army(playerCity));
+		this.player.getControlledCities().get(0).setDefendingArmy(null);
 		
 		// fill the lists
 		loadCitiesAndDistances();
