@@ -13,42 +13,53 @@ public class ReadCSV {
 		FileReader fileReader = new FileReader(path); // open file "path"
 		BufferedReader br = new BufferedReader(fileReader); // read from it
 
-		while ((currentLine = br.readLine()) != null) {
+		while ((currentLine = br.readLine()) != null) 
+		{
 
 			String[] result = currentLine.split(","); // save to result
 
 			distances.add(new Distance(result[0], result[1], Integer.parseInt(result[2]))); // fill distances
 
 			// check if city already added if not then add it
-			if (availableCities.isEmpty()) {
+			if (availableCities.isEmpty()) 
+			{
 				availableCities.add(new City(result[0]));
 				availableCities.add(new City(result[1]));
-			} else {
+			} 
+			else 
+			{
 				// iterate to check if city is already in the list
 				boolean flag0 = true;
 				boolean flag1 = true;
-				for (int i = 0; i < availableCities.size(); i++) {
+				for (int i = 0; i < availableCities.size(); i++) 
+				{
 					// set flag to false if list already has the cities
-					if (availableCities.get(i).getName().equals(result[0])) {
+					if (availableCities.get(i).getName().equals(result[0])) 
+					{
 						flag0 = false;
 					}
-					if (availableCities.get(i).getName().equals(result[1])) {
+					if (availableCities.get(i).getName().equals(result[1])) 
+					{
 						flag1 = false;
 					}
 				}
-				if (flag0) {
+				if (flag0) 
+				{
 					availableCities.add(new City(result[0]));
 				}
-				if (flag1) {
+				if (flag1) 
+				{
 					availableCities.add(new City(result[1]));
 				}
 			}
 		}
 	}
-
-	public static void readFile(City city) throws IOException {
+	
+	
+	// Load the army of specific city
+	public static void readFile(City city, String path) throws IOException {
 		String currentLine = "";
-		String path = city.getName() + "_army"; // set path to the naming scheme of the file
+		//String path = city.getName() + "_army.csv"; // set path to the naming scheme of the file
 		FileReader fileReader = new FileReader(path); // open file "path"
 		BufferedReader br = new BufferedReader(fileReader); // read from it
 

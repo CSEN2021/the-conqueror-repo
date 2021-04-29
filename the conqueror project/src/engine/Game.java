@@ -16,14 +16,17 @@ public class Game {
 
 	// constructor
 	public Game(String playerName, String playerCity) throws IOException {
-
-		this.player = new Player(playerName);
 		
 		//add to playerCity controlled cities and controlled armies
+		this.player = new Player(playerName);
+		this.player.getControlledCities().add(new City(playerCity));
+		this.player.getControlledArmies().add(new Army(playerCity));
 		
-		/* FIX THIS SHIT  maybe you shouldn't call them in the constructor ????
 		// fill the lists
 		loadCitiesAndDistances();
+		
+		//initialize all defending armies
+		/*
 		for(int i = 0; i < availableCities.size(); i++)
 		{
 			if(availableCities.get(i).getName() != playerCity)
@@ -37,13 +40,13 @@ public class Game {
 	public void loadArmy(String cityName, String path) throws IOException {
 		for(int i = 0; i < availableCities.size(); i++)
 		{
-			if(availableCities.get(i).getName() != cityName)
-				ReadCSV.readFile(availableCities.get(i));
+			if(availableCities.get(i).getName() == cityName)
+				ReadCSV.readFile(availableCities.get(i), path + "_army.csv");
 		}
 	}
 
 	private void loadCitiesAndDistances() throws IOException {
-		ReadCSV.readFile("distances", availableCities, distances);
+		ReadCSV.readFile("distances.csv", availableCities, distances);
 	}
 
 	// getters and setters
