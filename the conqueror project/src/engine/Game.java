@@ -18,7 +18,10 @@ public class Game {
 	public Game(String playerName, String playerCity) throws IOException {
 
 		this.player = new Player(playerName);
-		/* FIX THIS SHIT
+		
+		//add to playerCity controlled cities and controlled armies
+		
+		/* FIX THIS SHIT  maybe you shouldn't call them in the constructor ????
 		// fill the lists
 		loadCitiesAndDistances();
 		for(int i = 0; i < availableCities.size(); i++)
