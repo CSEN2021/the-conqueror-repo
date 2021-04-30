@@ -21,7 +21,6 @@ public class Game {
 		this.player = new Player(playerName);
 		this.player.getControlledCities().add(new City(playerCity));
 		this.player.getControlledCities().get(0).setDefendingArmy(null);
-		this.player.getControlledArmies().add(null);	// is this correct ?????
 		
 		// fill the lists
 		loadCitiesAndDistances();
