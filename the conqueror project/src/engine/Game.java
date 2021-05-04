@@ -1,8 +1,6 @@
 package engine;
 
 import java.util.*;
-import buildings.*;
-import units.*;
 import java.io.IOException; // new import for me
 
 public class Game {
@@ -17,10 +15,7 @@ public class Game {
 	// constructor
 	public Game(String playerName, String playerCity) throws IOException {
 		
-		//add to playerCity controlled cities and its army should be null since no one will attack it
 		this.player = new Player(playerName);
-		this.player.getControlledCities().add(new City(playerCity));
-		this.player.getControlledCities().get(0).setDefendingArmy(null);
 		
 		// fill the lists
 		loadCitiesAndDistances();
@@ -28,8 +23,17 @@ public class Game {
 		//initialize all defending armies
 		for(int i = 0; i < availableCities.size(); i++)
 		{
+			// if not player city
 			if(!availableCities.get(i).getName().equals(playerCity))
+			{
 				loadArmy(availableCities.get(i).getName(), availableCities.get(i).getName().toLowerCase() + "_army.csv");
+			}
+			//add to playerCity controlled cities and its army should be null since no one will attack it
+			else
+			{
+				this.player.getControlledCities().add(availableCities.get(i));
+				this.player.getControlledCities().get(0).setDefendingArmy(null);
+			}
 		}
 	}
 

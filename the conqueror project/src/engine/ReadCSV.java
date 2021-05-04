@@ -53,6 +53,7 @@ public class ReadCSV {
 				}
 			}
 		}
+		br.close();
 	}
 	
 	
@@ -83,5 +84,6 @@ public class ReadCSV {
 				break;
 			}
 		}
+		br.close();
 	}
 }
