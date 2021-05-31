@@ -3,7 +3,7 @@ package buildings;
 public abstract class Building {
 	
 	//instance variables
-	private int cost;
+	private int cost;	// read only
 	private int level = 1;
 	private int upgradeCost;
 	private boolean coolDown = true;
