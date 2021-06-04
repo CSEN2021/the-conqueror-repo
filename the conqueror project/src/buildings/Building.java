@@ -1,5 +1,5 @@
 package buildings;
-
+import exceptions.*;
 public abstract class Building {
 	
 	//instance variables
@@ -42,5 +42,67 @@ public abstract class Building {
 	
 	public int getCost() {
 		return cost;
+	}
+	
+	public void upgrade() throws BuildingInCoolDownException, MaxLevelException
+	{
+		
+		if (coolDown == true)
+		{
+			throw new BuildingInCoolDownException();
+		}
+		else
+		{
+		
+			if (this instanceof Farm || this instanceof Market)
+			{
+				if (this.getLevel() == 2)
+				{
+					throw new MaxLevelException();
+				}
+				else
+				{
+					setLevel(2);
+					if (this instanceof Farm)
+						upgradeCost = 700;
+					else
+						upgradeCost = 1000;
+				}
+			}
+			else if (this instanceof Barracks || this instanceof ArcheryRange || this instanceof Stable)
+			{
+				int level = this.getLevel();
+				if (level == 3)
+				{
+					throw new MaxLevelException();
+				}
+				else
+				{
+					
+					this.setLevel(level + 1);
+					if (this instanceof ArcheryRange)
+					{
+						if (level == 2)
+						{
+							this.setUpgradeCost(700);
+						}
+					}
+					else if (this instanceof ArcheryRange)
+					{
+						this.setUpgradeCost(700);
+					}
+					else if (this instanceof Barracks)
+					{
+						this.setUpgradeCost(1500);
+					}
+					else
+					{
+						this.setUpgradeCost(2000);
+					}
+						
+				}
+					
+			}		
+		}
 	}
 }
