@@ -40,7 +40,50 @@ public abstract class Unit {
 		if (this.parentArmy.getUnits().contains(target)) { //checks if the target is one of the units in the player's army(still incomplete i think)
 			throw new FriendlyFireException();
 		}
-		int newcount = 
+		double factor;
+		if(this instanceof Archer) {
+			if(target instanceof Cavalry && this.getLevel()<3) {
+				factor=0.1;
+			}else if((this.getLevel()==1 && target instanceof Infantry)||(this.getLevel()==3 && target instanceof Cavalry)) {
+				factor=0.2;
+			}else if((this.getLevel()==1 && target instanceof Archer)||(this.getLevel()==2 && target instanceof Infantry)) {
+				factor=0.3;
+			}else if((this.getLevel()==2 && target instanceof Archer)||(this.getLevel()==3 && target instanceof Infantry)) {
+				factor=0.4;
+			}else {
+				factor=0.5;
+			}
+		}else if(this instanceof Infantry) {
+			if((this.getLevel()==1 && target instanceof Infantry)||(this.getLevel()==1 && target instanceof Cavalry)) {
+				factor=0.1;
+			}else if((this.getLevel()==2 && target instanceof Infantry)||(this.getLevel()==2 && target instanceof Cavalry)) {
+				factor=0.2;
+			}else if(this.getLevel()==3 && target instanceof Cavalry){
+				factor=0.25;
+			}else if((this.getLevel()==1 && target instanceof Archer)||(this.getLevel()==3 && target instanceof Infantry)) {
+				factor=0.3;
+			}else if(this.getLevel()==2 && target instanceof Archer) {
+				factor=0.4;
+			}else {
+				factor=0.5;
+			}
+		}else {
+			if(target instanceof Cavalry && this.getLevel()<3) {
+				factor=0.2;
+			}else if((this.getLevel()==1 && target instanceof Infantry)||(this.getLevel()==3 && target instanceof Cavalry)) {
+				factor=0.3;
+			}else if(this.getLevel()==2 && target instanceof Infantry) {
+				factor=0.4;
+			}else if((this.getLevel()==1 && target instanceof Archer)||(this.getLevel()==3 && target instanceof Infantry)) {
+				factor=0.5;
+			}else if(this.getLevel()==2 && target instanceof Archer) {
+				factor=0.6;
+			}else {
+				factor=0.7;
+			}
+		}
+		target.setCurrentSoldierCount((int)(target.getCurrentSoldierCount()-this.currentSoldierCount*factor));
+		target.getParentArmy().handleAttackedUnit(target);
 	}
 
 	//getters and setters

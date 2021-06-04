@@ -15,6 +15,17 @@ public class Infantry extends Unit {
 
 
 	// make an infantry given the level only
+	public static Infantry create(String level ) {
+		switch (level) {
+		case "1":
+			return new Infantry(1, 50, 0.5, 0.6, 0.7);
+		case "2":
+			return new Infantry(2, 50, 0.5, 0.6, 0.7);
+		default:
+			return new Infantry(3, 60, 0.6, 0.7, 0.8);
+		}
+	}
+	// make an archer given the level and parent army
 	public static Infantry create(String level,Army parentArmy) {
 		switch (level) {
 		case "1":
