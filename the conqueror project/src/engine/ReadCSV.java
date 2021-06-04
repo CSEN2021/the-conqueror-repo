@@ -72,15 +72,15 @@ public class ReadCSV {
 			// adding units
 			switch (result[0]) 
 			{
-			// initialize units with corresponding level
+			// initialize units with corresponding level and parent army
 			case "Archer":
-				units.add(Archer.create(result[1]));
+				units.add(Archer.create(result[1],city.getDefendingArmy()));
 				break;
 			case "Infantry":
-				units.add(Infantry.create(result[1]));
+				units.add(Infantry.create(result[1],city.getDefendingArmy()));
 				break;
 			case "Cavalry":
-				units.add(Cavalry.create(result[1]));
+				units.add(Cavalry.create(result[1],city.getDefendingArmy()));
 				break;
 			}
 		}

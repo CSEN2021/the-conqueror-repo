@@ -2,6 +2,8 @@ package units;
 
 import java.util.ArrayList;
 
+import exceptions.MaxCapacityException;
+
 public class Army {
 	
 	//instance variables
@@ -16,6 +18,45 @@ public class Army {
 	public Army(String currentLocation) {
 		this.currentLocation = currentLocation;
 		units = new ArrayList<>();
+	}
+	//methods
+	public void relocateUnit(Unit unit) throws MaxCapacityException{
+		if(this.units.size()==10) {				//checks if the current units are already at max size
+			throw new MaxCapacityException();
+		}
+		
+		Army oldArmy = unit.getParentArmy();
+		unit.setParentArmy(this);
+		this.units.add(unit);
+		oldArmy.getUnits().remove(unit);
+	}
+	
+	public void handleAttackedUnit(Unit u) {
+		if(u.getCurrentSoldierCount()<=0) {
+			this.units.remove(u);
+		}
+	}
+	
+	public double foodNeeded() {
+		double foodNeeded = 0;
+		switch (this.currentStatus) {
+		case IDLE:
+			for (int i = 0; i < units.size(); i++) {
+				foodNeeded+=units.get(i).getIdleUpkeep()*units.get(i).getCurrentSoldierCount();
+			}
+			break;
+		case BESIEGING:
+			for (int i = 0; i < units.size(); i++) {
+				foodNeeded+=units.get(i).getSiegeUpkeep()*units.get(i).getCurrentSoldierCount();
+			}
+			break;
+		case MARCHING:
+			for (int i = 0; i < units.size(); i++) {
+				foodNeeded+=units.get(i).getMarchingUpkeep()*units.get(i).getCurrentSoldierCount();
+			}
+			break;
+		}
+		return foodNeeded;
 	}
 	
 	//getters and setters
