@@ -1,5 +1,8 @@
 package units;
 
+import exceptions.FriendlyCityException;
+import exceptions.FriendlyFireException;
+
 public abstract class Unit {
 	
 	//instance variables
@@ -9,14 +12,35 @@ public abstract class Unit {
 	private double idleUpkeep;	//READ ONLY
 	private double marchingUpkeep;  //READ ONLY
 	private double siegeUpkeep;  //READ ONLY
+	private Army parentArmy;
 	
-	//constructor
+	
+	//constructor with and without parent army 
 	public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep) {
 		this.level = level;
 		this.maxSoldierCount = maxSoldierCount;
 		this.idleUpkeep = idleUpkeep;
 		this.marchingUpkeep = marchingUpkeep;
 		this.siegeUpkeep = siegeUpkeep;
+		this.currentSoldierCount = maxSoldierCount;
+	}
+	
+	public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep,double siegeUpkeep, Army parentArmy) {
+		this.level = level;
+		this.maxSoldierCount = maxSoldierCount;
+		this.idleUpkeep = idleUpkeep;
+		this.marchingUpkeep = marchingUpkeep;
+		this.siegeUpkeep = siegeUpkeep;
+		this.currentSoldierCount = maxSoldierCount;
+		this.parentArmy = parentArmy;
+	}
+	
+	//methods
+	public void attack(Unit target) throws FriendlyFireException{
+		if (this.parentArmy.getUnits().contains(target)) { //checks if the target is one of the units in the player's army(still incomplete i think)
+			throw new FriendlyFireException();
+		}
+		int newcount = 
 	}
 
 	//getters and setters
@@ -47,5 +71,12 @@ public abstract class Unit {
 	public double getSiegeUpkeep() {
 		return siegeUpkeep;
 	}
+	public Army getParentArmy() {
+		return parentArmy;
+	}
+	public void setParentArmy(Army parentArmy) {
+		this.parentArmy = parentArmy;
+	}
+	
 	
 }
