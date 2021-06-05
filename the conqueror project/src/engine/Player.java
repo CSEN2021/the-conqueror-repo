@@ -118,7 +118,7 @@ public class Player
 		}
 		if (cost > treasury)
 			throw new NotEnoughGoldException();
-		// check for duplicates
+		// check for duplicates then add
 
 		if (type.equals("Farm") || type.equals("Market"))
 		{
