@@ -18,21 +18,13 @@ public class Stable extends MilitaryBuilding
 	public void upgrade() throws BuildingInCoolDownException, MaxLevelException
 	{
 		// check for exceptions
-		if (this.isCoolDown() == true)
-		{
-			throw new BuildingInCoolDownException();
-		}
-		if (this.getLevel() == 3)
-		{
-			throw new MaxLevelException();
-		}
+		super.upgrade();
 		setLevel(getLevel() + 1);
 		this.setUpgradeCost(2000);
 		if (getLevel() == 2)
 			setRecruitmentCost(650);
 		else
 			setRecruitmentCost(700);
-		setCoolDown(true);
 	}
 
 	public Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException

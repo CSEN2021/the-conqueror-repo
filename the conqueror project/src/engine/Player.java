@@ -141,8 +141,7 @@ public class Player
 			TheCity.getMilitaryBuildings().add((MilitaryBuilding) TheBuilding);
 		}
 		treasury -= cost;
-		// Make sure to update the coolDown value after performing the action. As per
-		// the game rules, player can only have one building from each type. ????????
+		// Make sure to update the coolDown value after performing the action.????
 
 	}
 
@@ -169,6 +168,7 @@ public class Player
 
 	public void laySiege(Army army, City city) throws TargetNotReachedException, FriendlyCityException
 	{
+		//tried to change this condition to check the distance to location and it gave error
 		if (!army.getCurrentLocation().equals(city.getName()))
 			throw new TargetNotReachedException();
 		if (controlledCities.contains(city))

@@ -39,6 +39,8 @@ public class Game
 			else
 			{
 				this.player.getControlledCities().add(availableCities.get(i));
+				// we used to nullify the defending army but it gave an error so what now ?
+				// this.player.getControlledCities().get(i).setDefendingArmy(null);
 			}
 		}
 	}
@@ -126,7 +128,7 @@ public class Game
 					player.getControlledArmies().get(i)
 							.setCurrentLocation(player.getControlledArmies().get(i).getTarget());
 					player.getControlledArmies().get(i).setCurrentStatus(Status.IDLE);
-					player.getControlledArmies().get(i).setDistancetoTarget(-1);
+					player.getControlledArmies().get(i).setDistancetoTarget(0);
 					player.getControlledArmies().get(i).setTarget("");
 				}
 			}
@@ -136,26 +138,39 @@ public class Game
 		{
 			if (availableCities.get(i).isUnderSiege() == true)
 			{
-				availableCities.get(i).setTurnsUnderSiege(availableCities.get(i).getTurnsUnderSiege() + 1);
-				for (int j = 0; j < availableCities.get(i).getDefendingArmy().getUnits().size(); j++)
+				// Just reset the underSiege and turns under siege value if passed 3 turns
+				// check indentation pls
+				if (availableCities.get(i).getTurnsUnderSiege() == 3)
 				{
-					availableCities.get(i).getDefendingArmy().getUnits().get(j).setCurrentSoldierCount((int) (0.9
-							* availableCities.get(i).getDefendingArmy().getUnits().get(j).getCurrentSoldierCount()));
-					if (availableCities.get(i).getDefendingArmy().getUnits().get(j).getCurrentSoldierCount() <= 0)
-					{
-						availableCities.get(i).getDefendingArmy().getUnits().remove(j);
-					}
+					availableCities.get(i).setUnderSiege(false);
+					availableCities.get(i).setTurnsUnderSiege(-1);
 				}
-				if (availableCities.get(i).getDefendingArmy().getUnits().size() == 0)
+				else
 				{
-					Army TheArmy = null;
-					for (int j = 0; j < player.getControlledArmies().size(); j++)
+					availableCities.get(i).setTurnsUnderSiege(availableCities.get(i).getTurnsUnderSiege() + 1);
+					for (int j = 0; j < availableCities.get(i).getDefendingArmy().getUnits().size(); j++)
 					{
-						if (player.getControlledArmies().get(j).getCurrentLocation()
-								.equals(availableCities.get(i).getName()))
-							TheArmy = player.getControlledArmies().get(j);
+						availableCities.get(i).getDefendingArmy().getUnits().get(j)
+								.setCurrentSoldierCount((int) (0.9 * availableCities.get(i).getDefendingArmy()
+										.getUnits().get(j).getCurrentSoldierCount()));
+						if (availableCities.get(i).getDefendingArmy().getUnits().get(j).getCurrentSoldierCount() <= 0)
+						{
+							availableCities.get(i).getDefendingArmy().getUnits().remove(j);
+						}
 					}
-					occupy(TheArmy, availableCities.get(i).getName());
+					if (availableCities.get(i).getDefendingArmy().getUnits().size() == 0)
+					{
+						Army TheArmy = null;
+						for (int j = 0; j < player.getControlledArmies().size(); j++)
+						{
+							// use handleAttackedUnit ?
+							if (player.getControlledArmies().get(j).getCurrentLocation()
+									.equals(availableCities.get(i).getName()))
+								TheArmy = player.getControlledArmies().get(j);
+						}
+						// is this code correct ?
+						occupy(TheArmy, availableCities.get(i).getName());
+					}
 				}
 			}
 		}
@@ -195,7 +210,15 @@ public class Game
 						.attack(attacker.getUnits().get((int) Math.random() * attacker.getUnits().size()));
 			}
 			attackerTurn = !attackerTurn;
-			// should we endTurn() ?
+		}
+		// is this part correct ?
+		if (attacker.getUnits().size() == 0)
+		{
+			player.getControlledArmies().remove(attacker);
+		}
+		else
+		{
+			occupy(attacker, attacker.getCurrentLocation());
 		}
 	}
 

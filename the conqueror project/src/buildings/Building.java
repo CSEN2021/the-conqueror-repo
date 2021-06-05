@@ -30,7 +30,6 @@ public abstract class Building
 		{
 			throw new MaxLevelException();
 		}
-		// then call helper which uses dynamic polymorphism
 		coolDown = true;
 	}
 
