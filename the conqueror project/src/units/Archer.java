@@ -43,4 +43,32 @@ public class Archer extends Unit
 				return new Archer(3, 70, 0.5, 0.6, 0.7, parentArmy);
 		}
 	}
+
+	// methods
+	public double calcFactor(Unit target)
+	{
+		if (target instanceof Cavalry && getLevel() < 3)
+		{
+			return 0.1;
+		}
+		else if ((getLevel() == 1 && target instanceof Infantry)
+				|| (getLevel() == 3 && target instanceof Cavalry))
+		{
+			return 0.2;
+		}
+		else if ((getLevel() == 1 && target instanceof Archer)
+				|| (getLevel() == 2 && target instanceof Infantry))
+		{
+			return 0.3;
+		}
+		else if ((getLevel() == 2 && target instanceof Archer)
+				|| (getLevel() == 3 && target instanceof Infantry))
+		{
+			return 0.4;
+		}
+		else
+		{
+			return 0.5;
+		}
+	}
 }

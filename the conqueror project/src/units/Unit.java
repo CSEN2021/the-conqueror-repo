@@ -3,7 +3,8 @@ package units;
 import exceptions.FriendlyCityException;
 import exceptions.FriendlyFireException;
 
-public abstract class Unit {
+public abstract class Unit
+{
 
 	// instance variables
 	private int level; // READ ONLY
@@ -15,7 +16,8 @@ public abstract class Unit {
 	private Army parentArmy;
 
 	// constructor with and without parent army
-	public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep) {
+	public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep)
+	{
 		this.level = level;
 		this.maxSoldierCount = maxSoldierCount;
 		this.idleUpkeep = idleUpkeep;
@@ -25,7 +27,8 @@ public abstract class Unit {
 	}
 
 	public Unit(int level, int maxSoldierCount, double idleUpkeep, double marchingUpkeep, double siegeUpkeep,
-			Army parentArmy) {
+			Army parentArmy)
+	{
 		this.level = level;
 		this.maxSoldierCount = maxSoldierCount;
 		this.idleUpkeep = idleUpkeep;
@@ -36,100 +39,69 @@ public abstract class Unit {
 	}
 
 	// methods
-	public void attack(Unit target) throws FriendlyFireException {
+	public void attack(Unit target) throws FriendlyFireException
+	{
 		// checks if the target is one of the units in the player's army(still
-		// incomplete i think)
-		if (this.parentArmy.getUnits().contains(target)) {
+		// incomplete i think), Mok says we can just check parent army of target and
+		// attacker ?
+		if (this.parentArmy.getUnits().contains(target))
+		{
 			throw new FriendlyFireException();
 		}
-		double factor;
-		if (this instanceof Archer) {
-			if (target instanceof Cavalry && this.getLevel() < 3) {
-				factor = 0.1;
-			} else if ((this.getLevel() == 1 && target instanceof Infantry)
-					|| (this.getLevel() == 3 && target instanceof Cavalry)) {
-				factor = 0.2;
-			} else if ((this.getLevel() == 1 && target instanceof Archer)
-					|| (this.getLevel() == 2 && target instanceof Infantry)) {
-				factor = 0.3;
-			} else if ((this.getLevel() == 2 && target instanceof Archer)
-					|| (this.getLevel() == 3 && target instanceof Infantry)) {
-				factor = 0.4;
-			} else {
-				factor = 0.5;
-			}
-		} else if (this instanceof Infantry) {
-			if ((this.getLevel() == 1 && target instanceof Infantry)
-					|| (this.getLevel() == 1 && target instanceof Cavalry)) {
-				factor = 0.1;
-			} else if ((this.getLevel() == 2 && target instanceof Infantry)
-					|| (this.getLevel() == 2 && target instanceof Cavalry)) {
-				factor = 0.2;
-			} else if (this.getLevel() == 3 && target instanceof Cavalry) {
-				factor = 0.25;
-			} else if ((this.getLevel() == 1 && target instanceof Archer)
-					|| (this.getLevel() == 3 && target instanceof Infantry)) {
-				factor = 0.3;
-			} else if (this.getLevel() == 2 && target instanceof Archer) {
-				factor = 0.4;
-			} else {
-				factor = 0.5;
-			}
-		} else {
-			if (target instanceof Cavalry && this.getLevel() < 3) {
-				factor = 0.2;
-			} else if ((this.getLevel() == 1 && target instanceof Infantry)
-					|| (this.getLevel() == 3 && target instanceof Cavalry)) {
-				factor = 0.3;
-			} else if (this.getLevel() == 2 && target instanceof Infantry) {
-				factor = 0.4;
-			} else if ((this.getLevel() == 1 && target instanceof Archer)
-					|| (this.getLevel() == 3 && target instanceof Infantry)) {
-				factor = 0.5;
-			} else if (this.getLevel() == 2 && target instanceof Archer) {
-				factor = 0.6;
-			} else {
-				factor = 0.7;
-			}
-		}
+
+		// calculates factor using dynamic polymorphism
+		double factor = calcFactor(target);
+
+		// decrease target soldiers by the following equation
 		target.setCurrentSoldierCount((int) (target.getCurrentSoldierCount() - this.currentSoldierCount * factor));
 		target.getParentArmy().handleAttackedUnit(target);
 	}
 
+	abstract public double calcFactor(Unit target);
+
 	// getters and setters
-	public int getCurrentSoldierCount() {
+	public int getCurrentSoldierCount()
+	{
 		return currentSoldierCount;
 	}
 
-	public void setCurrentSoldierCount(int currentSoldierCount) {
+	public void setCurrentSoldierCount(int currentSoldierCount)
+	{
 		this.currentSoldierCount = currentSoldierCount;
 	}
 
-	public int getLevel() {
+	public int getLevel()
+	{
 		return level;
 	}
 
-	public int getMaxSoldierCount() {
+	public int getMaxSoldierCount()
+	{
 		return maxSoldierCount;
 	}
 
-	public double getIdleUpkeep() {
+	public double getIdleUpkeep()
+	{
 		return idleUpkeep;
 	}
 
-	public double getMarchingUpkeep() {
+	public double getMarchingUpkeep()
+	{
 		return marchingUpkeep;
 	}
 
-	public double getSiegeUpkeep() {
+	public double getSiegeUpkeep()
+	{
 		return siegeUpkeep;
 	}
 
-	public Army getParentArmy() {
+	public Army getParentArmy()
+	{
 		return parentArmy;
 	}
 
-	public void setParentArmy(Army parentArmy) {
+	public void setParentArmy(Army parentArmy)
+	{
 		this.parentArmy = parentArmy;
 	}
 
