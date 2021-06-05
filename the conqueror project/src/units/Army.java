@@ -26,14 +26,14 @@ public class Army
 	public void relocateUnit(Unit unit) throws MaxCapacityException
 	{
 		// checks if the current units are already at max size
-		if (this.units.size() == 10)
+		if (units.size() == getMaxToHold())
 		{
 			throw new MaxCapacityException();
 		}
 
 		Army oldArmy = unit.getParentArmy();
 		unit.setParentArmy(this);
-		this.units.add(unit);
+		units.add(unit);
 		oldArmy.getUnits().remove(unit);
 	}
 
