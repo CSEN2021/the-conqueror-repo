@@ -115,9 +115,9 @@ public class Game
 			{
 				if (player.getFood() == 0)
 					player.getControlledArmies().get(i).getUnits().get(j).setCurrentSoldierCount(
-							(int) 0.9 * player.getControlledArmies().get(i).getUnits().get(j).getCurrentSoldierCount());
+							(int) (0.9 * player.getControlledArmies().get(i).getUnits().get(j).getCurrentSoldierCount()));
 			}
-			if (player.getControlledArmies().get(i).getCurrentStatus().equals(Status.MARCHING))
+			if (!player.getControlledArmies().get(i).getTarget().equals(""))
 			{
 				player.getControlledArmies().get(i)
 						.setDistancetoTarget(player.getControlledArmies().get(i).getDistancetoTarget() - 1);
@@ -127,6 +127,7 @@ public class Game
 							.setCurrentLocation(player.getControlledArmies().get(i).getTarget());
 					player.getControlledArmies().get(i).setCurrentStatus(Status.IDLE);
 					player.getControlledArmies().get(i).setDistancetoTarget(-1);
+					player.getControlledArmies().get(i).setTarget("");
 				}
 			}
 		}
@@ -138,8 +139,8 @@ public class Game
 				availableCities.get(i).setTurnsUnderSiege(availableCities.get(i).getTurnsUnderSiege() + 1);
 				for (int j = 0; j < availableCities.get(i).getDefendingArmy().getUnits().size(); j++)
 				{
-					availableCities.get(i).getDefendingArmy().getUnits().get(j).setCurrentSoldierCount((int) 0.9
-							* availableCities.get(i).getDefendingArmy().getUnits().get(j).getCurrentSoldierCount());
+					availableCities.get(i).getDefendingArmy().getUnits().get(j).setCurrentSoldierCount((int) (0.9
+							* availableCities.get(i).getDefendingArmy().getUnits().get(j).getCurrentSoldierCount()));
 				}
 			}
 		}
