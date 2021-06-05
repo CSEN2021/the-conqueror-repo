@@ -1,35 +1,43 @@
 package buildings;
 
 import exceptions.BuildingInCoolDownException;
+import exceptions.MaxLevelException;
 import exceptions.MaxRecruitedException;
 import units.*;
 
-public class ArcheryRange extends MilitaryBuilding{
+public class ArcheryRange extends MilitaryBuilding
+{
 
-	//constructor
+	// constructor
+
 	public ArcheryRange()
 	{
 		super(1500, 800, 400);
 	}
-	
-	public Unit recruit() throws BuildingInCoolDownException,MaxRecruitedException
+
+	// methods
+
+	public void upgradeHlp() throws BuildingInCoolDownException, MaxLevelException
 	{
-		if (this.isCoolDown() == true) {
+		setLevel(getLevel() + 1);
+		this.setUpgradeCost(700);
+		if (getLevel() == 2)
+			setRecruitmentCost(450);
+		else
+			setRecruitmentCost(500);
+	}
+
+	public Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException
+	{
+		if (isCoolDown() == true)
+		{
 			throw new BuildingInCoolDownException();
 		}
-		else 
+		if (getCurrentRecruit() == getMaxRecruit())
 		{
-			if (this.getCurrentRecruit() == this.getMaxRecruit())
-			{
-				throw new MaxRecruitedException();
-			}
-			else
-			{
-				this.setCurrentRecruit(getCurrentRecruit() + 1);
-				return Archer.create(this.getLevel() + "");
-			}
+			throw new MaxRecruitedException();
 		}
-		
+		setCurrentRecruit(getCurrentRecruit() + 1);
+		return Archer.create(getLevel() + "");
 	}
 }
-

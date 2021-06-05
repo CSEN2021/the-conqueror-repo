@@ -1,28 +1,36 @@
 package buildings;
 
-public class Market extends EconomicBuilding{
+import exceptions.BuildingInCoolDownException;
+import exceptions.MaxLevelException;
 
-	//constructor
+public class Market extends EconomicBuilding
+{
+
+	// constructor
 	public Market()
 	{
 		super(1500, 700);
 	}
-	
+
+	// methods
+
+	public void upgradeHlp() throws BuildingInCoolDownException, MaxLevelException
+	{
+		setLevel(getLevel() + 1);
+		this.setUpgradeCost(1000);
+	}
+
 	public int harvest()
 	{
-		int level = getLevel();
-		if (level == 1)
+		switch (getLevel())
 		{
-			return 1000;
-		}
-		else if (level == 2)
-		{
-			return 1500;
-		}
-		else
-		{
-			return 2000;
+			case 1:
+				return 1000;
+			case 2:
+				return 1500;
+			default:
+				return 2000;
 		}
 	}
-	
+
 }

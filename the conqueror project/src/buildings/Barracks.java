@@ -8,25 +8,29 @@ public class Barracks extends MilitaryBuilding {
 	{
 		super(2000, 1000, 500);
 	}
-
+	
+	//methods
+	public void upgradeHlp() throws BuildingInCoolDownException, MaxLevelException
+	{
+		setLevel(getLevel() + 1);
+		this.setUpgradeCost(1500);
+		if (getLevel() == 2)
+			setRecruitmentCost(550);
+		else
+			setRecruitmentCost(600);
+	}
 	public Unit recruit() throws BuildingInCoolDownException,MaxRecruitedException
 	{
-		if (this.isCoolDown() == true) {
+		if (isCoolDown() == true)
+		{
 			throw new BuildingInCoolDownException();
 		}
-		else 
+		if (getCurrentRecruit() == getMaxRecruit())
 		{
-			if (this.getCurrentRecruit() == this.getMaxRecruit())
-			{
-				throw new MaxRecruitedException();
-			}
-			else
-			{
-				this.setCurrentRecruit(getCurrentRecruit() + 1);
-				return Infantry.create(this.getLevel() + "");
-			}
+			throw new MaxRecruitedException();
 		}
-		
+		setCurrentRecruit(getCurrentRecruit() + 1);
+		return Infantry.create(getLevel() + "");
 	}
 	
 }
