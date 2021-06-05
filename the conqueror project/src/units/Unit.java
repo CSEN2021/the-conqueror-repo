@@ -52,7 +52,11 @@ public abstract class Unit
 		double factor = calcFactor(target);
 
 		// decrease target soldiers by the following equation
-		target.setCurrentSoldierCount((int) (target.getCurrentSoldierCount() - this.currentSoldierCount * factor));
+		double newcount = target.getCurrentSoldierCount() - this.currentSoldierCount * factor;
+		if(newcount<0) {
+			newcount=0;
+		}
+		target.setCurrentSoldierCount((int)newcount);
 		target.getParentArmy().handleAttackedUnit(target);
 	}
 
