@@ -1,6 +1,5 @@
 package units;
 
-import exceptions.FriendlyCityException;
 import exceptions.FriendlyFireException;
 
 public abstract class Unit
