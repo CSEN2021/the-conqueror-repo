@@ -164,7 +164,7 @@ public class Game
 
 	public void autoResolve(Army attacker, Army defender) throws FriendlyFireException
 	{
-		if(player.getControlledArmies().contains(attacker) && player.getControlledArmies().contains(defender))
+		if (player.getControlledArmies().contains(attacker) && player.getControlledArmies().contains(defender))
 			throw new FriendlyFireException();
 		boolean attackerTurn = true;
 		while (!isGameOver() && attacker.getUnits().size() != 0 && defender.getUnits().size() != 0)
@@ -186,7 +186,7 @@ public class Game
 
 	public boolean isGameOver()
 	{
-		if (player.getControlledCities().size() == availableCities.size() || getCurrentTurnCount() == getMaxTurnCount())
+		if (player.getControlledCities().size() == availableCities.size() || getCurrentTurnCount() > getMaxTurnCount())
 			return true;
 		return false;
 	}
