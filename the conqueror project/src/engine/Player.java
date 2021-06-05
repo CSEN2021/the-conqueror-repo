@@ -72,9 +72,9 @@ public class Player
 		// recruit the unit
 		if (TheBuilding.getRecruitmentCost() > treasury)
 			throw new NotEnoughGoldException();
-		treasury -= TheBuilding.getRecruitmentCost();
 		Unit TheUnit = TheBuilding.recruit();
 		TheUnit.setParentArmy(TheCity.getDefendingArmy());
+		treasury -= TheBuilding.getRecruitmentCost();
 
 		// shouldn't we check that we are not adding to a full army ?
 		TheCity.getDefendingArmy().getUnits().add(TheUnit);
@@ -118,10 +118,26 @@ public class Player
 		}
 		if (cost > treasury)
 			throw new NotEnoughGoldException();
+		// check for duplicates
+
 		if (type.equals("Farm") || type.equals("Market"))
+		{
+			for (int i = 0; i < TheCity.getEconomicalBuildings().size(); i++)
+			{
+				if (TheCity.getEconomicalBuildings().get(i).getClass() == TheBuilding.getClass())
+					return;
+			}
 			TheCity.getEconomicalBuildings().add((EconomicBuilding) TheBuilding);
+		}
 		else
+		{
+			for (int i = 0; i < TheCity.getMilitaryBuildings().size(); i++)
+			{
+				if (TheCity.getMilitaryBuildings().get(i).getClass() == TheBuilding.getClass())
+					return;
+			}
 			TheCity.getMilitaryBuildings().add((MilitaryBuilding) TheBuilding);
+		}
 		treasury -= cost;
 		// Make sure to update the coolDown value after performing the action. As per
 		// the game rules, player can only have one building from each type. ????????
@@ -149,9 +165,9 @@ public class Player
 
 	public void laySiege(Army army, City city) throws TargetNotReachedException, FriendlyCityException
 	{
-		if(!army.getCurrentLocation().equals(city.getName()))
+		if (!army.getCurrentLocation().equals(city.getName()))
 			throw new TargetNotReachedException();
-		if(controlledCities.contains(city))
+		if (controlledCities.contains(city))
 			throw new FriendlyCityException();
 		army.setCurrentStatus(Status.BESIEGING);
 		city.setUnderSiege(true);

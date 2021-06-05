@@ -12,10 +12,20 @@ public class Farm extends EconomicBuilding
 	}
 
 	// methods
-	public void upgradeHlp() throws BuildingInCoolDownException, MaxLevelException
+	public void upgrade() throws BuildingInCoolDownException, MaxLevelException
 	{
+		// check for exceptions
+		if (this.isCoolDown() == true)
+		{
+			throw new BuildingInCoolDownException();
+		}
+		if (this.getLevel() == 3)
+		{
+			throw new MaxLevelException();
+		}
 		setLevel(getLevel() + 1);
 		this.setUpgradeCost(700);
+		setCoolDown(true);
 	}
 
 	public int harvest()

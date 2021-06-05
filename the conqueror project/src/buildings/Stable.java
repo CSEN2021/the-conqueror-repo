@@ -15,14 +15,24 @@ public class Stable extends MilitaryBuilding
 	}
 
 	// methods
-	public void upgradeHlp() throws BuildingInCoolDownException, MaxLevelException
+	public void upgrade() throws BuildingInCoolDownException, MaxLevelException
 	{
+		// check for exceptions
+		if (this.isCoolDown() == true)
+		{
+			throw new BuildingInCoolDownException();
+		}
+		if (this.getLevel() == 3)
+		{
+			throw new MaxLevelException();
+		}
 		setLevel(getLevel() + 1);
 		this.setUpgradeCost(2000);
 		if (getLevel() == 2)
 			setRecruitmentCost(650);
 		else
 			setRecruitmentCost(700);
+		setCoolDown(true);
 	}
 
 	public Unit recruit() throws BuildingInCoolDownException, MaxRecruitedException
@@ -36,6 +46,6 @@ public class Stable extends MilitaryBuilding
 			throw new MaxRecruitedException();
 		}
 		setCurrentRecruit(getCurrentRecruit() + 1);
-		return Infantry.create(getLevel() + "");
+		return Cavalry.create(getLevel() + "");
 	}
 }

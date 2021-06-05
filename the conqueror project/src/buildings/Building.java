@@ -31,11 +31,8 @@ public abstract class Building
 			throw new MaxLevelException();
 		}
 		// then call helper which uses dynamic polymorphism
-		this.upgradeHlp();
 		coolDown = true;
 	}
-
-	abstract public void upgradeHlp() throws BuildingInCoolDownException, MaxLevelException;
 
 	// getters and setters
 	public int getLevel()
