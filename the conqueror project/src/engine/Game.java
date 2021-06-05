@@ -114,8 +114,8 @@ public class Game
 			for (int j = 0; j < player.getControlledArmies().get(i).getUnits().size(); j++)
 			{
 				if (player.getFood() == 0)
-					player.getControlledArmies().get(i).getUnits().get(j).setCurrentSoldierCount(
-							(int) (0.9 * player.getControlledArmies().get(i).getUnits().get(j).getCurrentSoldierCount()));
+					player.getControlledArmies().get(i).getUnits().get(j).setCurrentSoldierCount((int) (0.9
+							* player.getControlledArmies().get(i).getUnits().get(j).getCurrentSoldierCount()));
 			}
 			if (!player.getControlledArmies().get(i).getTarget().equals(""))
 			{
@@ -141,6 +141,21 @@ public class Game
 				{
 					availableCities.get(i).getDefendingArmy().getUnits().get(j).setCurrentSoldierCount((int) (0.9
 							* availableCities.get(i).getDefendingArmy().getUnits().get(j).getCurrentSoldierCount()));
+					if (availableCities.get(i).getDefendingArmy().getUnits().get(j).getCurrentSoldierCount() <= 0)
+					{
+						availableCities.get(i).getDefendingArmy().getUnits().remove(j);
+					}
+				}
+				if (availableCities.get(i).getDefendingArmy().getUnits().size() == 0)
+				{
+					Army TheArmy = null;
+					for (int j = 0; j < player.getControlledArmies().size(); j++)
+					{
+						if (player.getControlledArmies().get(j).getCurrentLocation()
+								.equals(availableCities.get(i).getName()))
+							TheArmy = player.getControlledArmies().get(j);
+					}
+					occupy(TheArmy, availableCities.get(i).getName());
 				}
 			}
 		}
@@ -149,16 +164,15 @@ public class Game
 
 	public void occupy(Army a, String cityName)
 	{
-		City TheCity = null;
 		for (int i = 0; i < availableCities.size(); i++)
 		{
 			if (availableCities.get(i).getName().equals(cityName))
 			{
 				player.getControlledCities().add(availableCities.get(i));
 				availableCities.get(i).setDefendingArmy(a);
-				availableCities.get(i).setTurnsUnderSiege(0);
+				availableCities.get(i).setTurnsUnderSiege(-1);
 				availableCities.get(i).setUnderSiege(false);
-				// should you set the army status to IDLE ???
+				a.setCurrentStatus(Status.IDLE);
 			}
 		}
 	}
@@ -168,7 +182,7 @@ public class Game
 		if (player.getControlledArmies().contains(attacker) && player.getControlledArmies().contains(defender))
 			throw new FriendlyFireException();
 		boolean attackerTurn = true;
-		while (!isGameOver() && attacker.getUnits().size() != 0 && defender.getUnits().size() != 0)
+		while (attacker.getUnits().size() != 0 && defender.getUnits().size() != 0)
 		{
 			if (attackerTurn)
 			{
@@ -181,7 +195,7 @@ public class Game
 						.attack(attacker.getUnits().get((int) Math.random() * attacker.getUnits().size()));
 			}
 			attackerTurn = !attackerTurn;
-			endTurn();
+			// should we endTurn() ?
 		}
 	}
 

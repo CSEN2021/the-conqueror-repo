@@ -11,7 +11,7 @@ public class City {
 	private ArrayList<EconomicBuilding> economicalBuildings;	//read only
 	private ArrayList<MilitaryBuilding> militaryBuildings;	//read only
 	private Army defendingArmy;
-	private int turnsUnderSiege;
+	private int turnsUnderSiege = -1;
 	private boolean underSiege = false;
 	
 	//constructor

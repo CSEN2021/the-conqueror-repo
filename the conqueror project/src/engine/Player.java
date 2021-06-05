@@ -175,6 +175,7 @@ public class Player
 			throw new FriendlyCityException();
 		army.setCurrentStatus(Status.BESIEGING);
 		city.setUnderSiege(true);
+		city.setTurnsUnderSiege(0);
 		// update turnsUnderSiege at the end of turn ?
 	}
 
