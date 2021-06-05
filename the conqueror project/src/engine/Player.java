@@ -36,6 +36,8 @@ public class Player
 				TheCity = controlledCities.get(i);
 			}
 		}
+		if(TheCity == null)
+			return;
 		ArrayList<MilitaryBuilding> militaryBuildings = TheCity.getMilitaryBuildings();
 		// get the military building
 		MilitaryBuilding TheBuilding = null;
@@ -149,17 +151,19 @@ public class Player
 	{
 		if (b.getUpgradeCost() > treasury)
 			throw new NotEnoughGoldException();
+		int oldCost = b.getUpgradeCost();
 		b.upgrade();
-		treasury -= b.getUpgradeCost();
+		treasury -= oldCost;
 	}
 
 	public void initiateArmy(City city, Unit unit)
 	{
 		Army TheArmy = new Army(city.getName());
-		Army oldArmy = unit.getParentArmy();
+		Army oldArmy = city.getDefendingArmy();
 		unit.setParentArmy(TheArmy);
 		TheArmy.getUnits().add(unit);
-		oldArmy.getUnits().remove(unit);
+		if(oldArmy != null)
+			oldArmy.getUnits().remove(unit);
 		controlledArmies.add(TheArmy);
 	}
 

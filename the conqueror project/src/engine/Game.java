@@ -39,7 +39,6 @@ public class Game
 			else
 			{
 				this.player.getControlledCities().add(availableCities.get(i));
-				this.player.getControlledCities().get(0).setDefendingArmy(null);
 			}
 		}
 	}
