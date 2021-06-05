@@ -32,6 +32,7 @@ public abstract class Building
 		}
 		// then call helper which uses dynamic polymorphism
 		this.upgradeHlp();
+		coolDown = true;
 	}
 
 	abstract public void upgradeHlp() throws BuildingInCoolDownException, MaxLevelException;
