@@ -136,12 +136,13 @@ public class Game
 		// stuff related to enemy cities
 		for (int i = 0; i < availableCities.size(); i++)
 		{
+			// underSeige
 			if (availableCities.get(i).isUnderSiege() == true)
 			{
 				// Just reset the underSiege and turns under siege value if passed 3 turns
-				// check indentation pls
 				if (availableCities.get(i).getTurnsUnderSiege() == 3)
 				{
+					// change army status to IDLE ?
 					availableCities.get(i).setUnderSiege(false);
 					availableCities.get(i).setTurnsUnderSiege(-1);
 				}
