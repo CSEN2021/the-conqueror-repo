@@ -158,7 +158,7 @@ public class Player
 	public void initiateArmy(City city, Unit unit)
 	{
 		Army TheArmy = new Army(city.getName());
-		Army oldArmy = unit.getParentArmy();
+		Army oldArmy = city.getDefendingArmy();
 		unit.setParentArmy(TheArmy);
 		TheArmy.getUnits().add(unit);
 		if(oldArmy != null)
