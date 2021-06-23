@@ -1,20 +1,7 @@
 package views;
 
-import java.awt.Label;
-import java.awt.LayoutManager;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-
+import java.awt.*;
+import javax.swing.*;
 
 
 public class HomeView extends JFrame{
@@ -24,19 +11,17 @@ public class HomeView extends JFrame{
 		new JFrame();
 		this.setSize(1280, 720);
 		
-		Label welcome = new Label("Welcome");
+		Label welcome = new Label("   Enter Your Name");
 		JButton startGame = new JButton("Start Game");
-		JTextField playerName = new JTextField("Enter your name");
-		
+		JTextField enterYourNameField = new JTextField();
+		enterYourNameField.setPreferredSize(new Dimension(100,25));
+
 		JPanel topPanel = new JPanel();
 		JPanel midPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
 		JPanel filler = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		JPanel welcomePanel = new JPanel();
-		JTextField enterYourNameField = new JTextField("Please enter your name");
-		midPanel.setBackground(Color.CYAN);
-		welcomePanel.setBackground(Color.red);
 		bottomPanel.setPreferredSize(new Dimension(0,330));
 		
 		topPanel.setPreferredSize(new Dimension(0,320));
