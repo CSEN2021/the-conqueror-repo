@@ -15,6 +15,10 @@ public class HomeView extends JFrame implements ActionListener
 {
 	Image backgroundImage;
 	JButton startGame;
+	JButton cairoButton;
+	JButton romeButton;
+	JButton spartaButton;
+	String selectedCity;
 	HomeViewListener listener;
 	JTextField enterYourNameField;
 	Label welcome;
@@ -29,6 +33,9 @@ public class HomeView extends JFrame implements ActionListener
 		Graphics2D g2D = (Graphics2D) g;
 		g2D.drawImage(backgroundImage, 0, 0, null);
 		startGame.repaint();
+		cairoButton.repaint();
+		spartaButton.repaint();
+		romeButton.repaint();
 	}
 
 	public HomeView()
@@ -42,17 +49,24 @@ public class HomeView extends JFrame implements ActionListener
 		welcome.setAlignment(Label.CENTER);
 		startGame = new JButton("Start Game");
 		enterYourNameField = new JTextField();
-		enterYourNameField.setPreferredSize(new Dimension(100, 25));
+		enterYourNameField.setPreferredSize(new Dimension(250, 25));
 		enterYourNameField.setHorizontalAlignment(JTextField.CENTER);
 
+		cairoButton = new JButton("Cairo");
+		romeButton = new JButton("Rome");
+		spartaButton = new JButton("Sparta");
+		
 		JPanel topPanel = new JPanel();
 		JPanel midPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
 		JPanel filler = new JPanel();
 		topPanel.setLayout(new BorderLayout());
 		JPanel welcomePanel = new JPanel();
+		JPanel chooseCityPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
 
 		bottomPanel.setPreferredSize(new Dimension(0, 330));
+		bottomPanel.setLayout(new BorderLayout());
 		topPanel.setPreferredSize(new Dimension(0, 320));
 
 		startGame.setForeground(Color.WHITE);
@@ -67,7 +81,12 @@ public class HomeView extends JFrame implements ActionListener
 		topPanel.add(welcomePanel, BorderLayout.SOUTH);
 		welcomePanel.add(welcome, BorderLayout.CENTER);
 		midPanel.add(enterYourNameField);
-		bottomPanel.add(startGame, BorderLayout.CENTER);
+		bottomPanel.add(buttonPanel, BorderLayout.CENTER);
+		buttonPanel.add(startGame);
+		bottomPanel.add(chooseCityPanel, BorderLayout.NORTH);
+		chooseCityPanel.add(cairoButton,BorderLayout.SOUTH);
+		chooseCityPanel.add(spartaButton,BorderLayout.SOUTH);
+		chooseCityPanel.add(romeButton,BorderLayout.SOUTH);
 
 		this.setTitle("The Conquerer");
 		this.setResizable(false);
