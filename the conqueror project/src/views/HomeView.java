@@ -12,7 +12,7 @@ public class HomeView extends JFrame implements ActionListener
 	private JButton cairoButton = new JButton("Cairo");
 	private JButton romeButton = new JButton("Rome");
 	private JButton spartaButton = new JButton("Sparta");
-	private String selectedCity;
+	private String selectedCity = "";
 	private HomeViewListener listener;
 	private JTextField enterYourNameField;
 	private JLabel welcome = new JLabel("Enter Your Name");
