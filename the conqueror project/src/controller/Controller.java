@@ -1,17 +1,15 @@
 package controller;
 
+import units.*;
 import java.io.IOException;
 
 import javax.swing.JButton;
 
+import engine.City;
 import engine.Game;
 import engine.Player;
-import listeners.HomeViewListener;
-import listeners.WorldMapViewListener;
-import views.CityView;
-import views.HomeView;
-import views.TemplateView;
-import views.WorldMapView;
+import listeners.*;
+import views.*;
 
 public class Controller implements HomeViewListener, WorldMapViewListener
 {
@@ -74,10 +72,10 @@ public class Controller implements HomeViewListener, WorldMapViewListener
 	}
 
 	@Override
-	public void onInitiate(JButton openedButton)
+	public void onInitiate()
 	{
-		// TODO Auto-generated method stub
-		
+		InitiateArmyView initiateArmyView = new InitiateArmyView();
+		//theGame.getPlayer().initiateArmy(city, unit);
 	}
 
 	@Override
