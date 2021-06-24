@@ -21,7 +21,8 @@ public class City {
 		militaryBuildings = new ArrayList<>();
 		defendingArmy = new Army(name);
 	}
-
+	
+	
 
 	//getters and setters
 	public Army getDefendingArmy() {
