@@ -49,8 +49,6 @@ public class HomeView extends JFrame implements ActionListener
 
 	public HomeView()
 	{
-		super();
-
 		// text and labels
 		welcome.setHorizontalAlignment(JLabel.CENTER);
 		enterYourNameField = new JTextField();
