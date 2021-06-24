@@ -5,6 +5,7 @@ import java.io.IOException;
 import engine.Game;
 import engine.Player;
 import listeners.HomeViewListener;
+import views.CityView;
 import views.HomeView;
 import views.WorldMapView;
 
@@ -34,6 +35,7 @@ public class Controller implements HomeViewListener
 			theGame = new Game(playerName, playerCity);
 			startScreen.dispose();
 			worldMapView = new WorldMapView(theGame);
+			CityView city= new CityView(theGame);
 //			worldMapView.setGold(theGame.getPlayer().getTreasury());
 //			worldMapView.setPlayerName(playerName);
 //			worldMapView.setTurnCount(theGame.getCurrentTurnCount());

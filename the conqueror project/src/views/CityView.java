@@ -11,13 +11,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class CityView extends JFrame implements ActionListener
+import engine.Game;
+
+public class CityView extends WorldMapView implements ActionListener
 {
 	
-	public CityView()
+	public CityView(Game theGame)
 	{
-		super();
-		
+		super(theGame);
 		JPanel topPanel = new JPanel(new BorderLayout());
 		JPanel midPanel = new JPanel();
 		JPanel bottomPanel = new JPanel(new BorderLayout());
@@ -59,8 +60,5 @@ public class CityView extends JFrame implements ActionListener
 		// TODO Auto-generated method stub
 		
 	}
-	public static void main(String[] args) {
-		new CityView();
-	}
-
+	
 }
