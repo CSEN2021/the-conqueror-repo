@@ -14,7 +14,7 @@ import exceptions.NotEnoughGoldException;
 import listeners.*;
 import views.*;
 
-public class Controller implements HomeViewListener, WorldMapViewListener, InitiateArmyViewListener
+public class Controller implements HomeViewListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener
 {
 	private HomeView homeScreen;
 	private WorldMapView worldMapView;
@@ -155,19 +155,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		
 	}
 
-	@Override
-	public void onInitiateCity(String cityName)
-	{
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void onInitiateUnit()
-	{
-		// TODO Auto-generated method stub
-		
-	}
 }
 
 
