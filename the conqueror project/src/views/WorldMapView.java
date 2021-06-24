@@ -137,7 +137,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		}
 		else if (e.getSource() == iniateArmyButton)
 		{
-
+			listener.onInitiate();
 		}
 		else if (e.getSource() == reloacteButton)
 		{
