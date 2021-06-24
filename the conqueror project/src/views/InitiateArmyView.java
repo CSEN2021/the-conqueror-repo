@@ -9,17 +9,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import engine.*;
+import listeners.InitiateArmyViewListener;
 import units.*;
 
 public class InitiateArmyView extends JFrame implements ActionListener
 {
-	String cities[] = {"Cairo","Sparta","Rome"};
-	JComboBox cityComboBox = new JComboBox(cities);
-	JComboBox unitsComboBox;
-	JPanel mainPanel = new JPanel();
-	public InitiateArmyView ()
+	private String cities[] = {"Cairo","Sparta","Rome"};
+	private JComboBox cityComboBox = new JComboBox(cities);
+	private JComboBox unitsComboBox;
+	private JPanel mainPanel = new JPanel();
+	private InitiateArmyViewListener listener;
+	private City theCity;
+	
+	public InitiateArmyView (Game theGame)
 	{
-		
+		//theGame.findCity(getName());
 		add(mainPanel);
 		mainPanel.add(cityComboBox);
 		setSize(new Dimension(400, 200));
@@ -29,7 +33,14 @@ public class InitiateArmyView extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		// TODO Auto-generated method stub
+		if(e.getSource() == cityComboBox)
+		{
+			listener.onInitiateCity((String)cityComboBox.getSelectedItem());
+		}
 		
+	}
+	public void setListener(InitiateArmyViewListener listener)
+	{
+		this.listener = listener;
 	}
 }
