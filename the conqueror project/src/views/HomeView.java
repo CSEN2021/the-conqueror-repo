@@ -121,8 +121,7 @@ public class HomeView extends JFrame implements ActionListener
 			}
 			else
 			{
-				welcome.setText("ENTER NAME & CITY");
-				welcome.setForeground(Color.red);
+				JOptionPane.showMessageDialog(null, "please enter a name & select a city","Warning", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		else

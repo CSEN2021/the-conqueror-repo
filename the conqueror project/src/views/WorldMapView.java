@@ -2,114 +2,148 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import engine.Game;
-import engine.Player;
+import listeners.WorldMapViewListener;
 
-public class WorldMapView extends JFrame implements ActionListener
+public class WorldMapView extends TemplateView implements ActionListener
 {
-	private JPanel fillerPanel = new JPanel();
-	private JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-	private JPanel bottomPanel = new JPanel(new BorderLayout());
-	private JPanel statsPanel = new JPanel();
-	// stats
-	private double gold;
-	private double food;
-	private String playerName;
-	private int turnCount;
-	
-	private JLabel goldLabel = new JLabel();
-	private JLabel foodLabel = new JLabel();
-	private JLabel playerNameLabel = new JLabel();
-	private JLabel turnCountLabel = new JLabel();
-	
-	public void updateLabels()
+	private JButton cairoButton = new JButton("Cairo");
+	private JButton spartaButton = new JButton("Sparta");
+	private JButton romeButton = new JButton("Rome");
+	private JButton endTurnButton = new JButton("End Turn");
+	private JButton targetButton = new JButton("Target a City");
+	private JButton iniateArmyButton = new JButton("Iniate an Army");
+	private JButton reloacteButton = new JButton("Relocate a unit");
+	private WorldMapViewListener listener;
+	private JPanel bottomPanel = new JPanel();
+	private JPanel midPanel = new JPanel();
+	private JPanel rightPanel = new JPanel();
+	private JTextArea armyTextArea = new JTextArea("Controlled Armies :\n");
+
+	public void paint(Graphics g)
 	{
-		goldLabel.setText("Gold : " + gold);
-		foodLabel.setText("Food : " + food);
-		playerNameLabel.setText("Player : " + playerName);
-		turnCountLabel.setText("Turn : " + turnCount);
+		Graphics2D g2D = (Graphics2D) g;
+
+		// background image
+		g2D.drawImage(new ImageIcon("resources/worldMap.png").getImage(), 0, 0, null);
+
+		// fix buttons
+		fixPaint();
 	}
 
 	public WorldMapView(Game theGame)
 	{
-		// initialize labels
-		setGold(theGame.getPlayer().getTreasury());
-		setFood(theGame.getPlayer().getFood());
-		setPlayerName(theGame.getPlayer().getName());
-		setTurnCount(theGame.getCurrentTurnCount());
-		updateLabels();
-		goldLabel.setBackground(new Color(0xFAD63F));
-		goldLabel.setOpaque(true);
-		foodLabel.setBackground(new Color(0xF58C3C));
-		foodLabel.setOpaque(true);
-		turnCountLabel.setBackground(new Color(0xE288F5));
-		turnCountLabel.setOpaque(true);
-		playerNameLabel.setBackground(new Color(0x6E93FA));
-		playerNameLabel.setOpaque(true);
+		super(theGame);
+
+		// components
 		
+		cairoButton.addActionListener(this);
+		if(!theGame.getPlayer().getControlledCities().get(0).getName().equals("Cairo"))
+			cairoButton.setEnabled(false);
+		spartaButton.addActionListener(this);
+		if(!theGame.getPlayer().getControlledCities().get(0).getName().equals("Sparta"))
+			spartaButton.setEnabled(false);
+		romeButton.addActionListener(this);
+		if(!theGame.getPlayer().getControlledCities().get(0).getName().equals("Rome"))
+			romeButton.setEnabled(false);
+		
+		endTurnButton.addActionListener(this);
+		targetButton.addActionListener(this);
+		iniateArmyButton.addActionListener(this);
+		reloacteButton.addActionListener(this);
+		
+		setUpButton(endTurnButton);
+		setUpButton(romeButton);
+		setUpButton(cairoButton);
+		setUpButton(spartaButton);
+		setUpButton(targetButton);
+		setUpButton(reloacteButton);
+		setUpButton(iniateArmyButton);
+		
+		armyTextArea.setBackground(new Color(0x3E4149));
+		armyTextArea.setForeground(Color.white);
+
 		// panels
-		
-		
-		// adding components
-		add(topPanel, BorderLayout.NORTH);
-		topPanel.setBackground(Color.red);
-		topPanel.add(statsPanel, BorderLayout.WEST);
-		topPanel.setBackground(new Color(0x3E4149));
-		statsPanel.setOpaque(false);
-		statsPanel.add(playerNameLabel);
-		statsPanel.add(turnCountLabel);
-		statsPanel.add(goldLabel);
-		statsPanel.add(foodLabel);
-		
-		// frame properties
-		setIconImage(new ImageIcon("resources/icon.png").getImage());
-		setSize(1280, 720);
-		setTitle("The Conquerer");
-		setResizable(false);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		validate();
-		repaint();
+
+		bottomPanel.setBackground(new Color(0x3E4149));
+		rightPanel.setBackground(new Color(0x3E4149));
+
+		// add
+		add(rightPanel, BorderLayout.EAST);
+		add(bottomPanel, BorderLayout.SOUTH);
+		add(midPanel, BorderLayout.CENTER);
+
+		bottomPanel.add(iniateArmyButton);
+		bottomPanel.add(reloacteButton);
+		bottomPanel.add(targetButton);
+		bottomPanel.add(endTurnButton);
+
+		rightPanel.add(armyTextArea);
+
+		midPanel.add(cairoButton, BorderLayout.CENTER);
+		midPanel.add(spartaButton, BorderLayout.EAST);
+		midPanel.add(romeButton, BorderLayout.WEST);
+		midPanel.setOpaque(false);
+
+		revalidate();
+	}
+
+	@Override
+	public void fixPaint()
+	{
+		super.fixPaint();
+		cairoButton.repaint();
+		spartaButton.repaint();
+		romeButton.repaint();
+		bottomPanel.repaint();
+		endTurnButton.repaint();
+		rightPanel.repaint();
+		armyTextArea.repaint();
+		targetButton.repaint();
+		reloacteButton.repaint();
+		iniateArmyButton.repaint();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		// TODO Auto-generated method stub
+		if (e.getSource() == endTurnButton)
+		{
+			listener.onEndTurn();
+		}
+		else if (e.getSource() == cairoButton || e.getSource() == romeButton || e.getSource() == spartaButton)
+		{
+			listener.onOpenCity((JButton) e.getSource());
+		}
+		else if (e.getSource() == targetButton)
+		{
+
+		}
+		else if (e.getSource() == iniateArmyButton)
+		{
+
+		}
+		else if (e.getSource() == reloacteButton)
+		{
+
+		}
 
 	}
 
-	public void setGold(double gold)
+	public void setListener(WorldMapViewListener listener)
 	{
-		this.gold = gold;
+		this.listener = listener;
 	}
-	
-	public void setFood(double food)
-	{
-		this.food = food;
-	}
-
-	public void setPlayerName(String playerName)
-	{
-		this.playerName = playerName;
-	}
-
-	public void setTurnCount(int turnCount)
-	{
-		this.turnCount = turnCount;
-	}
-
-	
 
 }

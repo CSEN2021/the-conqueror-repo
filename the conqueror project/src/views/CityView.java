@@ -1,6 +1,7 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,45 +14,36 @@ import javax.swing.JPanel;
 
 import engine.Game;
 
-public class CityView extends WorldMapView implements ActionListener
+public class CityView extends TemplateView implements ActionListener
 {
+	private JButton buildButton = new JButton("Build");
+	private JButton upgradeButton = new JButton("Upgrade");
+	private JButton recruitButton = new JButton("Recruit Button");
+	private JPanel midPanel = new JPanel();
+	private JPanel bottomPanel = new JPanel(new BorderLayout());
+	private JPanel filler = new JPanel();
 	
 	public CityView(Game theGame)
 	{
 		super(theGame);
-		JPanel topPanel = new JPanel(new BorderLayout());
-		JPanel midPanel = new JPanel();
-		JPanel bottomPanel = new JPanel(new BorderLayout());
-		JPanel filler = new JPanel();
-		midPanel.setLayout(new GridLayout(1, 3));
 		
-		midPanel.add(new JButton("Build"));
-		midPanel.add(new JButton("Upgrade"));
-		midPanel.add(new JButton("Recruit"));
+		// components
+		midPanel.add(buildButton);
+		midPanel.add(upgradeButton);
+		midPanel.add(recruitButton);
+		setUpButton(upgradeButton);
+		setUpButton(buildButton);
+		setUpButton(recruitButton);
 		
-		bottomPanel.setPreferredSize(new Dimension(0, 320));
-		midPanel.setPreferredSize(new Dimension(0, 420));
-		topPanel.setPreferredSize(new Dimension(0, 130));
+		// panels
+		midPanel.setLayout(new GridLayout(1, 0));
 		
+		//midPanel.setPreferredSize(new Dimension(0, 420));
 		
-		add(topPanel, BorderLayout.NORTH);
+		// add
 		add(midPanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
 
-		topPanel.add(filler, BorderLayout.CENTER);
-
-		
-		
-		setIconImage(new ImageIcon("resources/icon.png").getImage());
-		setSize(1280, 720);
-		setTitle("The Conquerer");
-		setResizable(false);
-		setVisible(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		validate();
-		repaint();
-
-		
 		
 	}
 
