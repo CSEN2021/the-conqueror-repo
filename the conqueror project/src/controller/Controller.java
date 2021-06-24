@@ -11,12 +11,13 @@ import engine.Player;
 import listeners.*;
 import views.*;
 
-public class Controller implements HomeViewListener, WorldMapViewListener
+public class Controller implements HomeViewListener, WorldMapViewListener, InitiateArmyViewListener
 {
-	HomeView homeScreen;
-	WorldMapView worldMapView;
-	CityView cityView;
-	Game theGame;
+	private HomeView homeScreen;
+	private WorldMapView worldMapView;
+	private CityView cityView;
+	private Game theGame;
+	private InitiateArmyView initiateArmyView;
 
 	public Controller()
 	{
@@ -74,12 +75,27 @@ public class Controller implements HomeViewListener, WorldMapViewListener
 	@Override
 	public void onInitiate()
 	{
-		InitiateArmyView initiateArmyView = new InitiateArmyView();
+		initiateArmyView = new InitiateArmyView(theGame);
+		initiateArmyView.setListener(this);
 		//theGame.getPlayer().initiateArmy(city, unit);
 	}
 
 	@Override
 	public void onRelocateUnit(JButton openedButton)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onInitiateCity(String cityName)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onInitiateUnit()
 	{
 		// TODO Auto-generated method stub
 		
