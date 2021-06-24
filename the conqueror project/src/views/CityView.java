@@ -1,10 +1,13 @@
 package views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,23 +19,36 @@ public class CityView extends TemplateView implements ActionListener
 	private JButton buildButton = new JButton("Build");
 	private JButton upgradeButton = new JButton("Upgrade");
 	private JButton recruitButton = new JButton("Recruit Button");
-	private JLabel barracksLabel = new JLabel("No Barracks");
-	private JLabel baracksLvlLabel = new JLabel("Level : 0");
-	private JLabel baracksRecruitLabel = new JLabel("No unit");
-	private JLabel archeryRangeLabel = new JLabel("No ArcheryRange");
-	private JLabel archeryRangeLvllLabel = new JLabel("Level : 0");
-	private JLabel archeryRangeRecruitLabel = new JLabel("No unit");
-	private JLabel stableLabel = new JLabel("No Stable");
-	private JLabel stableLvlLabel = new JLabel("Level : 0");
-	private JLabel stableRecruitLabel = new JLabel("No unit");
-	private JLabel marketLabel = new JLabel("No Market");
-	private JLabel marketLvlLabel = new JLabel("Level : 0");
-	private JLabel farmLabel = new JLabel("No Farm");
-	private JLabel farmLvlLabel = new JLabel("Level : 0");
+	private JButton barracksLabel = new JButton("No Barracks");
+	private JButton baracksLvlLabel = new JButton("Level : 0");
+	private JButton baracksRecruitLabel = new JButton("No unit");
+	private JButton archeryRangeLabel = new JButton("No ArcheryRange");
+	private JButton archeryRangeLvllLabel = new JButton("Level : 0");
+	private JButton archeryRangeRecruitLabel = new JButton("No unit");
+	private JButton stableLabel = new JButton("No Stable");
+	private JButton stableLvlLabel = new JButton("Level : 0");
+	private JButton stableRecruitLabel = new JButton("No unit");
+	private JButton marketLabel = new JButton("No Market");
+	private JButton marketLvlLabel = new JButton("Level : 0");
+	private JButton farmLabel = new JButton("No Farm");
+	private JButton farmLvlLabel = new JButton("Level : 0");
 	private JLabel fillerLabel = new JLabel("");
 	private JPanel midPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel(new BorderLayout());
 	private JPanel fillerPanel = new JPanel();
+	
+	
+	
+	
+	
+	public void setUpButton2(JButton theButton, String path )
+	{
+		theButton.setIcon(new ImageIcon("resources/" + path));
+		theButton.setForeground(Color.WHITE);
+		theButton.setBackground(Color.DARK_GRAY);
+		theButton.setFocusable(false);
+		theButton.repaint();
+	}
 	
 	public CityView(Game theGame)
 	{
@@ -43,19 +59,25 @@ public class CityView extends TemplateView implements ActionListener
 		setUpButton(buildButton);
 		setUpButton(recruitButton);
 
-		setUpLabel(archeryRangeLabel);
-		setUpLabel(archeryRangeLvllLabel);
-		setUpLabel(archeryRangeRecruitLabel);
-		setUpLabel(barracksLabel);
-		setUpLabel(baracksLvlLabel);
-		setUpLabel(baracksRecruitLabel);
-		setUpLabel(stableLabel);
-		setUpLabel(stableLvlLabel);
-		setUpLabel(stableRecruitLabel);
-		setUpLabel(marketLabel);
-		setUpLabel(marketLvlLabel);
-		setUpLabel(farmLabel);
-		setUpLabel(farmLvlLabel);
+		setUpButton(archeryRangeLabel);
+		setUpButton(archeryRangeLvllLabel);
+		setUpButton(archeryRangeRecruitLabel);
+		setUpButton(barracksLabel);
+		setUpButton(baracksLvlLabel);
+		setUpButton(baracksRecruitLabel);
+		setUpButton(stableLabel);
+		setUpButton(stableLvlLabel);
+		setUpButton(stableRecruitLabel);
+		setUpButton(marketLabel);
+		setUpButton(marketLvlLabel);
+		setUpButton(farmLabel);
+		setUpButton(farmLvlLabel);
+		
+		//Icons
+		
+		
+		
+		
 		
 		// panels
 		midPanel.setLayout(new GridLayout(0, 3));
