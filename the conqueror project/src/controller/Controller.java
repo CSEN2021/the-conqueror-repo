@@ -5,13 +5,16 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 
+import buildings.Building;
+import buildings.Farm;
 import engine.City;
 import engine.Game;
 import engine.Player;
+import exceptions.NotEnoughGoldException;
 import listeners.*;
 import views.*;
 
-public class Controller implements HomeViewListener, WorldMapViewListener
+public class Controller implements HomeViewListener, WorldMapViewListener, CityViewListener
 {
 	HomeView homeScreen;
 	WorldMapView worldMapView;
@@ -55,6 +58,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener
 	public void onOpenCity(JButton openedButton)
 	{
 		cityView = new CityView(theGame);
+		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
+		cityView.setListener(this);
+		System.out.println(cityView.getCurrentCity().getName());
 	}
 
 	@Override
@@ -84,4 +90,54 @@ public class Controller implements HomeViewListener, WorldMapViewListener
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	public void onBuild(String s) {
+		// TODO Auto-generated method stub
+		String currentCityName = cityView.getCurrentCity().getName();
+		try {
+			theGame.getPlayer().build(s, currentCityName);
+		} catch (NotEnoughGoldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println();
+		
+	}
+
+	@Override
+	public void onUpgrade() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRecruit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSelectBuilding() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSelectLevel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSelectUnit() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	
 }
+
+

@@ -12,10 +12,28 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import buildings.ArcheryRange;
+import engine.City;
 import engine.Game;
+import listeners.CityViewListener;
 
 public class CityView extends TemplateView implements ActionListener
 {
+	private City currentCity;
+	private CityViewListener listener;
+	
+	
+	public City getCurrentCity() {
+		return currentCity;
+	}
+	
+	
+	public void setCurrentCity(City currentCity) {
+		this.currentCity = currentCity;
+	}
+
+
+
 	private JButton buildButton = new JButton("Build");
 	private JButton upgradeButton = new JButton("Upgrade");
 	private JButton recruitButton = new JButton("Recruit Button");
@@ -114,6 +132,37 @@ public class CityView extends TemplateView implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+		if (e.getSource() == archeryRangeLabel)
+		{
+			listener.onBuild("ArcheryRange");
+		}
+		else if (e.getSource() == barracksLabel)
+		{
+			listener.onBuild("Barracks");
+		}
+		else if (e.getSource() == stableLabel)
+		{
+			listener.onBuild("Stable");
+		}
+		else if (e.getSource() == farmLabel)
+		{
+			listener.onBuild("Farm");
+		}
+		else if (e.getSource() == marketLabel)
+		{
+			listener.onBuild("Market");
+				
+		}
+		
+		
+	}
+
+	public CityViewListener getListener() {
+		return listener;
+	}
+
+	public void setListener(CityViewListener listener) {
+		this.listener = listener;
 	}
 	
 }
