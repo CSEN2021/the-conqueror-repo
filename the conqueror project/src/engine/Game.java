@@ -13,7 +13,7 @@ public class Game
 	private Player player;
 	private ArrayList<City> availableCities = new ArrayList<>(); // read only
 	private ArrayList<Distance> distances = new ArrayList<>(); // read only
-	final private int maxTurnCount = 30; // read only
+	final private int maxTurnCount = 50; // read only
 	private int currentTurnCount = 1;
 
 	// constructor

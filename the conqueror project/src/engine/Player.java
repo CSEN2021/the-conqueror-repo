@@ -12,7 +12,7 @@ public class Player
 	private String name; // read only
 	private ArrayList<City> controlledCities; // read only
 	private ArrayList<Army> controlledArmies; // read only
-	private double treasury;
+	private double treasury = 5000;
 	private double food;
 
 	// constructor
