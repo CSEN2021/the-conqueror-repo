@@ -3,25 +3,20 @@ package views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import listeners.HomeViewListener;
 
 public class HomeView extends JFrame implements ActionListener
 {
-	Image backgroundImage;
-	JButton startGame;
-	JButton cairoButton;
-	JButton romeButton;
-	JButton spartaButton;
-	String selectedCity;
-	HomeViewListener listener;
-	JTextField enterYourNameField;
-	Label welcome;
+	private JButton startGame = new JButton("Start Game");;
+	private JButton cairoButton = new JButton("Cairo");
+	private JButton romeButton = new JButton("Rome");
+	private JButton spartaButton = new JButton("Sparta");
+	private String selectedCity;
+	private HomeViewListener listener;
+	private JTextField enterYourNameField;
+	private JLabel welcome = new JLabel("Enter Your Name");
 
 	public void setListener(HomeViewListener listener)
 	{
@@ -31,31 +26,36 @@ public class HomeView extends JFrame implements ActionListener
 	public void paint(Graphics g)
 	{
 		Graphics2D g2D = (Graphics2D) g;
-		g2D.drawImage(backgroundImage, 0, 0, null);
+		
+		// background image
+		g2D.drawImage(new ImageIcon("resources/startScreen.jpg").getImage(), 0, 0, null);
+		
+		// fix buttons
 		startGame.repaint();
 		cairoButton.repaint();
 		spartaButton.repaint();
 		romeButton.repaint();
+		welcome.repaint();
 	}
-
+	public void loadButton(JButton theButton)
+	{
+		theButton.setIcon(new ImageIcon("resources/"+theButton.getText()+"Image.jpg"));
+		theButton.setPreferredSize(new Dimension(300,220));	
+		theButton.setVerticalTextPosition(JButton.TOP);
+		theButton.setHorizontalTextPosition(JButton.CENTER);
+		theButton.setBackground(Color.LIGHT_GRAY);
+	}
 	public HomeView()
 	{
-
-		backgroundImage = new ImageIcon("resources/startScreen.jpg").getImage();
-		new JFrame();
-		this.setSize(1280, 720);
-
-		welcome = new Label("Enter Your Name");
-		welcome.setAlignment(Label.CENTER);
-		startGame = new JButton("Start Game");
+		super();
+		
+		// text and labels
+		welcome.setHorizontalAlignment(JLabel.CENTER);
 		enterYourNameField = new JTextField();
 		enterYourNameField.setPreferredSize(new Dimension(250, 25));
 		enterYourNameField.setHorizontalAlignment(JTextField.CENTER);
-
-		cairoButton = new JButton("Cairo");
-		romeButton = new JButton("Rome");
-		spartaButton = new JButton("Sparta");
 		
+		// panels
 		JPanel topPanel = new JPanel();
 		JPanel midPanel = new JPanel();
 		JPanel bottomPanel = new JPanel();
@@ -65,14 +65,21 @@ public class HomeView extends JFrame implements ActionListener
 		JPanel chooseCityPanel = new JPanel();
 		JPanel buttonPanel = new JPanel();
 
-		bottomPanel.setPreferredSize(new Dimension(0, 330));
+		bottomPanel.setPreferredSize(new Dimension(0, 420));
 		bottomPanel.setLayout(new BorderLayout());
-		topPanel.setPreferredSize(new Dimension(0, 320));
-
+		topPanel.setPreferredSize(new Dimension(0, 230));
+		
+		// buttons
+		loadButton(cairoButton);
+		loadButton(spartaButton);
+		loadButton(romeButton);
+		
 		startGame.setForeground(Color.WHITE);
 		startGame.setBackground(Color.DARK_GRAY);
 		startGame.setFocusable(false);
 		startGame.addActionListener(this);
+		
+		// adding components
 		this.add(topPanel, BorderLayout.NORTH);
 		this.add(midPanel, BorderLayout.CENTER);
 		this.add(bottomPanel, BorderLayout.SOUTH);
@@ -88,6 +95,8 @@ public class HomeView extends JFrame implements ActionListener
 		chooseCityPanel.add(spartaButton,BorderLayout.SOUTH);
 		chooseCityPanel.add(romeButton,BorderLayout.SOUTH);
 
+		// frame properties
+		this.setSize(1280, 720);
 		this.setTitle("The Conquerer");
 		this.setResizable(false);
 		this.setVisible(true);
