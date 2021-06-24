@@ -2,7 +2,6 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -82,22 +81,30 @@ public class TemplateView extends JFrame
 		validate();
 		repaint();
 	}
-	
+
 	public void fixPaint()
 	{
 		goldLabel.repaint();
 		foodLabel.repaint();
 		playerNameLabel.repaint();
 		turnCountLabel.repaint();
-		//topPanel.repaint();
+		// topPanel.repaint();
 	}
-	
-	public void setUpButton (JButton theButton)
+
+	public void setUpButton(JButton theButton)
 	{
 		theButton.setForeground(Color.WHITE);
 		theButton.setBackground(Color.DARK_GRAY);
 		theButton.setFocusable(false);
 		theButton.repaint();
+	}
+
+	public void setUpLabel(JLabel theLabel)
+	{
+		theLabel.setHorizontalAlignment(JLabel.CENTER);
+		theLabel.setBackground(Color.DARK_GRAY);
+		theLabel.setForeground(Color.WHITE);
+		theLabel.setOpaque(true);
 	}
 
 	public void setGold(double gold)
@@ -119,7 +126,7 @@ public class TemplateView extends JFrame
 	{
 		this.turnCount = turnCount;
 	}
-	
+
 	public JLabel getGoldLabel()
 	{
 		return goldLabel;
