@@ -46,6 +46,16 @@ public class Game
 	}
 
 	// methods
+	
+	public City findCity(String cityName)
+	{
+		for(int i = 0; i < availableCities.size(); i++)
+		{
+			if(availableCities.get(i).getName().equals(cityName))
+				return availableCities.get(i);
+		}
+		return null;
+	}
 
 	// initializes the defending army of the defending cities
 	public void loadArmy(String cityName, String path) throws IOException
