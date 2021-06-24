@@ -73,7 +73,12 @@ public class WorldMapView extends TemplateView implements ActionListener
 		
 		armyTextArea.setBackground(new Color(0x3E4149));
 		armyTextArea.setForeground(Color.white);
-
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			armyTextArea.setText(armyTextArea.getText() +
+					'\n' + theGame.getPlayer().getControlledArmies().get(i));
+		}
+		
 		// panels
 
 		bottomPanel.setBackground(new Color(0x3E4149));
