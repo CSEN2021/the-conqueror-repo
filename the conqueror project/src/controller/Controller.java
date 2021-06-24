@@ -1,14 +1,18 @@
 package controller;
 
+import java.io.IOException;
+
 import engine.Game;
 import engine.Player;
 import listeners.HomeViewListener;
 import views.HomeView;
+import views.WorldMapView;
 
 public class Controller implements HomeViewListener
 {
 	HomeView homeScreen;
-	Player thePlayer;
+	WorldMapView worldMapView;
+	Game theGame;
 
 	public Controller()
 	{
@@ -23,9 +27,20 @@ public class Controller implements HomeViewListener
 	}
 	
 	@Override
-	public void onStartGame(String playerName)
+	public void onStartGame(String playerName, String playerCity, HomeView startScreen)
 	{
-		thePlayer = new Player(playerName);
-		System.out.println(playerName);
+		try
+		{
+			theGame = new Game(playerName, playerCity);
+			startScreen.dispose();
+			worldMapView = new WorldMapView(theGame);
+//			worldMapView.setGold(theGame.getPlayer().getTreasury());
+//			worldMapView.setPlayerName(playerName);
+//			worldMapView.setTurnCount(theGame.getCurrentTurnCount());
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }
