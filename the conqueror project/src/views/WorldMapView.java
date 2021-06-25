@@ -25,7 +25,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JButton romeButton = new JButton("Rome");
 	private JButton endTurnButton = new JButton("End Turn");
 	private JButton targetButton = new JButton("Target a City");
-	private JButton iniateArmyButton = new JButton("Iniate an Army");
+	private JButton initiateArmyButton = new JButton("Initiate an Army");
 	private JButton reloacteButton = new JButton("Relocate a unit");
 	private WorldMapViewListener listener;
 	private JPanel bottomPanel = new JPanel();
@@ -62,7 +62,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		
 		endTurnButton.addActionListener(this);
 		targetButton.addActionListener(this);
-		iniateArmyButton.addActionListener(this);
+		initiateArmyButton.addActionListener(this);
 		reloacteButton.addActionListener(this);
 		
 		setUpButton(endTurnButton);
@@ -71,7 +71,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		setUpButton(spartaButton);
 		setUpButton(targetButton);
 		setUpButton(reloacteButton);
-		setUpButton(iniateArmyButton);
+		setUpButton(initiateArmyButton);
 		
 		armyTextArea.setBackground(new Color(0x3E4149));
 		armyTextArea.setForeground(Color.white);
@@ -88,7 +88,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		add(bottomPanel, BorderLayout.SOUTH);
 		add(midPanel, BorderLayout.CENTER);
 
-		bottomPanel.add(iniateArmyButton);
+		bottomPanel.add(initiateArmyButton);
 		bottomPanel.add(reloacteButton);
 		bottomPanel.add(targetButton);
 		bottomPanel.add(endTurnButton);
@@ -105,13 +105,14 @@ public class WorldMapView extends TemplateView implements ActionListener
 	}
 
 
-	public void updateStats(Game theGame)
+	public void updateControlledArmies(Game theGame)
 	{
-		super.updateStats(theGame);
+		armyTextArea.setText("Controlled Armies :\n");
 		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
-			armyTextArea.setText("Controlled Armies :" +
-					'\n' +"" +theGame.getPlayer().getControlledArmies().toString());
+			String string = theGame.getPlayer().getControlledArmies().get(i).toString();
+			armyTextArea.append("Army " + (i+1)+'\n'+
+					string+"\n");
 		}
 		repaint();
 	}
@@ -128,7 +129,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		armyTextArea.repaint();
 		targetButton.repaint();
 		reloacteButton.repaint();
-		iniateArmyButton.repaint();
+		initiateArmyButton.repaint();
 	}
 
 	@Override
@@ -146,7 +147,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		{
 
 		}
-		else if (e.getSource() == iniateArmyButton)
+		else if (e.getSource() == initiateArmyButton)
 		{
 			listener.onInitiate();
 		}

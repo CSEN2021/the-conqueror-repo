@@ -44,7 +44,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			startScreen.dispose();
 			worldMapView = new WorldMapView(theGame);
 			worldMapView.setListener(this);
-			System.out.print(theGame.findCity("cairo").getDefendingArmy());
 		}
 		catch (IOException e)
 		{
@@ -98,7 +97,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	public void onInitiateCity(String cityName)
 	{
 		armyInitiationCity = theGame.findCity(cityName);
-		armyInitiationCity.getDefendingArmy().getUnits().add(Archer.create("3"));
 		ArrayList<Unit> units = armyInitiationCity.getDefendingArmy().getUnits();
 		String[] unitsArray = new String[units.size()];
 		for (int i = 0; i < units.size(); i++)
@@ -146,7 +144,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 		actualUnitToInitiate = armyInitiationCity.getDefendingArmy().findUnit(nameSearch, levelSearch);
 		theGame.getPlayer().initiateArmy(armyInitiationCity, actualUnitToInitiate);
-		worldMapView.updateStats(theGame);
+		worldMapView.updateControlledArmies(theGame);
 	}
 
 	@Override

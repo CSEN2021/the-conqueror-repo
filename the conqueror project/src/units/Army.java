@@ -23,6 +23,7 @@ public class Army
 	}
 
 	// methods
+
 	public String toString()
 	{
 		int[] counters =
