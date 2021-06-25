@@ -44,6 +44,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		try
 		{
 			theGame = new Game(playerName, playerCity);
+			
 			startScreen.dispose();
 			worldMapView = new WorldMapView(theGame);
 			worldMapView.setListener(this);
@@ -70,6 +71,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
 		cityView.drawDefendingArmy();
 		cityView.setListener(this);
+		
 	}
 
 	@Override
@@ -475,6 +477,14 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	public void onRelocateUnitChosen(String unitToBeInitiated)
 	{
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onShowDefendingArmy() {
+		// TODO Auto-generated method stub
+		
+		new ShowArmyView(theGame, cityView.getCurrentCity());
 		
 	}
 

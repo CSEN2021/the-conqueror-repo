@@ -67,6 +67,11 @@ public abstract class Unit
 		return "";
 	}
 	
+	public String unitInfo()
+	{
+		return "";
+	}
+	
 	// getters and setters
 	public int getCurrentSoldierCount()
 	{
