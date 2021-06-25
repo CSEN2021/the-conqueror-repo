@@ -23,6 +23,28 @@ public class Army
 	}
 
 	// methods
+	public Unit findUnit(String type, int lvl)
+	{
+		for (int i = 0; i < units.size(); i++)
+		{
+			if (type.equalsIgnoreCase("archer") && units.get(i) instanceof Archer && units.get(i).getLevel() == lvl)
+			{
+				return units.get(i);
+			}
+			else if (type.equalsIgnoreCase("cavalry") && units.get(i) instanceof Cavalry
+					&& units.get(i).getLevel() == lvl)
+			{
+				return units.get(i);
+			}
+			else if (type.equalsIgnoreCase("infantry") && units.get(i) instanceof Infantry
+					&& units.get(i).getLevel() == lvl)
+			{
+				return units.get(i);
+			}
+		}
+		return Archer.create("2");
+	}
+
 	public void relocateUnit(Unit unit) throws MaxCapacityException
 	{
 		// checks if the current units are already at max size

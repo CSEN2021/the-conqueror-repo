@@ -45,6 +45,10 @@ public class Archer extends Unit
 	}
 
 	// methods
+	public String toString()
+	{
+		return "Archer " + this.getLevel();
+	}
 	public double calcFactor(Unit target)
 	{
 		if (target instanceof Cavalry && getLevel() < 3)

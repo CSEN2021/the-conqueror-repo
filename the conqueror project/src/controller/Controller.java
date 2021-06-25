@@ -116,6 +116,8 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 		initiateArmyView.dispose();
 		initiateArmyView = new InitiateArmyView(theGame, unitsArray);
+		initiateArmyView.setIsChoosingUnit(true);
+		initiateArmyView.setListener(this);
 	}
 
 	@Override
@@ -139,7 +141,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			nameSearch =unitToBeInitiated.substring(0, 7);
 			levelSearch = unitToBeInitiated.charAt(8);
 		}
-		
+		actualUnitToInitiate = armyInitiationCity.getDefendingArmy().findUnit(nameSearch, levelSearch);
+		theGame.getPlayer().initiateArmy(armyInitiationCity, actualUnitToInitiate);
+		System.out.println(theGame.getPlayer().getControlledArmies().get(0).getUnits().get(0));
 	}
 
 	@Override
