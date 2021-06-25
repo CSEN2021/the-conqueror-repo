@@ -49,22 +49,22 @@ public class WorldMapView extends TemplateView implements ActionListener
 		super(theGame);
 		this.theGame = theGame;
 		// components
-		
+
 		cairoButton.addActionListener(this);
-		if(!theGame.getPlayer().getControlledCities().get(0).getName().equals("Cairo"))
+		if (!theGame.getPlayer().getControlledCities().get(0).getName().equals("Cairo"))
 			cairoButton.setEnabled(false);
 		spartaButton.addActionListener(this);
-		if(!theGame.getPlayer().getControlledCities().get(0).getName().equals("Sparta"))
+		if (!theGame.getPlayer().getControlledCities().get(0).getName().equals("Sparta"))
 			spartaButton.setEnabled(false);
 		romeButton.addActionListener(this);
-		if(!theGame.getPlayer().getControlledCities().get(0).getName().equals("Rome"))
+		if (!theGame.getPlayer().getControlledCities().get(0).getName().equals("Rome"))
 			romeButton.setEnabled(false);
-		
+
 		endTurnButton.addActionListener(this);
 		targetButton.addActionListener(this);
 		initiateArmyButton.addActionListener(this);
 		reloacteButton.addActionListener(this);
-		
+
 		setUpButton(endTurnButton);
 		setUpButton(romeButton);
 		setUpButton(cairoButton);
@@ -72,12 +72,11 @@ public class WorldMapView extends TemplateView implements ActionListener
 		setUpButton(targetButton);
 		setUpButton(reloacteButton);
 		setUpButton(initiateArmyButton);
-		
+
 		armyTextArea.setBackground(new Color(0x3E4149));
 		armyTextArea.setForeground(Color.white);
-		armyTextArea.setPreferredSize(new Dimension(350,720));
-		
-		
+		armyTextArea.setPreferredSize(new Dimension(350, 720));
+
 		// panels
 
 		bottomPanel.setBackground(new Color(0x3E4149));
@@ -104,18 +103,18 @@ public class WorldMapView extends TemplateView implements ActionListener
 		revalidate();
 	}
 
-
 	public void updateControlledArmies(Game theGame)
 	{
 		armyTextArea.setText("Controlled Armies :\n");
 		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
 			String string = theGame.getPlayer().getControlledArmies().get(i).toString();
-			armyTextArea.append("Army " + (i+1)+'\n'+
-					string+"\n");
+			armyTextArea.append("Army " + (i + 1) + " ( at "
+					+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string + "\n");
 		}
 		repaint();
 	}
+
 	@Override
 	public void fixPaint()
 	{
