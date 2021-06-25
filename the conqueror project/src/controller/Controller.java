@@ -31,6 +31,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	public static void main(String[] args)
 	{
 		new Controller();
+		
 		// new Game(null, null);
 	}
 
@@ -43,6 +44,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			startScreen.dispose();
 			worldMapView = new WorldMapView(theGame);
 			worldMapView.setListener(this);
+			System.out.print(theGame.findCity("cairo").getDefendingArmy());
 		}
 		catch (IOException e)
 		{
@@ -126,24 +128,25 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		Unit actualUnitToInitiate;
 		String nameSearch;
 		int levelSearch;
+
 		if (unitToBeInitiated.length() == 8) // archer
 		{
 			nameSearch = unitToBeInitiated.substring(0, 6);
-			levelSearch = unitToBeInitiated.charAt(7);
+			levelSearch = Integer.parseInt(""+unitToBeInitiated.charAt(7));
 		}
 		else if (unitToBeInitiated.length() == 10) // infantry
 		{
 			nameSearch = unitToBeInitiated.substring(0, 8);
-			levelSearch = unitToBeInitiated.charAt(9);
+			levelSearch = Integer.parseInt(""+unitToBeInitiated.charAt(9));
 		}
 		else // cavalry
 		{
 			nameSearch =unitToBeInitiated.substring(0, 7);
-			levelSearch = unitToBeInitiated.charAt(8);
+			levelSearch = Integer.parseInt(""+unitToBeInitiated.charAt(8));
 		}
 		actualUnitToInitiate = armyInitiationCity.getDefendingArmy().findUnit(nameSearch, levelSearch);
 		theGame.getPlayer().initiateArmy(armyInitiationCity, actualUnitToInitiate);
-		System.out.println(theGame.getPlayer().getControlledArmies().get(0).getUnits().get(0));
+		worldMapView.updateStats(theGame);
 	}
 
 	@Override

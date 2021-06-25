@@ -23,6 +23,64 @@ public class Army
 	}
 
 	// methods
+	public String toString()
+	{
+		int[] counters =
+		{ 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		for (int i = 0; i < units.size(); i++)
+		{
+			if (units.get(i) instanceof Infantry)
+			{
+				if (units.get(i).getLevel() == 1)
+				{
+					counters[0] += 1;
+				}
+				else if (units.get(i).getLevel() == 2)
+				{
+					counters[1] += 1;
+				}
+				else
+				{
+					counters[2] += 1;
+				}
+			}
+			else if (units.get(i) instanceof Archer)
+			{
+				if (units.get(i).getLevel() == 1)
+				{
+					counters[3] += 1;
+				}
+				else if (units.get(i).getLevel() == 2)
+				{
+					counters[4] += 1;
+				}
+				else
+				{
+					counters[5] += 1;
+				}
+			}
+			else
+			{
+				if (units.get(i).getLevel() == 1)
+				{
+					counters[6] += 1;
+				}
+				else if (units.get(i).getLevel() == 2)
+				{
+					counters[7] += 1;
+				}
+				else
+				{
+					counters[8] += 1;
+				}
+			}
+		}
+		return ("Level 1 Infantry : " + counters[0] + " , Level 2 Infantry : " + counters[1] + " , Level 3 Infantry : "
+				+ counters[2] + '\n' + "Level 1 Archer   : " + counters[3] + " , Level 2 Archer   : " + counters[4]
+				+ " , Level 3 Archer   : " + counters[5] + '\n' + "Level 1 Cavalry  : " + counters[6] + " , Level 2 Cavalry  : "
+				+ counters[7] + " , Level 3 Cavalry  : " + counters[8]);
+	}
+
 	public Unit findUnit(String type, int lvl)
 	{
 		for (int i = 0; i < units.size(); i++)
@@ -42,7 +100,7 @@ public class Army
 				return units.get(i);
 			}
 		}
-		return Archer.create("2");
+		return null;
 	}
 
 	public void relocateUnit(Unit unit) throws MaxCapacityException

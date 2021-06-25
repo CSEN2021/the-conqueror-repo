@@ -2,6 +2,7 @@ package views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.LayoutManager;
@@ -18,6 +19,7 @@ import listeners.WorldMapViewListener;
 
 public class WorldMapView extends TemplateView implements ActionListener
 {
+	private Game theGame;
 	private JButton cairoButton = new JButton("Cairo");
 	private JButton spartaButton = new JButton("Sparta");
 	private JButton romeButton = new JButton("Rome");
@@ -45,7 +47,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 	public WorldMapView(Game theGame)
 	{
 		super(theGame);
-
+		this.theGame = theGame;
 		// components
 		
 		cairoButton.addActionListener(this);
@@ -73,11 +75,8 @@ public class WorldMapView extends TemplateView implements ActionListener
 		
 		armyTextArea.setBackground(new Color(0x3E4149));
 		armyTextArea.setForeground(Color.white);
-		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
-		{
-			armyTextArea.setText(armyTextArea.getText() +
-					'\n' + theGame.getPlayer().getControlledArmies().get(i));
-		}
+		armyTextArea.setPreferredSize(new Dimension(300,720));
+		
 		
 		// panels
 
@@ -105,6 +104,17 @@ public class WorldMapView extends TemplateView implements ActionListener
 		revalidate();
 	}
 
+
+	public void updateStats(Game theGame)
+	{
+		super.updateStats(theGame);
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			armyTextArea.setText("Controlled Armies :" +
+					'\n' + theGame.getPlayer().getControlledArmies().get(i));
+		}
+		repaint();
+	}
 	@Override
 	public void fixPaint()
 	{
