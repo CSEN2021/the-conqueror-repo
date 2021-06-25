@@ -155,43 +155,22 @@ public class CityView extends TemplateView implements ActionListener
 		if (e.getSource() == archeryRangeButton)
 		{
 			listener.onBuild("ArcheryRange");
-			archeryRangeButton.setEnabled(false);
-			archeryRangeButton.setText("ArcheryRange Built");
-			archeryRangeLvlButton.setEnabled(true);
-			archeryRangeLvlButton.setText("Level: 1");
 		}
 		else if (e.getSource() == barracksButton)
 		{
 			listener.onBuild("Barracks");
-			barracksButton.setEnabled(false);
-			barracksButton.setText("Barracks Built");
-			barracksLvlButton.setText("Level: 1");
-			barracksLvlButton.setEnabled(true);
 		}
 		else if (e.getSource() == stableButton)
 		{
 			listener.onBuild("Stable");
-			stableButton.setEnabled(false);	
-			stableButton.setText("Stable Built");
-			stableLvlButton.setText("Level: 1");
-			stableLvlButton.setEnabled(true);
 		}
 		else if (e.getSource() == farmButton)
 		{
 			listener.onBuild("Farm");
-			farmButton.setEnabled(false);
-			farmButton.setText("Farm Built");
-			farmLvlButton.setText("Level: 1");
-			farmLvlButton.setEnabled(true);
 		}
 		else if (e.getSource() == marketButton)
 		{
 			listener.onBuild("Market");
-			marketButton.setEnabled(false);
-			marketButton.setText("Market Built");
-			marketLvlButton.setText("Level: 1");
-			marketLvlButton.setEnabled(true);
-			
 		}
 		if (e.getSource() == marketLvlButton)
 		{

@@ -139,18 +139,62 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 
 	}
 
-	public void onBuild(String s)
+	public void onBuild(String stringBuildling)
 	{
 		// TODO Auto-generated method stub
 		String currentCityName = cityView.getCurrentCity().getName();
 		try
 		{
-			theGame.getPlayer().build(s, currentCityName);
+			theGame.getPlayer().build(stringBuildling, currentCityName);
+			switch (stringBuildling)
+			{
+				case "Farm":
+				{
+					cityView.getFarmButton().setEnabled(false);
+					cityView.getFarmButton().setText("Farm Built");
+					cityView.getFarmLvlButton().setText("Level: 1");
+					cityView.getFarmLvlButton().setEnabled(true);
+					break;
+				}
+				case "Market":
+				{
+					cityView.getMarketButton().setEnabled(false);
+					cityView.getMarketButton().setText("Market Built");
+					cityView.getMarketLvlButton().setText("Level: 1");
+					cityView.getMarketLvlButton().setEnabled(true);
+					break;
+				}
+				case "ArcheryRange":
+				{
+					cityView.getArcheryRangeButton().setEnabled(false);
+					cityView.getArcheryRangeButton().setText("ArcheryRange Built");
+					cityView.getArcheryRangeLvlButton().setEnabled(true);
+					cityView.getArcheryRangeLvlButton().setText("Level: 1");
+					break;
+				}
+				case "Barracks":
+				{
+					cityView.getBarracksButton().setEnabled(false);
+					cityView.getBarracksButton().setText("Barracks Built");
+					cityView.getBarracksLvlButton().setText("Level: 1");
+					cityView.getBarracksLvlButton().setEnabled(true);
+					break;
+				}
+				case "Stable":
+				{
+					cityView.getStableButton().setEnabled(false);	
+					cityView.getStableButton().setText("Stable Built");
+					cityView.getStableLvlButton().setText("Level: 1");
+					cityView.getStableLvlButton().setEnabled(true);
+					break;
+				}
+			}
 		}
 		catch (NotEnoughGoldException e)
 		{
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "You don't have enough gold!", "Warning",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
 		worldMapView.updateStats(theGame);
@@ -162,6 +206,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		String currentCityName = cityView.getCurrentCity().getName();
 		ArrayList<EconomicBuilding> economicBuildings = theGame.findCity(currentCityName).getEconomicalBuildings();
 		ArrayList<MilitaryBuilding> militaryBuildings = theGame.findCity(currentCityName).getMilitaryBuildings();
+		
 		try
 		{
 			int currentLevel;
@@ -173,14 +218,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					{
 						if (economicBuildings.get(i) instanceof Farm)
 						{
-							economicBuildings.get(i).upgrade();
+							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getFarmLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getFarmLvlButton().setText("Level: " + currentLevel);
 							cityView.getFarmButton().setEnabled(false);
 							break;
 						}
 					}
-
+					break;
 				}
 				case "Market":
 				{
@@ -188,14 +233,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					{
 						if (economicBuildings.get(i) instanceof Market)
 						{
-							economicBuildings.get(i).upgrade();
+							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getMarketLvlLabel().getText().charAt(7) + "") + 1;
 							cityView.getMarketLvlButton().setText("Level: " + currentLevel);
 							cityView.getMarketButton().setEnabled(false);
 							break;
 						}
 					}
-
+					break;
 				}
 				case "ArcheryRange":
 				{
@@ -203,13 +248,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					{
 						if (militaryBuildings.get(i) instanceof ArcheryRange)
 						{
-							militaryBuildings.get(i).upgrade();
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel);
 							cityView.getArcheryRangeLvlButton().setEnabled(false);
 							break;
 						}
 					}
+					break;
 
 				}
 				case "Barracks":
@@ -218,13 +264,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					{
 						if (militaryBuildings.get(i) instanceof Barracks)
 						{
-							militaryBuildings.get(i).upgrade();
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));;
 							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getBarracksLvlButton().setText("Level: " + currentLevel );
 							cityView.getBarracksButton().setEnabled(false);
 							break;
 						}
 					}
+					break;
 
 				}
 				case "Stable":
@@ -233,17 +280,19 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					{
 						if (militaryBuildings.get(i) instanceof Stable)
 						{
-							militaryBuildings.get(i).upgrade();
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getStableLvlButton().setText("Level: " + currentLevel);
 							cityView.getStableButton().setEnabled(false);
 							break;
 						}
 					}
-
+					break;
 				}
 				
 			}
+			cityView.updateStats(theGame);
+			worldMapView.updateStats(theGame);
 
 		}
 		catch (MaxLevelException maxLevelException)
@@ -255,6 +304,12 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		catch(BuildingInCoolDownException bInCoolDownException)
 		{
 			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		catch (NotEnoughGoldException notEnoughGoldException) 
+		{
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(null, "You don't have enough gold", "Warning",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
