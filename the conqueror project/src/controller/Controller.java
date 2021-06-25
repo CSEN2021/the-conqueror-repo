@@ -59,6 +59,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		if (cityView == null)
 		{
 			cityView = new CityView(theGame);
+			
 		}
 		else
 		{
@@ -66,6 +67,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			cityView.updateStats(theGame);
 		}
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
+		cityView.drawDefendingArmy();
 		cityView.setListener(this);
 	}
 
@@ -74,6 +76,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	{
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
+		cityView.getBarracksRecruitButton().setEnabled(true);
+		cityView.getArcheryRangeRecruitButton().setEnabled(true);
+		cityView.getStableRecruitButton().setEnabled(true);
 	}
 
 	@Override
@@ -394,6 +399,10 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		try
 		{
 			theGame.getPlayer().recruitUnit(unit, cityView.getCurrentCity().getName());
+			cityView.drawDefendingArmy();
+			worldMapView.updateStats(theGame);
+			cityView.updateStats(theGame);
+			cityView.repaint();
 		} 
 		catch (BuildingInCoolDownException buildingInCoolDownException)
 		{
@@ -429,6 +438,8 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			
 			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
+		
+		
 
 	}
 

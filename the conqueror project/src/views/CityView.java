@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import buildings.ArcheryRange;
 import engine.City;
@@ -47,7 +48,7 @@ public class CityView extends TemplateView implements ActionListener
 	private JButton archeryRangeRecruitButton = new JButton("No unit");
 	
 	
-	private JButton stableButton = new JButton("No Stable Cost: 1500");
+	private JButton stableButton = new JButton("No Stable Cost: 2500");
 	private JButton stableLvlButton = new JButton("Level : 0");
 	private JButton stableRecruitButton = new JButton("No unit");
 	
@@ -66,7 +67,7 @@ public class CityView extends TemplateView implements ActionListener
 	private JPanel fillerPanel = new JPanel();
 	
 	private JPanel infoPanel =  new JPanel();
-	
+	JTextArea defendingArmiesTextArea = new JTextArea();
 	
 	
 	public void setUpButton2(JButton theButton, String path )
@@ -137,9 +138,7 @@ public class CityView extends TemplateView implements ActionListener
 		add(bottomPanel, BorderLayout.SOUTH);
 		
 		
-		JLabel testingJLabel = new JLabel(currentCity.getDefendingArmy().toString());
-		bottomPanel.add(testingJLabel, BorderLayout.NORTH);
-		bottomPanel.setPreferredSize(new Dimension(720, 200));
+		
 		
 		
 		midPanel.add(archeryRangeButton);
@@ -158,12 +157,22 @@ public class CityView extends TemplateView implements ActionListener
 		midPanel.add(farmButton);
 		midPanel.add(farmLvlButton);
 		
-		
+		if (currentCity == null)
+		{
+			System.out.println(currentCity);
+			System.out.println("HEY2");
+		}
 		
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 	}
 
+	public void drawDefendingArmy()
+	{
+		defendingArmiesTextArea.setText(currentCity.getDefendingArmy().toString());
+		bottomPanel.add(defendingArmiesTextArea, BorderLayout.NORTH);
+	}
+	
 	public JButton getBarracksRecruitButton() {
 		return barracksRecruitButton;
 	}
