@@ -164,7 +164,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	}
 
 	@Override
-	public void onRelocateUnit(JButton openedButton)
+	public void onRelocateUnit()
 	{
 		// TODO Auto-generated method stub
 
