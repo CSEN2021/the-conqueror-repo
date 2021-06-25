@@ -80,7 +80,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	{
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
-		cityView.getBarracksLvlLabel().setEnabled(true);
+		
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 				{
 					cityView.getFarmButton().setEnabled(false);
 					cityView.getFarmButton().setText("Farm Built");
-					cityView.getFarmLvlButton().setText("Level: 1");
+					cityView.getFarmLvlButton().setText("Level: 1 Cost: 500");
 					cityView.getFarmLvlButton().setEnabled(true);
 					break;
 				}
@@ -160,7 +160,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 				{
 					cityView.getMarketButton().setEnabled(false);
 					cityView.getMarketButton().setText("Market Built");
-					cityView.getMarketLvlButton().setText("Level: 1");
+					cityView.getMarketLvlButton().setText("Level: 1 Cost: 700");
 					cityView.getMarketLvlButton().setEnabled(true);
 					break;
 				}
@@ -169,14 +169,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					cityView.getArcheryRangeButton().setEnabled(false);
 					cityView.getArcheryRangeButton().setText("ArcheryRange Built");
 					cityView.getArcheryRangeLvlButton().setEnabled(true);
-					cityView.getArcheryRangeLvlButton().setText("Level: 1");
+					cityView.getArcheryRangeLvlButton().setText("Level: 1 Cost: 1500");
 					break;
 				}
 				case "Barracks":
 				{
 					cityView.getBarracksButton().setEnabled(false);
 					cityView.getBarracksButton().setText("Barracks Built");
-					cityView.getBarracksLvlButton().setText("Level: 1");
+					cityView.getBarracksLvlButton().setText("Level: 1 Cost: 1000");
 					cityView.getBarracksLvlButton().setEnabled(true);
 					break;
 				}
@@ -184,7 +184,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 				{
 					cityView.getStableButton().setEnabled(false);	
 					cityView.getStableButton().setText("Stable Built");
-					cityView.getStableLvlButton().setText("Level: 1");
+					cityView.getStableLvlButton().setText("Level: 1 Cost: 1500");
 					cityView.getStableLvlButton().setEnabled(true);
 					break;
 				}
@@ -220,8 +220,11 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getFarmLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getFarmLvlButton().setText("Level: " + currentLevel);
-							cityView.getFarmButton().setEnabled(false);
+							cityView.getFarmLvlButton().setText("Level: " + currentLevel + " Cost: 500");
+							if (currentLevel == 3)
+							{
+								cityView.getFarmLvlButton().setText("Max Level");
+							}
 							break;
 						}
 					}
@@ -235,8 +238,11 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getMarketLvlLabel().getText().charAt(7) + "") + 1;
-							cityView.getMarketLvlButton().setText("Level: " + currentLevel);
-							cityView.getMarketButton().setEnabled(false);
+							cityView.getMarketLvlButton().setText("Level: " + currentLevel + " Cost: 700");
+							if (currentLevel == 3)
+							{
+								cityView.getMarketLvlButton().setText("Max Level");
+							}
 							break;
 						}
 					}
@@ -250,8 +256,11 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel);
-							cityView.getArcheryRangeLvlButton().setEnabled(false);
+							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							if (currentLevel == 3)
+							{
+								cityView.getArcheryRangeLvlButton().setText("Max Level");
+							}
 							break;
 						}
 					}
@@ -266,8 +275,11 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));;
 							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getBarracksLvlButton().setText("Level: " + currentLevel );
-							cityView.getBarracksButton().setEnabled(false);
+							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
+							if (currentLevel == 3)
+							{
+								cityView.getBarracksLvlButton().setText("Max Level");
+							}
 							break;
 						}
 					}
@@ -282,8 +294,11 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getStableLvlButton().setText("Level: " + currentLevel);
-							cityView.getStableButton().setEnabled(false);
+							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							if (currentLevel == 3)
+							{
+								cityView.getStableLvlButton().setText("Max Level");
+							}
 							break;
 						}
 					}
@@ -298,6 +313,35 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		catch (MaxLevelException maxLevelException)
 		{
 			// TODO: handle exception
+			switch (stringBuildling)
+			{
+				case "Farm": 
+				{
+					cityView.getFarmLvlButton().setEnabled(false);	
+					break;
+				}
+				case "Market": 
+				{
+					cityView.getMarketLvlButton().setEnabled(false);
+					break;
+				}
+				case "Stable":
+				{
+					cityView.getStableLvlButton().setEnabled(false);
+					break;
+				}
+				case "Barracks":
+				{
+					cityView.getBarracksLvlButton().setEnabled(false);
+					break;
+				}
+				case "ArcheryRange":
+				{
+					cityView.getArcheryRangeLvlButton().setEnabled(false);
+					break;
+				}
+			}
+			
 			JOptionPane.showMessageDialog(null, "You have reached the max level. You can't upgrade.", "Warning",
 					JOptionPane.ERROR_MESSAGE);
 		}

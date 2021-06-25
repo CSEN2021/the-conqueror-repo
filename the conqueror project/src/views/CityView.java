@@ -37,18 +37,28 @@ public class CityView extends TemplateView implements ActionListener
 	private JLabel buildLabel = new JLabel("Click to Build");
 	private JLabel upgradeLabel = new JLabel("Click to Upgrade");
 	private JLabel recruitLabel = new JLabel("Click to Recruit");
-	private JButton barracksButton = new JButton("No Barracks");
+	
+	
+	private JButton barracksButton = new JButton("No Barracks Cost: 2000");
 	private JButton barracksLvlButton = new JButton("Level : 0");
 	private JButton barracksRecruitButton = new JButton("No unit");
-	private JButton archeryRangeButton = new JButton("No ArcheryRange\n Click to build");
+	
+	
+	private JButton archeryRangeButton = new JButton("No ArcheryRange Cost: 1500");
 	private JButton archeryRangeLvlButton = new JButton("Level : 0");
 	private JButton archeryRangeRecruitButton = new JButton("No unit");
-	private JButton stableButton = new JButton("No Stable\n Click to build");
+	
+	
+	private JButton stableButton = new JButton("No Stable Cost: 1500");
 	private JButton stableLvlButton = new JButton("Level : 0");
 	private JButton stableRecruitButton = new JButton("No unit");
-	private JButton marketButton = new JButton("No Market\n Click to build");
+	
+	
+	private JButton marketButton = new JButton("No Market Cost: 1500");
 	private JButton marketLvlButton = new JButton("Level : 0");
-	private JButton farmButton = new JButton("No Farm\n Click to build");
+	
+	
+	private JButton farmButton = new JButton("No Farm Cost: 1000");
 	private JButton farmLvlButton = new JButton("Level : 0");
 	
 	
