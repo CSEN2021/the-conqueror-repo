@@ -95,8 +95,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onInitiateCity(String cityName)
 	{
-		theGame.findCity(cityName).getDefendingArmy().getUnits().add(Archer.create("3"));
-		ArrayList<Unit> units = theGame.findCity(cityName).getDefendingArmy().getUnits();
+		armyInitiationCity = theGame.findCity(cityName);
+		armyInitiationCity.getDefendingArmy().getUnits().add(Archer.create("3"));
+		ArrayList<Unit> units = armyInitiationCity.getDefendingArmy().getUnits();
 		String[] unitsArray = new String[units.size()];
 		for (int i = 0; i < units.size(); i++)
 		{
@@ -120,8 +121,25 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onInitiateUnit(String unitToBeInitiated)
 	{
-		// TODO Auto-generated method stub
-
+		Unit actualUnitToInitiate;
+		String nameSearch;
+		int levelSearch;
+		if (unitToBeInitiated.length() == 8) // archer
+		{
+			nameSearch = unitToBeInitiated.substring(0, 6);
+			levelSearch = unitToBeInitiated.charAt(7);
+		}
+		else if (unitToBeInitiated.length() == 10) // infantry
+		{
+			nameSearch = unitToBeInitiated.substring(0, 8);
+			levelSearch = unitToBeInitiated.charAt(9);
+		}
+		else // cavalry
+		{
+			nameSearch =unitToBeInitiated.substring(0, 7);
+			levelSearch = unitToBeInitiated.charAt(8);
+		}
+		
 	}
 
 	@Override

@@ -8,7 +8,7 @@ public abstract class MilitaryBuilding extends Building
 
 	// instance variables
 	private int recruitmentCost;
-	private int currentRecruit;
+	private int currentRecruit = 0;
 	final private int maxRecruit = 3; // read only
 
 	// constructor
