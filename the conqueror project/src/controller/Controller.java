@@ -155,7 +155,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 
 	public void onBuild(String stringBuildling)
 	{
-		// TODO Auto-generated method stub
 		String currentCityName = cityView.getCurrentCity().getName();
 		try
 		{
@@ -217,7 +216,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 		catch (NotEnoughGoldException e)
 		{
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "You don't have enough gold!", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
@@ -392,18 +390,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	
 	public void onRecruit(String unit)
 	{
-		// TODO Auto-generated method stub
 		try
 		{
-			
 			theGame.getPlayer().recruitUnit(unit, cityView.getCurrentCity().getName());
-			ArrayList<Unit> units = theGame.findCity(cityView.getCurrentCity().getName()).getDefendingArmy().getUnits();
-			for (int i = 0; i < units.size(); i++)
-			{
-				System.out.println("HEEEEEY");
-				System.out.println(units.get(i));
-			}
-			
 		} 
 		catch (BuildingInCoolDownException buildingInCoolDownException)
 		{
@@ -411,6 +400,27 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 		catch (MaxRecruitedException maxRecruitedException) 
 		{
+			switch (unit) 
+			{
+				case "Archer":
+				{
+					cityView.getArcheryRangeRecruitButton().setEnabled(false);
+					break;
+				}
+				case "Infantry":
+				{
+					cityView.getBarracksRecruitButton().setEnabled(false);
+					break;
+				}
+				case "Cavalry":
+				{
+					cityView.getStableRecruitButton().setEnabled(false);
+					break;
+				}
+			}
+			
+			
+			
 			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		catch (NotEnoughGoldException notEnoughGoldException) 
