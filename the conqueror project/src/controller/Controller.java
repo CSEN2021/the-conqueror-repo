@@ -74,9 +74,18 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	{
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
-		cityView.getBarracksRecruitButton().setEnabled(true);
-		cityView.getArcheryRangeRecruitButton().setEnabled(true);
-		cityView.getStableRecruitButton().setEnabled(true);
+		if (cityView.getBarracksButton().isEnabled() == false)
+		{
+			cityView.getBarracksRecruitButton().setEnabled(true);
+		}
+		if (cityView.getArcheryRangeButton().isEnabled() == false)
+		{
+			cityView.getArcheryRangeRecruitButton().setEnabled(true);
+		}
+		if (cityView.getStableButton().isEnabled() == false)
+		{
+			cityView.getStableRecruitButton().setEnabled(true);
+		}
 	}
 
 	@Override
