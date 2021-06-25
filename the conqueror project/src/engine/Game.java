@@ -51,7 +51,7 @@ public class Game
 	{
 		for(int i = 0; i < availableCities.size(); i++)
 		{
-			if(availableCities.get(i).getName().equals(cityName))
+			if(availableCities.get(i).getName().equalsIgnoreCase(cityName))
 				return availableCities.get(i);
 		}
 		return null;
