@@ -56,6 +56,8 @@ public class CityView extends TemplateView implements ActionListener
 	private JButton farmButton = new JButton("Build a Farm. Cost: 1000");
 	private JButton farmLvlButton = new JButton("Build to upgrade.");
 	
+	private JButton showDefendingArmy = new JButton("Show Defending Army");
+	
 	
 	private JLabel fillerLabel = new JLabel("");
 	private JPanel midPanel = new JPanel();
@@ -96,6 +98,8 @@ public class CityView extends TemplateView implements ActionListener
 		setUpButton(farmButton);
 		setUpButton(farmLvlButton);
 		
+		setUpButton(showDefendingArmy);
+		
 		//adding listeners
 		
 		archeryRangeButton.addActionListener(this);
@@ -113,6 +117,9 @@ public class CityView extends TemplateView implements ActionListener
 		stableRecruitButton.addActionListener(this);
 		archeryRangeRecruitButton.addActionListener(this);
 		barracksRecruitButton.addActionListener(this);
+		
+		showDefendingArmy.addActionListener(this);
+		
 		
 		archeryRangeLvlButton.setEnabled(false);
 		stableLvlButton.setEnabled(false);
@@ -149,7 +156,7 @@ public class CityView extends TemplateView implements ActionListener
 		
 		midPanel.add(marketButton);
 		midPanel.add(marketLvlButton);
-		midPanel.add(fillerLabel);
+		midPanel.add(showDefendingArmy);
 		midPanel.add(farmButton);
 		midPanel.add(farmLvlButton);
 		
@@ -253,6 +260,11 @@ public class CityView extends TemplateView implements ActionListener
 		else if (e.getSource() == stableRecruitButton)
 		{
 			listener.onRecruit("Cavalry");
+		}
+		
+		if(e.getSource() == showDefendingArmy)
+		{
+			listener.onShowDefendingArmy();
 		}
 			
 	}

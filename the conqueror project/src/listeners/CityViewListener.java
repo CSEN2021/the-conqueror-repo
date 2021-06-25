@@ -6,6 +6,6 @@ public interface CityViewListener
 	public void onUpgrade(String building);
 	public void onRecruit(String unit);
 	
-	
+	public void onShowDefendingArmy();
 	
 }

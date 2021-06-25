@@ -48,6 +48,12 @@ public class Infantry extends Unit
 	{
 		return "Infantry " + this.getLevel();
 	}
+	
+	public String unitInfo()
+	{
+		return "Infantry Level " + this.getLevel();
+	}
+	
 	public double calcFactor(Unit target)
 	{
 		if ((getLevel() == 1 && target instanceof Infantry) || (getLevel() == 1 && target instanceof Cavalry))
