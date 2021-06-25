@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ArrayList;
@@ -31,13 +30,13 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		this.homeScreen = new HomeView();
 		homeScreen.setListener(this);
 	}
-	
+
 	public static void main(String[] args)
 	{
 		new Controller();
-		//new Game(null, null);
+		// new Game(null, null);
 	}
-	
+
 	@Override
 	public void onStartGame(String playerName, String playerCity, HomeView startScreen)
 	{
@@ -56,7 +55,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			e.printStackTrace();
 		}
 	}
-	
+
 	// actions performed
 
 	@Override
@@ -66,13 +65,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		{
 			cityView = new CityView(theGame);
 		}
-		else 
+		else
 		{
 			cityView.setVisible(true);
+			cityView.updateStats(theGame);
 		}
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
 		cityView.setListener(this);
-		
+
 	}
 
 	@Override
@@ -87,152 +87,164 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	public void onTargetCity(JButton openedButton)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onInitiate()
-	{	
-		String[] cities = {"Cairo","Sparta","Rome"};
+	{
+		String[] cities =
+		{ "Cairo", "Sparta", "Rome" };
 		initiateArmyView = new InitiateArmyView(theGame, cities);
 		initiateArmyView.setListener(this);
-		//theGame.getPlayer().initiateArmy(city, unit);
+		// theGame.getPlayer().initiateArmy(city, unit);
 	}
+
 	@Override
 	public void onInitiateCity(String cityName)
 	{
 		theGame.findCity(cityName).getDefendingArmy().getUnits().add(Archer.create("3"));
 		ArrayList<Unit> units = theGame.findCity(cityName).getDefendingArmy().getUnits();
-		String [] unitsArray = new String [units.size()];
-		for(int i = 0; i < units.size(); i++)
+		String[] unitsArray = new String[units.size()];
+		for (int i = 0; i < units.size(); i++)
 		{
-			if(units.get(i) instanceof Archer )
+			if (units.get(i) instanceof Archer)
 			{
-				unitsArray[i] = "Archer "+units.get(i).getLevel();
+				unitsArray[i] = "Archer " + units.get(i).getLevel();
 			}
-			else if(units.get(i) instanceof Infantry )
+			else if (units.get(i) instanceof Infantry)
 			{
-				unitsArray[i] = "Infantry "+units.get(i).getLevel();
+				unitsArray[i] = "Infantry " + units.get(i).getLevel();
 			}
-			else 
+			else
 			{
-				unitsArray[i] = "Cavalry "+units.get(i).getLevel();
+				unitsArray[i] = "Cavalry " + units.get(i).getLevel();
 			}
 		}
 		initiateArmyView.dispose();
-		initiateArmyView = new InitiateArmyView(theGame,unitsArray);
+		initiateArmyView = new InitiateArmyView(theGame, unitsArray);
 	}
 
 	@Override
 	public void onInitiateUnit(String unitToBeInitiated)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onRelocateUnit(JButton openedButton)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
-	
-	public void onBuild(String s) {
+	public void onBuild(String s)
+	{
 		// TODO Auto-generated method stub
 		String currentCityName = cityView.getCurrentCity().getName();
-		try {
+		try
+		{
 			theGame.getPlayer().build(s, currentCityName);
-		} catch (NotEnoughGoldException e) {
+		}
+		catch (NotEnoughGoldException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		cityView.updateStats(theGame);
+		worldMapView.updateStats(theGame);
 	}
 
-	
-	public void onUpgrade(String stringBuildling) {
+	public void onUpgrade(String stringBuildling)
+	{
 		// TODO Auto-generated method stub
 		String currentCityName = cityView.getCurrentCity().getName();
 		ArrayList<EconomicBuilding> economicBuildings = theGame.findCity(currentCityName).getEconomicalBuildings();
 		ArrayList<MilitaryBuilding> militaryBuildings = theGame.findCity(currentCityName).getMilitaryBuildings();
-		try {
-			
-			switch (stringBuildling) {
-			case "Farm": {	
-				for (int i = 0; i < economicBuildings.size(); i++)
+		try
+		{
+
+			switch (stringBuildling)
+			{
+				case "Farm":
 				{
-					if (economicBuildings.get(i) instanceof Farm)
+					for (int i = 0; i < economicBuildings.size(); i++)
 					{
-						economicBuildings.get(i).upgrade();
-						break;
+						if (economicBuildings.get(i) instanceof Farm)
+						{
+							economicBuildings.get(i).upgrade();
+							break;
+						}
 					}
+
 				}
-				
-			}
-			case "Market": {	
-				for (int i = 0; i < economicBuildings.size(); i++)
+				case "Market":
 				{
-					if (economicBuildings.get(i) instanceof Market)
+					for (int i = 0; i < economicBuildings.size(); i++)
 					{
-						economicBuildings.get(i).upgrade();
-						break;
+						if (economicBuildings.get(i) instanceof Market)
+						{
+							economicBuildings.get(i).upgrade();
+							break;
+						}
 					}
+
 				}
-				
-			}
-			case "ArcheryRange": {	
-				for (int i = 0; i < militaryBuildings.size(); i++)
+				case "ArcheryRange":
 				{
-					if (militaryBuildings.get(i) instanceof ArcheryRange)
+					for (int i = 0; i < militaryBuildings.size(); i++)
 					{
-						militaryBuildings.get(i).upgrade();
-						break;
+						if (militaryBuildings.get(i) instanceof ArcheryRange)
+						{
+							militaryBuildings.get(i).upgrade();
+							break;
+						}
 					}
+
 				}
-				
-			}
-			case "Barracks": {	
-				for (int i = 0; i < militaryBuildings.size(); i++)
+				case "Barracks":
 				{
-					if (militaryBuildings.get(i) instanceof Barracks)
+					for (int i = 0; i < militaryBuildings.size(); i++)
 					{
-						militaryBuildings.get(i).upgrade();
-						break;
+						if (militaryBuildings.get(i) instanceof Barracks)
+						{
+							militaryBuildings.get(i).upgrade();
+							break;
+						}
 					}
+
 				}
-				
-			}
-			case "Stable": {	
-				for (int i = 0; i < militaryBuildings.size(); i++)
+				case "Stable":
 				{
-					if (militaryBuildings.get(i) instanceof Stable)
+					for (int i = 0; i < militaryBuildings.size(); i++)
 					{
-						militaryBuildings.get(i).upgrade();
-						break;
+						if (militaryBuildings.get(i) instanceof Stable)
+						{
+							militaryBuildings.get(i).upgrade();
+							break;
+						}
 					}
+
 				}
-				
 			}
+
 		}
-		} catch (Exception e) {
+		catch (Exception e)
+		{
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(null, "please enter a name & select a city","Warning", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "please enter a name & select a city", "Warning",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		
+		cityView.updateStats(theGame);
+		worldMapView.updateStats(theGame);
 	}
 
 	@Override
-	public void onRecruit() {
+	public void onRecruit()
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-
-	
-
-	
-
 
 }
-
-
