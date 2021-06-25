@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -66,8 +67,18 @@ public class CityView extends TemplateView implements ActionListener
 	
 	private JPanel infoPanel =  new JPanel();
 	JTextArea defendingArmiesTextArea = new JTextArea();
+	JLabel cityIcon;
 	
-	
+	public JLabel getCityIcon() {
+		return cityIcon;
+	}
+
+
+	public void setCityIcon(JLabel cityIcon) {
+		this.cityIcon = cityIcon;
+	}
+
+
 	public void setUpButton2(JButton theButton, String path )
 	{
 		theButton.setIcon(new ImageIcon("resources/" + path));
@@ -160,6 +171,12 @@ public class CityView extends TemplateView implements ActionListener
 		midPanel.add(farmButton);
 		midPanel.add(farmLvlButton);
 		
+		cityIcon = new JLabel();
+		
+		
+		
+		
+		midPanel.add(cityIcon);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 	}
