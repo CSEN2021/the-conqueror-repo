@@ -2,9 +2,14 @@ package controller;
 
 import units.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
+import org.hamcrest.core.IsInstanceOf;
+
+import units.*;
 import buildings.Building;
 import buildings.Farm;
 import engine.City;
@@ -80,8 +85,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 
 	@Override
 	public void onInitiate()
-	{
-		initiateArmyView = new InitiateArmyView(theGame);
+	{	
+		String[] cities = {"Cairo","Sparta","Rome"};
+		initiateArmyView = new InitiateArmyView(theGame, cities);
 		initiateArmyView.setListener(this);
 		//theGame.getPlayer().initiateArmy(city, unit);
 	}
@@ -144,8 +150,26 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onInitiateCity(String cityName)
 	{
-		// TODO Auto-generated method stub
-		
+		theGame.findCity(cityName).getDefendingArmy().getUnits().add(Archer.create("3"));
+		ArrayList<Unit> units = theGame.findCity(cityName).getDefendingArmy().getUnits();
+		String [] unitsArray = new String [units.size()];
+		for(int i = 0; i < units.size(); i++)
+		{
+			if(units.get(i) instanceof Archer )
+			{
+				unitsArray[i] = "Archer "+units.get(i).getLevel();
+			}
+			else if(units.get(i) instanceof Infantry )
+			{
+				unitsArray[i] = "Infantry "+units.get(i).getLevel();
+			}
+			else 
+			{
+				unitsArray[i] = "Cavalry "+units.get(i).getLevel();
+			}
+		}
+		initiateArmyView.dispose();
+		initiateArmyView = new InitiateArmyView(theGame,unitsArray);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import listeners.HomeViewListener;
 
 public class HomeView extends JFrame implements ActionListener
 {
-	private JButton startGame = new JButton("Start Game");;
+	private JButton startGame = new JButton("Start Game");
 	private JButton cairoButton = new JButton("Cairo");
 	private JButton romeButton = new JButton("Rome");
 	private JButton spartaButton = new JButton("Sparta");

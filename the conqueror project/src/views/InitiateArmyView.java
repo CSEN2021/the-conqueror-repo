@@ -14,18 +14,19 @@ import units.*;
 
 public class InitiateArmyView extends JFrame implements ActionListener
 {
-	private String cities[] = {"Cairo","Sparta","Rome"};
-	private JComboBox cityComboBox = new JComboBox(cities);
-	private JComboBox unitsComboBox;
+	
+	private JComboBox comboBox;
+
 	private JPanel mainPanel = new JPanel();
 	private InitiateArmyViewListener listener;
-	private City theCity;
 	
-	public InitiateArmyView (Game theGame)
+	public InitiateArmyView (Game theGame, String [] forComboBox)
 	{
+		comboBox = new JComboBox(forComboBox);
+		comboBox.addActionListener(this);
 		//theGame.findCity(getName());
 		add(mainPanel);
-		mainPanel.add(cityComboBox);
+		mainPanel.add(comboBox);
 		setSize(new Dimension(400, 200));
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -33,9 +34,9 @@ public class InitiateArmyView extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if(e.getSource() == cityComboBox)
+		if(e.getSource() == comboBox)
 		{
-			listener.onInitiateCity((String)cityComboBox.getSelectedItem());
+			listener.onInitiateCity((String)comboBox.getSelectedItem());
 		}
 		
 	}
