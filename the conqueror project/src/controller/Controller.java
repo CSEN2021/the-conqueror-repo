@@ -2,14 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
-
 import org.hamcrest.core.IsInstanceOf;
-
-import units.*;
 import units.*;
 import buildings.*;
 import engine.*;
@@ -24,6 +20,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	private CityView cityView;
 	private Game theGame;
 	private InitiateArmyView initiateArmyView;
+	private City armyInitiationCity;
 
 	public Controller()
 	{
@@ -46,9 +43,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			startScreen.dispose();
 			worldMapView = new WorldMapView(theGame);
 			worldMapView.setListener(this);
-//			worldMapView.setGold(theGame.getPlayer().getTreasury());
-//			worldMapView.setPlayerName(playerName);
-//			worldMapView.setTurnCount(theGame.getCurrentTurnCount());
 		}
 		catch (IOException e)
 		{
@@ -72,7 +66,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
 		cityView.setListener(this);
-
 	}
 
 	@Override
@@ -80,7 +73,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	{
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
-		
 	}
 
 	@Override
@@ -103,8 +95,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onInitiateCity(String cityName)
 	{
-		theGame.findCity(cityName).getDefendingArmy().getUnits().add(Archer.create("3"));
-		ArrayList<Unit> units = theGame.findCity(cityName).getDefendingArmy().getUnits();
+		armyInitiationCity = theGame.findCity(cityName);
+		armyInitiationCity.getDefendingArmy().getUnits().add(Archer.create("3"));
+		ArrayList<Unit> units = armyInitiationCity.getDefendingArmy().getUnits();
 		String[] unitsArray = new String[units.size()];
 		for (int i = 0; i < units.size(); i++)
 		{
@@ -128,8 +121,25 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onInitiateUnit(String unitToBeInitiated)
 	{
-		// TODO Auto-generated method stub
-
+		Unit actualUnitToInitiate;
+		String nameSearch;
+		int levelSearch;
+		if (unitToBeInitiated.length() == 8) // archer
+		{
+			nameSearch = unitToBeInitiated.substring(0, 6);
+			levelSearch = unitToBeInitiated.charAt(7);
+		}
+		else if (unitToBeInitiated.length() == 10) // infantry
+		{
+			nameSearch = unitToBeInitiated.substring(0, 8);
+			levelSearch = unitToBeInitiated.charAt(9);
+		}
+		else // cavalry
+		{
+			nameSearch =unitToBeInitiated.substring(0, 7);
+			levelSearch = unitToBeInitiated.charAt(8);
+		}
+		
 	}
 
 	@Override
@@ -188,7 +198,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 				}
 				case "Stable":
 				{
-					cityView.getStableButton().setEnabled(false);	
+					cityView.getStableButton().setEnabled(false);
 					cityView.getStableButton().setText("Stable Built");
 					cityView.getStableLvlButton().setText("Level: 1 Cost: 1500");
 					cityView.getStableLvlButton().setEnabled(true);
@@ -204,8 +214,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		catch (NotEnoughGoldException e)
 		{
 			// TODO Auto-generated catch block
-			JOptionPane.showMessageDialog(null, "You don't have enough gold!", "Warning",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "You don't have enough gold!", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
 		worldMapView.updateStats(theGame);
@@ -217,7 +226,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		String currentCityName = cityView.getCurrentCity().getName();
 		ArrayList<EconomicBuilding> economicBuildings = theGame.findCity(currentCityName).getEconomicalBuildings();
 		ArrayList<MilitaryBuilding> militaryBuildings = theGame.findCity(currentCityName).getMilitaryBuildings();
-		
+
 		try
 		{
 			int currentLevel;
@@ -266,7 +275,8 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						if (militaryBuildings.get(i) instanceof ArcheryRange)
 						{
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
-							currentLevel = Integer.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
+							currentLevel = Integer
+									.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
 							if (currentLevel == 3)
 							{
@@ -284,8 +294,10 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					{
 						if (militaryBuildings.get(i) instanceof Barracks)
 						{
-							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));;
-							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
+							;
+							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "")
+									+ 1;
 							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
 							if (currentLevel == 3)
 							{
@@ -303,7 +315,8 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					{
 						if (militaryBuildings.get(i) instanceof Stable)
 						{
-							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));;
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
+							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
 							if (currentLevel == 3)
@@ -315,7 +328,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					}
 					break;
 				}
-				
+
 			}
 			cityView.updateStats(theGame);
 			worldMapView.updateStats(theGame);
@@ -326,12 +339,12 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			// TODO: handle exception
 			switch (stringBuildling)
 			{
-				case "Farm": 
+				case "Farm":
 				{
-					cityView.getFarmLvlButton().setEnabled(false);	
+					cityView.getFarmLvlButton().setEnabled(false);
 					break;
 				}
-				case "Market": 
+				case "Market":
 				{
 					cityView.getMarketLvlButton().setEnabled(false);
 					break;
@@ -352,20 +365,18 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					break;
 				}
 			}
-			
+
 			JOptionPane.showMessageDialog(null, "You have reached the max level. You can't upgrade.", "Warning",
 					JOptionPane.ERROR_MESSAGE);
 		}
-		catch(BuildingInCoolDownException bInCoolDownException)
+		catch (BuildingInCoolDownException bInCoolDownException)
 		{
-			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
-		catch (NotEnoughGoldException notEnoughGoldException) 
+		catch (NotEnoughGoldException notEnoughGoldException)
 		{
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(null, "You don't have enough gold", "Warning",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "You don't have enough gold", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
 		worldMapView.updateStats(theGame);

@@ -22,6 +22,38 @@ public class City {
 		defendingArmy = new Army(name);
 	}
 	
+	// methods
+	public Building findBuilding(String theBuilding)
+	{
+		
+		for(int i = 0; i<economicalBuildings.size();i++)
+		{
+			if(theBuilding.equalsIgnoreCase("farm")&& economicalBuildings.get(i) instanceof Farm)
+			{
+				return (Farm)economicalBuildings.get(i);
+			}
+			else if (theBuilding.equalsIgnoreCase("market")&& economicalBuildings.get(i) instanceof Market)
+			{
+				return (Market)economicalBuildings.get(i);
+			}
+		}
+		for(int i = 0; i<militaryBuildings.size();i++)
+		{
+			if(theBuilding.equalsIgnoreCase("farm")&& militaryBuildings.get(i) instanceof Barracks)
+			{
+				return (Barracks)militaryBuildings.get(i);
+			}
+			else if (theBuilding.equalsIgnoreCase("market")&& militaryBuildings.get(i) instanceof ArcheryRange)
+			{
+				return (ArcheryRange)militaryBuildings.get(i);
+			}
+			else if (theBuilding.equalsIgnoreCase("market")&& militaryBuildings.get(i) instanceof Stable)
+			{
+				return (Stable)militaryBuildings.get(i);
+			}
+		}
+		return null;
+	}
 	
 
 	//getters and setters

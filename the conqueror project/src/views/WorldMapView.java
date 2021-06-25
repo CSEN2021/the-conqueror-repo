@@ -101,6 +101,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		midPanel.add(romeButton, BorderLayout.WEST);
 		midPanel.setOpaque(false);
 
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		revalidate();
 	}
 
