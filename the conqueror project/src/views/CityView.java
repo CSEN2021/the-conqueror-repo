@@ -117,6 +117,10 @@ public class CityView extends TemplateView implements ActionListener
 		farmLvlButton.addActionListener(this);
 		marketLvlButton.addActionListener(this);
 		
+		stableRecruitButton.addActionListener(this);
+		archeryRangeRecruitButton.addActionListener(this);
+		barracksRecruitButton.addActionListener(this);
+		
 		archeryRangeLvlButton.setEnabled(false);
 		stableLvlButton.setEnabled(false);
 		barracksLvlButton.setEnabled(false);
@@ -194,7 +198,8 @@ public class CityView extends TemplateView implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
+		//Building
 		
 		if (e.getSource() == archeryRangeButton)
 		{
@@ -216,6 +221,8 @@ public class CityView extends TemplateView implements ActionListener
 		{
 			listener.onBuild("Market");
 		}
+		
+		//Upgrading
 		if (e.getSource() == marketLvlButton)
 		{
 			listener.onUpgrade("Market");
@@ -236,6 +243,21 @@ public class CityView extends TemplateView implements ActionListener
 		{
 			listener.onUpgrade("ArcheryRange");
 		}	
+		
+		//Recruiting
+		if (e.getSource() == archeryRangeRecruitButton)
+		{
+			listener.onRecruit("Archer");
+		}
+		else if (e.getSource() == barracksRecruitButton)
+		{
+			listener.onRecruit("Infantry");
+		}
+		else if (e.getSource() == stableRecruitButton)
+		{
+			listener.onRecruit("Cavalry");
+		}
+			
 	}
 
 	public JButton getBarracksButton() {

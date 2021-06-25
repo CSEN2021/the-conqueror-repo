@@ -158,7 +158,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 
 	public void onBuild(String stringBuildling)
 	{
-		// TODO Auto-generated method stub
 		String currentCityName = cityView.getCurrentCity().getName();
 		try
 		{
@@ -220,7 +219,6 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 		catch (NotEnoughGoldException e)
 		{
-			// TODO Auto-generated catch block
 			JOptionPane.showMessageDialog(null, "You don't have enough gold!", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
@@ -328,8 +326,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-							cityView.getStableRecruitButton().setText("Calvary, Cost: " + (((Stable)(theGame.findCity(currentCityName).findBuilding("Stabke"))).getRecruitmentCost()));
-
+							cityView.getStableRecruitButton().setText("Calvary, Cost: " + (((Stable)(theGame.findCity(currentCityName).findBuilding("Stable"))).getRecruitmentCost()));
 							if (currentLevel == 3)
 							{
 								cityView.getStableLvlButton().setText("Max Level");
@@ -387,16 +384,53 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		catch (NotEnoughGoldException notEnoughGoldException)
 		{
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(null, "You don't have enough gold", "Warning", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
 		worldMapView.updateStats(theGame);
 	}
 
-	@Override
-	public void onRecruit()
+	
+	public void onRecruit(String unit)
 	{
-		// TODO Auto-generated method stub
+		try
+		{
+			theGame.getPlayer().recruitUnit(unit, cityView.getCurrentCity().getName());
+		} 
+		catch (BuildingInCoolDownException buildingInCoolDownException)
+		{
+			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning", JOptionPane.ERROR_MESSAGE);
+		}
+		catch (MaxRecruitedException maxRecruitedException) 
+		{
+			switch (unit) 
+			{
+				case "Archer":
+				{
+					cityView.getArcheryRangeRecruitButton().setEnabled(false);
+					break;
+				}
+				case "Infantry":
+				{
+					cityView.getBarracksRecruitButton().setEnabled(false);
+					break;
+				}
+				case "Cavalry":
+				{
+					cityView.getStableRecruitButton().setEnabled(false);
+					break;
+				}
+			}
+			
+			
+			
+			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning", JOptionPane.ERROR_MESSAGE);
+		}
+		catch (NotEnoughGoldException notEnoughGoldException) 
+		{
+			
+			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
+		}
 
 	}
 
