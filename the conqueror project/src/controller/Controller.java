@@ -2,10 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import org.hamcrest.core.IsInstanceOf;
+import java.awt.*;
+import javax.swing.*;
 import units.*;
 import buildings.*;
 import engine.*;
