@@ -33,32 +33,32 @@ public class CityView extends TemplateView implements ActionListener
 		this.currentCity = currentCity;
 	}
 
+	
 
-
 	
 	
 	
-	private JButton barracksButton = new JButton("No Barracks Cost: 2000");
-	private JButton barracksLvlButton = new JButton("Level : 0");
-	private JButton barracksRecruitButton = new JButton("No unit");
+	private JButton barracksButton = new JButton("Build Barracks. Cost: 2000");
+	private JButton barracksLvlButton = new JButton("Build to upgrade.");
+	private JButton barracksRecruitButton = new JButton("Build Barracks to recruit");
 	
 	
-	private JButton archeryRangeButton = new JButton("No ArcheryRange Cost: 1500");
-	private JButton archeryRangeLvlButton = new JButton("Level : 0");
-	private JButton archeryRangeRecruitButton = new JButton("No unit");
+	private JButton archeryRangeButton = new JButton("Build an ArcheryRange. Cost: 1500");
+	private JButton archeryRangeLvlButton = new JButton("Build to upgrade.");
+	private JButton archeryRangeRecruitButton = new JButton("Build an Archeryrange to recruit");
 	
 	
-	private JButton stableButton = new JButton("No Stable Cost: 2500");
-	private JButton stableLvlButton = new JButton("Level : 0");
-	private JButton stableRecruitButton = new JButton("No unit");
+	private JButton stableButton = new JButton("Build a Stable. Cost: 2500");
+	private JButton stableLvlButton = new JButton("Build to upgrade.");
+	private JButton stableRecruitButton = new JButton("Build a Stable to recruit");
 	
 	
-	private JButton marketButton = new JButton("No Market Cost: 1500");
-	private JButton marketLvlButton = new JButton("Level : 0");
+	private JButton marketButton = new JButton("Build a Market. Cost: 1500");
+	private JButton marketLvlButton = new JButton("Build to upgrade.");
 	
 	
-	private JButton farmButton = new JButton("No Farm Cost: 1000");
-	private JButton farmLvlButton = new JButton("Level : 0");
+	private JButton farmButton = new JButton("Build a Farm. Cost: 1000");
+	private JButton farmLvlButton = new JButton("Build to upgrade.");
 	
 	
 	private JLabel fillerLabel = new JLabel("");
@@ -156,12 +156,6 @@ public class CityView extends TemplateView implements ActionListener
 		midPanel.add(fillerLabel);
 		midPanel.add(farmButton);
 		midPanel.add(farmLvlButton);
-		
-		if (currentCity == null)
-		{
-			System.out.println(currentCity);
-			System.out.println("HEY2");
-		}
 		
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
