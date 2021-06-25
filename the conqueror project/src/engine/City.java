@@ -39,15 +39,15 @@ public class City {
 		}
 		for(int i = 0; i<militaryBuildings.size();i++)
 		{
-			if(theBuilding.equalsIgnoreCase("farm")&& militaryBuildings.get(i) instanceof Barracks)
+			if(theBuilding.equalsIgnoreCase("barracks")&& militaryBuildings.get(i) instanceof Barracks)
 			{
 				return (Barracks)militaryBuildings.get(i);
 			}
-			else if (theBuilding.equalsIgnoreCase("market")&& militaryBuildings.get(i) instanceof ArcheryRange)
+			else if (theBuilding.equalsIgnoreCase("archeryrange")&& militaryBuildings.get(i) instanceof ArcheryRange)
 			{
 				return (ArcheryRange)militaryBuildings.get(i);
 			}
-			else if (theBuilding.equalsIgnoreCase("market")&& militaryBuildings.get(i) instanceof Stable)
+			else if (theBuilding.equalsIgnoreCase("stable")&& militaryBuildings.get(i) instanceof Stable)
 			{
 				return (Stable)militaryBuildings.get(i);
 			}
