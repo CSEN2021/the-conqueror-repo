@@ -180,6 +180,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					cityView.getArcheryRangeButton().setText("ArcheryRange Built");
 					cityView.getArcheryRangeLvlButton().setEnabled(true);
 					cityView.getArcheryRangeLvlButton().setText("Level: 1 Cost: 1500");
+					
+					cityView.getArcheryRangeRecruitButton().setEnabled(true);
+					cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: 400");
 					break;
 				}
 				case "Barracks":
@@ -188,6 +191,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					cityView.getBarracksButton().setText("Barracks Built");
 					cityView.getBarracksLvlButton().setText("Level: 1 Cost: 1000");
 					cityView.getBarracksLvlButton().setEnabled(true);
+					
+					cityView.getBarracksRecruitButton().setEnabled(true);
+					cityView.getBarracksRecruitButton().setText("Infantry, Cost: 500");
 					break;
 				}
 				case "Stable":
@@ -196,6 +202,11 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					cityView.getStableButton().setText("Stable Built");
 					cityView.getStableLvlButton().setText("Level: 1 Cost: 1500");
 					cityView.getStableLvlButton().setEnabled(true);
+					
+					
+					
+					cityView.getStableRecruitButton().setEnabled(true);
+					cityView.getStableRecruitButton().setText("Calvary, Cost: 600");
 					break;
 				}
 			}
@@ -267,6 +278,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							currentLevel = Integer
 									.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: " + (((ArcheryRange)(theGame.findCity(currentCityName).findBuilding("ArcheryRange"))).getRecruitmentCost()));
 							if (currentLevel == 3)
 							{
 								cityView.getArcheryRangeLvlButton().setText("Max Level");
@@ -285,9 +297,10 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							;
-							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "")
-									+ 1;
+							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
+							cityView.getBarracksRecruitButton().setText("Infantry, Cost: " + (((Barracks)(theGame.findCity(currentCityName).findBuilding("Infantry"))).getRecruitmentCost()));
+
 							if (currentLevel == 3)
 							{
 								cityView.getBarracksLvlButton().setText("Max Level");
@@ -308,6 +321,8 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							cityView.getStableRecruitButton().setText("Calvary, Cost: " + (((Stable)(theGame.findCity(currentCityName).findBuilding("Stabke"))).getRecruitmentCost()));
+
 							if (currentLevel == 3)
 							{
 								cityView.getStableLvlButton().setText("Max Level");

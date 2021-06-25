@@ -123,6 +123,10 @@ public class CityView extends TemplateView implements ActionListener
 		farmLvlButton.setEnabled(false);
 		marketLvlButton.setEnabled(false);
 		
+		archeryRangeRecruitButton.setEnabled(false);
+		barracksRecruitButton.setEnabled(false);
+		stableRecruitButton.setEnabled(false);
+		
 		// panels
 		midPanel.setLayout(new GridLayout(0, 3));
 		midPanel.setPreferredSize(new Dimension(0, 200));
@@ -157,6 +161,36 @@ public class CityView extends TemplateView implements ActionListener
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 	}
+
+	public JButton getBarracksRecruitButton() {
+		return barracksRecruitButton;
+	}
+
+
+	public void setBarracksRecruitButton(JButton barracksRecruitButton) {
+		this.barracksRecruitButton = barracksRecruitButton;
+	}
+
+
+	public JButton getArcheryRangeRecruitButton() {
+		return archeryRangeRecruitButton;
+	}
+
+
+	public void setArcheryRangeRecruitButton(JButton archeryRangeRecruitButton) {
+		this.archeryRangeRecruitButton = archeryRangeRecruitButton;
+	}
+
+
+	public JButton getStableRecruitButton() {
+		return stableRecruitButton;
+	}
+
+
+	public void setStableRecruitButton(JButton stableRecruitButton) {
+		this.stableRecruitButton = stableRecruitButton;
+	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
