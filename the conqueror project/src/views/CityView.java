@@ -135,9 +135,11 @@ public class CityView extends TemplateView implements ActionListener
 		
 		add(midPanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
-		JLabel testingJLabel = new JLabel("SDSD");
+		
+		
+		JLabel testingJLabel = new JLabel(currentCity.getDefendingArmy().toString());
 		bottomPanel.add(testingJLabel, BorderLayout.NORTH);
-		bottomPanel.setSize(720, 300);
+		bottomPanel.setPreferredSize(new Dimension(720, 200));
 		
 		
 		midPanel.add(archeryRangeButton);
