@@ -1,11 +1,14 @@
 package views;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import engine.*;
@@ -19,6 +22,7 @@ public class InitiateArmyView extends JFrame implements ActionListener
 	private Boolean isChoosingUnit = false;
 	private String choosenCity = null;
 	private JPanel mainPanel = new JPanel();
+	private JLabel chooseLabel = new JLabel("Choose a City to initiate Army from:");
 	private InitiateArmyViewListener listener;
 	
 	public InitiateArmyView (Game theGame, String [] forComboBox)
@@ -27,12 +31,16 @@ public class InitiateArmyView extends JFrame implements ActionListener
 		comboBox.addActionListener(this);
 		comboBox.setPreferredSize(new Dimension(300,20));
 		//theGame.findCity(getName());
-		add(mainPanel);
+		
+		add(chooseLabel,BorderLayout.NORTH);
+		add(mainPanel,BorderLayout.CENTER);
 		mainPanel.add(comboBox);
-		//setSize(new Dimension(400, 200));
+		setIconImage(new ImageIcon("resources/icon.png").getImage());
+		setTitle("Initiate An Army");
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		revalidate();
 	}
 	public void setChoosenCity(String choosenCity)
 	{
@@ -45,6 +53,10 @@ public class InitiateArmyView extends JFrame implements ActionListener
 	public void setIsChoosingUnit(Boolean isChoosingUnit)
 	{
 		this.isChoosingUnit = isChoosingUnit;
+	}
+	public JLabel getChooseLabel()
+	{
+		return chooseLabel;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e)

@@ -13,7 +13,7 @@ import views.*;
 
 public class Controller implements HomeViewListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener
 {
-	private HomeView homeScreen;
+	private StartScreen homeScreen;
 	private WorldMapView worldMapView;
 	private CityView cityView;
 	private Game theGame;
@@ -22,7 +22,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 
 	public Controller()
 	{
-		this.homeScreen = new HomeView();
+		this.homeScreen = new StartScreen();
 		homeScreen.setListener(this);
 	}
 
@@ -34,7 +34,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	}
 
 	@Override
-	public void onStartGame(String playerName, String playerCity, HomeView startScreen)
+	public void onStartGame(String playerName, String playerCity, StartScreen startScreen)
 	{
 		try
 		{
@@ -130,6 +130,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 		initiateArmyView.dispose();
 		initiateArmyView = new InitiateArmyView(theGame, unitsArray);
+		initiateArmyView.getChooseLabel().setText("Choose a Unit to initiate Army with:");
 		initiateArmyView.setIsChoosingUnit(true);
 		initiateArmyView.setListener(this);
 	}

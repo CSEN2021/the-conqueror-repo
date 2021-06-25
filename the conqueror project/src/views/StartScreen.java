@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import listeners.HomeViewListener;
 
-public class HomeView extends JFrame implements ActionListener
+public class StartScreen extends JFrame implements ActionListener
 {
-	private JButton startGame = new JButton("Start Game");
-	private JButton cairoButton = new JButton("Cairo");
-	private JButton romeButton = new JButton("Rome");
-	private JButton spartaButton = new JButton("Sparta");
+	private JToggleButton startGame = new JToggleButton("Start Game");
+	private JToggleButton cairoButton = new JToggleButton("Cairo");
+	private JToggleButton romeButton = new JToggleButton("Rome");
+	private JToggleButton spartaButton = new JToggleButton("Sparta");
 	private String selectedCity = "";
 	private HomeViewListener listener;
 	private JTextField enterYourNameField;
@@ -41,13 +41,23 @@ public class HomeView extends JFrame implements ActionListener
 	{
 		theButton.setIcon(new ImageIcon("resources/" + theButton.getText() + "Image.jpg"));
 		theButton.setPreferredSize(new Dimension(300, 220));
-		theButton.setVerticalTextPosition(JButton.TOP);
-		theButton.setHorizontalTextPosition(JButton.CENTER);
+		theButton.setVerticalTextPosition(JToggleButton.TOP);
+		theButton.setHorizontalTextPosition(JToggleButton.CENTER);
+		theButton.setBackground(Color.LIGHT_GRAY);
+		theButton.addActionListener(this);
+	}
+	
+	public void loadButton(JToggleButton theButton)
+	{
+		theButton.setIcon(new ImageIcon("resources/" + theButton.getText() + "Image.jpg"));
+		theButton.setPreferredSize(new Dimension(300, 220));
+		theButton.setVerticalTextPosition(JToggleButton.TOP);
+		theButton.setHorizontalTextPosition(JToggleButton.CENTER);
 		theButton.setBackground(Color.LIGHT_GRAY);
 		theButton.addActionListener(this);
 	}
 
-	public HomeView()
+	public StartScreen()
 	{
 		// text and labels
 		welcome.setHorizontalAlignment(JLabel.CENTER);
@@ -110,6 +120,21 @@ public class HomeView extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		if(e.getSource() == cairoButton && cairoButton.isSelected())
+		{
+			spartaButton.setSelected(false);
+			romeButton.setSelected(false);
+		}
+		else if(e.getSource() == spartaButton && spartaButton.isSelected())
+		{
+			cairoButton.setSelected(false);
+			romeButton.setSelected(false);
+		}
+		else if(e.getSource() == romeButton && romeButton.isSelected())
+		{
+			cairoButton.setSelected(false);
+			spartaButton.setSelected(false);
+		}
 		if (e.getSource() == startGame)
 		{
 			if (!enterYourNameField.getText().equals("") && !selectedCity.equals(""))
@@ -126,7 +151,7 @@ public class HomeView extends JFrame implements ActionListener
 		}
 		else
 		{
-			selectedCity = ((JButton) e.getSource()).getText();
+			selectedCity = ((JToggleButton) e.getSource()).getText();
 		}
 
 	}

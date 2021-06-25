@@ -1,8 +1,8 @@
 package listeners;
 
-import views.HomeView;
+import views.StartScreen;
 
 public interface HomeViewListener
 {
-	public void onStartGame(String playerName, String playerCity, HomeView startScreen);
+	public void onStartGame(String playerName, String playerCity, StartScreen startScreen);
 }
