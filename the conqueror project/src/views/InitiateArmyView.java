@@ -16,7 +16,8 @@ public class InitiateArmyView extends JFrame implements ActionListener
 {
 	
 	private JComboBox comboBox;
-
+	private Boolean isChoosingUnit = false;
+	private String choosenCity = null;
 	private JPanel mainPanel = new JPanel();
 	private InitiateArmyViewListener listener;
 	
@@ -31,12 +32,27 @@ public class InitiateArmyView extends JFrame implements ActionListener
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
+	public void setChoosenCity(String choosenCity)
+	{
+		this.choosenCity = choosenCity;
+	}
+	public Boolean getIsChoosingUnit()
+	{
+		return isChoosingUnit;
+	}
+	public void setIsChoosingUnit(Boolean isChoosingUnit)
+	{
+		this.isChoosingUnit = isChoosingUnit;
+	}
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if(e.getSource() == comboBox)
+		if(e.getSource() == comboBox && isChoosingUnit == false)
 		{
 			listener.onInitiateCity((String)comboBox.getSelectedItem());
+		}
+		else {
+			listener.onInitiateUnit((String)comboBox.getSelectedItem());
 		}
 		
 	}
