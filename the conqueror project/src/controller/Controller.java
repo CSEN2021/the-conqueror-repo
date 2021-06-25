@@ -321,8 +321,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-							cityView.getStableRecruitButton().setText("Calvary, Cost: " + (((Stable)(theGame.findCity(currentCityName).findBuilding("Stabke"))).getRecruitmentCost()));
-
+							cityView.getStableRecruitButton().setText("Calvary, Cost: " + (((Stable)(theGame.findCity(currentCityName).findBuilding("Stable"))).getRecruitmentCost()));
 							if (currentLevel == 3)
 							{
 								cityView.getStableLvlButton().setText("Max Level");
@@ -380,16 +379,41 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		catch (NotEnoughGoldException notEnoughGoldException)
 		{
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(null, "You don't have enough gold", "Warning", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
 		worldMapView.updateStats(theGame);
 	}
 
-	@Override
-	public void onRecruit()
+	
+	public void onRecruit(String unit)
 	{
 		// TODO Auto-generated method stub
+		try
+		{
+			
+			theGame.getPlayer().recruitUnit(unit, cityView.getCurrentCity().getName());
+			ArrayList<Unit> units = theGame.findCity(cityView.getCurrentCity().getName()).getDefendingArmy().getUnits();
+			for (int i = 0; i < units.size(); i++)
+			{
+				System.out.println("HEEEEEY");
+				System.out.println(units.get(i));
+			}
+			
+		} 
+		catch (BuildingInCoolDownException buildingInCoolDownException)
+		{
+			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning", JOptionPane.ERROR_MESSAGE);
+		}
+		catch (MaxRecruitedException maxRecruitedException) 
+		{
+			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning", JOptionPane.ERROR_MESSAGE);
+		}
+		catch (NotEnoughGoldException notEnoughGoldException) 
+		{
+			
+			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
+		}
 
 	}
 

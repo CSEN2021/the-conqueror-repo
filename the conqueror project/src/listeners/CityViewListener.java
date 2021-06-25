@@ -2,9 +2,9 @@ package listeners;
 
 public interface CityViewListener
 {
-	public void onBuild(String s);
-	public void onUpgrade(String s);
-	public void onRecruit();
+	public void onBuild(String building);
+	public void onUpgrade(String building);
+	public void onRecruit(String unit);
 	
 	
 	
