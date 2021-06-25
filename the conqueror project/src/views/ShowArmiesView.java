@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
@@ -20,28 +21,28 @@ public class ShowArmiesView extends TemplateView implements ActionListener
 	
 	public ShowArmiesView(Game thegame) {
 		super(thegame);
-		JTextArea armyJTextArea;
+		JButton armyButton;
 		JPanel midPanel = new JPanel();
 		
 		ArrayList<Army> controlledArmies = thegame.getPlayer().getControlledArmies();
 		for (int i = 0; i < controlledArmies.size(); i++)
 		{
 			Army army = controlledArmies.get(i);
-			armyJTextArea = new JTextArea("Army " + (i + 1) + '\n' + army.toString());
-			armyJTextArea.setAlignmentX(CENTER_ALIGNMENT);
-			armyJTextArea.setAlignmentY(CENTER_ALIGNMENT);
+			armyButton = new JButton("Army " + (i + 1) + '\n' + army.toString());
+			armyButton.setAlignmentX(CENTER_ALIGNMENT);
+			armyButton.setAlignmentY(CENTER_ALIGNMENT);
 			
 			
-			armyJTextArea.setPreferredSize(new Dimension(150,100));
-			armyJTextArea.setBackground(Color.LIGHT_GRAY);
-			midPanel.add(armyJTextArea);
+			armyButton.setPreferredSize(new Dimension(150,100));
+			armyButton.setBackground(Color.LIGHT_GRAY);
+			midPanel.add(armyButton);
 		}
 		this.add(midPanel, BorderLayout.CENTER);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		int indexOfArmy = ((JButton) e.getSource()).getText().charAt(6) - 1;
 		
 	}
 	

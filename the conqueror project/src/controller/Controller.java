@@ -76,6 +76,21 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			cityView.updateStats(theGame);
 		}
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
+		
+		if (cityView.getCurrentCity().getName().equals("Cairo"))
+		{
+			cityView.getCityIcon().setIcon(new ImageIcon("resources/Archer.png"));
+		}
+		else if (cityView.getCurrentCity().getName().equals("Roma"))
+		{
+			cityView.getCityIcon().setIcon(new ImageIcon("resources/Archer.png"));
+		}
+		else 
+		{
+			cityView.getCityIcon().setIcon(new ImageIcon("resources/Archer.png"));
+		}
+		System.out.println(cityView.getCityIcon().getSize());
+		
 		cityView.drawDefendingArmy();
 		cityView.setListener(this);
 		
