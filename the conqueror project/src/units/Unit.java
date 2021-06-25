@@ -62,6 +62,11 @@ public abstract class Unit
 
 	abstract public double calcFactor(Unit target);
 
+	public String toString()
+	{
+		return "";
+	}
+	
 	// getters and setters
 	public int getCurrentSoldierCount()
 	{
