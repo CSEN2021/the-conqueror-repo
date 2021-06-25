@@ -75,7 +75,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		
 		armyTextArea.setBackground(new Color(0x3E4149));
 		armyTextArea.setForeground(Color.white);
-		armyTextArea.setPreferredSize(new Dimension(300,720));
+		armyTextArea.setPreferredSize(new Dimension(350,720));
 		
 		
 		// panels
@@ -111,7 +111,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
 			armyTextArea.setText("Controlled Armies :" +
-					'\n' + theGame.getPlayer().getControlledArmies().get(i));
+					'\n' + theGame.getPlayer().getControlledArmies().toString());
 		}
 		repaint();
 	}
