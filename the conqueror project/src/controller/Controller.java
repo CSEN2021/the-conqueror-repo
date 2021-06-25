@@ -91,6 +91,37 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		initiateArmyView.setListener(this);
 		//theGame.getPlayer().initiateArmy(city, unit);
 	}
+	@Override
+	public void onInitiateCity(String cityName)
+	{
+		theGame.findCity(cityName).getDefendingArmy().getUnits().add(Archer.create("3"));
+		ArrayList<Unit> units = theGame.findCity(cityName).getDefendingArmy().getUnits();
+		String [] unitsArray = new String [units.size()];
+		for(int i = 0; i < units.size(); i++)
+		{
+			if(units.get(i) instanceof Archer )
+			{
+				unitsArray[i] = "Archer "+units.get(i).getLevel();
+			}
+			else if(units.get(i) instanceof Infantry )
+			{
+				unitsArray[i] = "Infantry "+units.get(i).getLevel();
+			}
+			else 
+			{
+				unitsArray[i] = "Cavalry "+units.get(i).getLevel();
+			}
+		}
+		initiateArmyView.dispose();
+		initiateArmyView = new InitiateArmyView(theGame,unitsArray);
+	}
+
+	@Override
+	public void onInitiateUnit(String unitToBeInitiated)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void onRelocateUnit(JButton openedButton)
@@ -147,37 +178,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 
 	
 
-	@Override
-	public void onInitiateCity(String cityName)
-	{
-		theGame.findCity(cityName).getDefendingArmy().getUnits().add(Archer.create("3"));
-		ArrayList<Unit> units = theGame.findCity(cityName).getDefendingArmy().getUnits();
-		String [] unitsArray = new String [units.size()];
-		for(int i = 0; i < units.size(); i++)
-		{
-			if(units.get(i) instanceof Archer )
-			{
-				unitsArray[i] = "Archer "+units.get(i).getLevel();
-			}
-			else if(units.get(i) instanceof Infantry )
-			{
-				unitsArray[i] = "Infantry "+units.get(i).getLevel();
-			}
-			else 
-			{
-				unitsArray[i] = "Cavalry "+units.get(i).getLevel();
-			}
-		}
-		initiateArmyView.dispose();
-		initiateArmyView = new InitiateArmyView(theGame,unitsArray);
-	}
-
-	@Override
-	public void onInitiateUnit()
-	{
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 }
