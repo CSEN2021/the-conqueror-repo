@@ -11,7 +11,7 @@ import exceptions.*;
 import listeners.*;
 import views.*;
 
-public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener, RelocateUnitListener
+public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowArmiesViewListener
 {
 	// Main Method
 	public static void main(String[] args)
@@ -481,11 +481,18 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
+	
 	public void onShowDefendingArmy() {
 		// TODO Auto-generated method stub
 		
 		new ShowArmyView(theGame, cityView.getCurrentCity());
 		
+	}
+
+	@Override
+	public void onShowArmies() {
+		// TODO Auto-generated method stub
+		new ShowArmiesView(theGame);
 	}
 
 }

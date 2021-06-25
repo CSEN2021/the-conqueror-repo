@@ -32,6 +32,8 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JPanel midPanel = new JPanel();
 	private JPanel rightPanel = new JPanel();
 	private JTextArea armyTextArea = new JTextArea("Controlled Armies :\n");
+	
+	private JButton showArmiesButton = new JButton("Show Armies");
 
 	public void paint(Graphics g)
 	{
@@ -64,6 +66,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		targetButton.addActionListener(this);
 		initiateArmyButton.addActionListener(this);
 		reloacteButton.addActionListener(this);
+		showArmiesButton.addActionListener(this);
 		
 		setUpButton(endTurnButton);
 		setUpButton(romeButton);
@@ -72,6 +75,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		setUpButton(targetButton);
 		setUpButton(reloacteButton);
 		setUpButton(initiateArmyButton);
+		setUpButton(showArmiesButton);
 		
 		armyTextArea.setBackground(new Color(0x3E4149));
 		armyTextArea.setForeground(Color.white);
@@ -90,6 +94,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 
 		bottomPanel.add(initiateArmyButton);
 		bottomPanel.add(reloacteButton);
+		bottomPanel.add(showArmiesButton);
 		bottomPanel.add(targetButton);
 		bottomPanel.add(endTurnButton);
 
@@ -154,6 +159,10 @@ public class WorldMapView extends TemplateView implements ActionListener
 		else if (e.getSource() == reloacteButton)
 		{
 			listener.onRelocateUnit();
+		}
+		else if (e.getSource() == showArmiesButton)
+		{
+			listener.onShowArmies();
 		}
 
 	}

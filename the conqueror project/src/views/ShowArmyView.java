@@ -42,6 +42,11 @@ public class ShowArmyView extends TemplateView implements ActionListener
 		}
 		this.add(midPanel, BorderLayout.CENTER);
 	}
+	
+	public ShowArmyView(Game theGame, int indexOfArmy)
+	{
+		super(theGame);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
