@@ -2,10 +2,8 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JComboBox;
-import org.hamcrest.core.IsInstanceOf;
+import java.awt.*;
+import javax.swing.*;
 import units.*;
 import buildings.*;
 import engine.*;
@@ -31,7 +29,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	public static void main(String[] args)
 	{
 		new Controller();
-		
+
 		// new Game(null, null);
 	}
 
@@ -86,11 +84,13 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onInitiate()
 	{
-		String[] cities =
-		{ "Cairo", "Sparta", "Rome" };
+		String[] cities = new String [theGame.getPlayer().getControlledCities().size()];
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
+			cities[i] = theGame.getPlayer().getControlledCities().get(i).getName();
+		}
 		initiateArmyView = new InitiateArmyView(theGame, cities);
 		initiateArmyView.setListener(this);
-		// theGame.getPlayer().initiateArmy(city, unit);
 	}
 
 	@Override
@@ -130,21 +130,22 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		if (unitToBeInitiated.length() == 8) // archer
 		{
 			nameSearch = unitToBeInitiated.substring(0, 6);
-			levelSearch = Integer.parseInt(""+unitToBeInitiated.charAt(7));
+			levelSearch = Integer.parseInt("" + unitToBeInitiated.charAt(7));
 		}
 		else if (unitToBeInitiated.length() == 10) // infantry
 		{
 			nameSearch = unitToBeInitiated.substring(0, 8);
-			levelSearch = Integer.parseInt(""+unitToBeInitiated.charAt(9));
+			levelSearch = Integer.parseInt("" + unitToBeInitiated.charAt(9));
 		}
 		else // cavalry
 		{
-			nameSearch =unitToBeInitiated.substring(0, 7);
-			levelSearch = Integer.parseInt(""+unitToBeInitiated.charAt(8));
+			nameSearch = unitToBeInitiated.substring(0, 7);
+			levelSearch = Integer.parseInt("" + unitToBeInitiated.charAt(8));
 		}
 		actualUnitToInitiate = armyInitiationCity.getDefendingArmy().findUnit(nameSearch, levelSearch);
 		theGame.getPlayer().initiateArmy(armyInitiationCity, actualUnitToInitiate);
 		worldMapView.updateControlledArmies(theGame);
+		initiateArmyView.dispose();
 	}
 
 	@Override
@@ -184,7 +185,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					cityView.getArcheryRangeButton().setText("ArcheryRange Built");
 					cityView.getArcheryRangeLvlButton().setEnabled(true);
 					cityView.getArcheryRangeLvlButton().setText("Level: 1 Cost: 1500");
-					
+
 					cityView.getArcheryRangeRecruitButton().setEnabled(true);
 					cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: 400");
 					break;
@@ -195,7 +196,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					cityView.getBarracksButton().setText("Barracks Built");
 					cityView.getBarracksLvlButton().setText("Level: 1 Cost: 1000");
 					cityView.getBarracksLvlButton().setEnabled(true);
-					
+
 					cityView.getBarracksRecruitButton().setEnabled(true);
 					cityView.getBarracksRecruitButton().setText("Infantry, Cost: 500");
 					break;
@@ -206,9 +207,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					cityView.getStableButton().setText("Stable Built");
 					cityView.getStableLvlButton().setText("Level: 1 Cost: 1500");
 					cityView.getStableLvlButton().setEnabled(true);
-					
-					
-					
+
 					cityView.getStableRecruitButton().setEnabled(true);
 					cityView.getStableRecruitButton().setText("Calvary, Cost: 600");
 					break;
@@ -281,7 +280,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							currentLevel = Integer
 									.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-							cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: " + (((ArcheryRange)(theGame.findCity(currentCityName).findBuilding("ArcheryRange"))).getRecruitmentCost()));
+							cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: "
+									+ (((ArcheryRange) (theGame.findCity(currentCityName).findBuilding("ArcheryRange")))
+											.getRecruitmentCost()));
 							if (currentLevel == 3)
 							{
 								cityView.getArcheryRangeLvlButton().setText("Max Level");
@@ -300,9 +301,13 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							;
-							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
+							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "")
+									+ 1;
 							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
-							cityView.getBarracksRecruitButton().setText("Infantry, Cost: " + (((Barracks)(theGame.findCity(currentCityName).findBuilding("Infantry"))).getRecruitmentCost()));
+							cityView.getBarracksRecruitButton()
+									.setText("Infantry, Cost: "
+											+ (((Barracks) (theGame.findCity(currentCityName).findBuilding("Infantry")))
+													.getRecruitmentCost()));
 
 							if (currentLevel == 3)
 							{
@@ -324,7 +329,10 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-							cityView.getStableRecruitButton().setText("Calvary, Cost: " + (((Stable)(theGame.findCity(currentCityName).findBuilding("Stable"))).getRecruitmentCost()));
+							cityView.getStableRecruitButton()
+									.setText("Calvary, Cost: "
+											+ (((Stable) (theGame.findCity(currentCityName).findBuilding("Stable")))
+													.getRecruitmentCost()));
 							if (currentLevel == 3)
 							{
 								cityView.getStableLvlButton().setText("Max Level");
@@ -388,20 +396,19 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		worldMapView.updateStats(theGame);
 	}
 
-	
 	public void onRecruit(String unit)
 	{
 		try
 		{
 			theGame.getPlayer().recruitUnit(unit, cityView.getCurrentCity().getName());
-		} 
+		}
 		catch (BuildingInCoolDownException buildingInCoolDownException)
 		{
 			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
-		catch (MaxRecruitedException maxRecruitedException) 
+		catch (MaxRecruitedException maxRecruitedException)
 		{
-			switch (unit) 
+			switch (unit)
 			{
 				case "Archer":
 				{
@@ -419,14 +426,13 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					break;
 				}
 			}
-			
-			
-			
-			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning", JOptionPane.ERROR_MESSAGE);
+
+			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		catch (NotEnoughGoldException notEnoughGoldException) 
+		catch (NotEnoughGoldException notEnoughGoldException)
 		{
-			
+
 			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 

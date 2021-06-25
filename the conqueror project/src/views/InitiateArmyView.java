@@ -25,10 +25,12 @@ public class InitiateArmyView extends JFrame implements ActionListener
 	{
 		comboBox = new JComboBox(forComboBox);
 		comboBox.addActionListener(this);
+		comboBox.setPreferredSize(new Dimension(300,20));
 		//theGame.findCity(getName());
 		add(mainPanel);
 		mainPanel.add(comboBox);
-		setSize(new Dimension(400, 200));
+		//setSize(new Dimension(400, 200));
+		pack();
 		setVisible(true);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
