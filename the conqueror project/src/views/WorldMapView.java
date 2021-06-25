@@ -111,7 +111,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
 			armyTextArea.setText("Controlled Armies :" +
-					'\n' + theGame.getPlayer().getControlledArmies().toString());
+					'\n' +"" +theGame.getPlayer().getControlledArmies().toString());
 		}
 		repaint();
 	}
