@@ -104,8 +104,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onTargetCity(JButton openedButton)
 	{
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
