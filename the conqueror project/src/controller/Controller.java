@@ -1,21 +1,20 @@
 package controller;
 
-import units.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 
 import org.hamcrest.core.IsInstanceOf;
 
 import units.*;
-import buildings.Building;
-import buildings.Farm;
-import engine.City;
-import engine.Game;
-import engine.Player;
-import exceptions.NotEnoughGoldException;
+import units.*;
+import buildings.*;
+import engine.*;
+import exceptions.*;
 import listeners.*;
 import views.*;
 
@@ -63,10 +62,17 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onOpenCity(JButton openedButton)
 	{
-		cityView = new CityView(theGame);
+		if (cityView == null)
+		{
+			cityView = new CityView(theGame);
+		}
+		else 
+		{
+			cityView.setVisible(true);
+		}
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
 		cityView.setListener(this);
-		System.out.println(cityView.getCurrentCity().getName());
+		
 	}
 
 	@Override
@@ -74,6 +80,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	{
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
+		cityView.getBarracksLvlLabel().setEnabled(true);
 	}
 
 	@Override
@@ -140,13 +147,77 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println();
-		
 	}
 
-	@Override
-	public void onUpgrade() {
+	
+	public void onUpgrade(String stringBuildling) {
 		// TODO Auto-generated method stub
+		String currentCityName = cityView.getCurrentCity().getName();
+		ArrayList<EconomicBuilding> economicBuildings = theGame.findCity(currentCityName).getEconomicalBuildings();
+		ArrayList<MilitaryBuilding> militaryBuildings = theGame.findCity(currentCityName).getMilitaryBuildings();
+		try {
+			
+			switch (stringBuildling) {
+			case "Farm": {	
+				for (int i = 0; i < economicBuildings.size(); i++)
+				{
+					if (economicBuildings.get(i) instanceof Farm)
+					{
+						economicBuildings.get(i).upgrade();
+						break;
+					}
+				}
+				
+			}
+			case "Market": {	
+				for (int i = 0; i < economicBuildings.size(); i++)
+				{
+					if (economicBuildings.get(i) instanceof Market)
+					{
+						economicBuildings.get(i).upgrade();
+						break;
+					}
+				}
+				
+			}
+			case "ArcheryRange": {	
+				for (int i = 0; i < militaryBuildings.size(); i++)
+				{
+					if (militaryBuildings.get(i) instanceof ArcheryRange)
+					{
+						militaryBuildings.get(i).upgrade();
+						break;
+					}
+				}
+				
+			}
+			case "Barracks": {	
+				for (int i = 0; i < militaryBuildings.size(); i++)
+				{
+					if (militaryBuildings.get(i) instanceof Barracks)
+					{
+						militaryBuildings.get(i).upgrade();
+						break;
+					}
+				}
+				
+			}
+			case "Stable": {	
+				for (int i = 0; i < militaryBuildings.size(); i++)
+				{
+					if (militaryBuildings.get(i) instanceof Stable)
+					{
+						militaryBuildings.get(i).upgrade();
+						break;
+					}
+				}
+				
+			}
+		}
+		} catch (Exception e) {
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(null, "please enter a name & select a city","Warning", JOptionPane.ERROR_MESSAGE);
+		}
 		
 	}
 
@@ -155,26 +226,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public void onSelectBuilding() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onSelectLevel() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onSelectUnit() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	
 
 	
 
