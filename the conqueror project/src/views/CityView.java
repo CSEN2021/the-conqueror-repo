@@ -193,45 +193,127 @@ public class CityView extends TemplateView implements ActionListener
 			marketLvlButton.setEnabled(true);
 			
 		}
-		int currentLevel;
 		if (e.getSource() == marketLvlButton)
 		{
 			listener.onUpgrade("Market");
-			currentLevel = Integer.parseInt(marketLvlButton.getText().charAt(7) + "") + 1;
-			marketLvlButton.setText("Level: " + currentLevel);
-			marketLvlButton.setEnabled(false);
 		}
 		else if (e.getSource() == farmLvlButton)
 		{
 			listener.onUpgrade("Farm");
-			currentLevel = Integer.parseInt(farmLvlButton.getText().charAt(7) + "") + 1;
-			farmLvlButton.setText("Level: " + currentLevel);
-			farmLvlButton.setEnabled(false);
 		}
 		else if (e.getSource() == stableLvlButton)
 		{
 			listener.onUpgrade("Stable");
-			currentLevel = Integer.parseInt(stableLvlButton.getText().charAt(7) + "") + 1;
-			stableLvlButton.setText("Level: " + currentLevel);
-			stableLvlButton.setEnabled(false);
 		}
 		else if (e.getSource() == barracksLvlButton)
 		{
-			listener.onUpgrade("Barracks");
-			currentLevel = Integer.parseInt(barracksLvlButton.getText().charAt(7) + "") + 1;
-			barracksLvlButton.setText("Level: " + currentLevel );
-			barracksLvlButton.setEnabled(false);
+			listener.onUpgrade("Barracks");		
 		}
 		else if (e.getSource() == archeryRangeLvlButton)
 		{
 			listener.onUpgrade("ArcheryRange");
-			currentLevel = Integer.parseInt(archeryRangeLvlButton.getText().charAt(7) + "") + 1;
-			archeryRangeLvlButton.setText("Level: " + currentLevel);
-			archeryRangeLvlButton.setEnabled(false);
-		}
-		
-		
+		}	
 	}
+
+	public JButton getBarracksButton() {
+		return barracksButton;
+	}
+
+
+	public void setBarracksButton(JButton barracksButton) {
+		this.barracksButton = barracksButton;
+	}
+
+
+	public JButton getBarracksLvlButton() {
+		return barracksLvlButton;
+	}
+
+
+	public void setBarracksLvlButton(JButton barracksLvlButton) {
+		this.barracksLvlButton = barracksLvlButton;
+	}
+
+
+	public JButton getArcheryRangeButton() {
+		return archeryRangeButton;
+	}
+
+
+	public void setArcheryRangeButton(JButton archeryRangeButton) {
+		this.archeryRangeButton = archeryRangeButton;
+	}
+
+
+	public JButton getArcheryRangeLvlButton() {
+		return archeryRangeLvlButton;
+	}
+
+
+	public void setArcheryRangeLvlButton(JButton archeryRangeLvlButton) {
+		this.archeryRangeLvlButton = archeryRangeLvlButton;
+	}
+
+
+	public JButton getStableButton() {
+		return stableButton;
+	}
+
+
+	public void setStableButton(JButton stableButton) {
+		this.stableButton = stableButton;
+	}
+
+
+	public JButton getStableLvlButton() {
+		return stableLvlButton;
+	}
+
+
+	public void setStableLvlButton(JButton stableLvlButton) {
+		this.stableLvlButton = stableLvlButton;
+	}
+
+
+	public JButton getMarketButton() {
+		return marketButton;
+	}
+
+
+	public void setMarketButton(JButton marketButton) {
+		this.marketButton = marketButton;
+	}
+
+
+	public JButton getMarketLvlButton() {
+		return marketLvlButton;
+	}
+
+
+	public void setMarketLvlButton(JButton marketLvlButton) {
+		this.marketLvlButton = marketLvlButton;
+	}
+
+
+	public JButton getFarmButton() {
+		return farmButton;
+	}
+
+
+	public void setFarmButton(JButton farmButton) {
+		this.farmButton = farmButton;
+	}
+
+
+	public JButton getFarmLvlButton() {
+		return farmLvlButton;
+	}
+
+
+	public void setFarmLvlButton(JButton farmLvlButton) {
+		this.farmLvlButton = farmLvlButton;
+	}
+
 
 	public CityViewListener getListener() {
 		return listener;

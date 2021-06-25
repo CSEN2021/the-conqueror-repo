@@ -164,7 +164,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		ArrayList<MilitaryBuilding> militaryBuildings = theGame.findCity(currentCityName).getMilitaryBuildings();
 		try
 		{
-
+			int currentLevel;
 			switch (stringBuildling)
 			{
 				case "Farm":
@@ -174,6 +174,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						if (economicBuildings.get(i) instanceof Farm)
 						{
 							economicBuildings.get(i).upgrade();
+							currentLevel = Integer.parseInt(cityView.getFarmLvlButton().getText().charAt(7) + "") + 1;
+							cityView.getFarmLvlButton().setText("Level: " + currentLevel);
+							cityView.getFarmButton().setEnabled(false);
 							break;
 						}
 					}
@@ -186,6 +189,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						if (economicBuildings.get(i) instanceof Market)
 						{
 							economicBuildings.get(i).upgrade();
+							currentLevel = Integer.parseInt(cityView.getMarketLvlLabel().getText().charAt(7) + "") + 1;
+							cityView.getMarketLvlButton().setText("Level: " + currentLevel);
+							cityView.getMarketButton().setEnabled(false);
 							break;
 						}
 					}
@@ -198,6 +204,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						if (militaryBuildings.get(i) instanceof ArcheryRange)
 						{
 							militaryBuildings.get(i).upgrade();
+							currentLevel = Integer.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
+							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel);
+							cityView.getArcheryRangeLvlButton().setEnabled(false);
 							break;
 						}
 					}
@@ -210,6 +219,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						if (militaryBuildings.get(i) instanceof Barracks)
 						{
 							militaryBuildings.get(i).upgrade();
+							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
+							cityView.getBarracksLvlButton().setText("Level: " + currentLevel );
+							cityView.getBarracksButton().setEnabled(false);
 							break;
 						}
 					}
@@ -222,18 +234,27 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						if (militaryBuildings.get(i) instanceof Stable)
 						{
 							militaryBuildings.get(i).upgrade();
+							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
+							cityView.getStableLvlButton().setText("Level: " + currentLevel);
+							cityView.getStableButton().setEnabled(false);
 							break;
 						}
 					}
 
 				}
+				
 			}
 
 		}
-		catch (Exception e)
+		catch (MaxLevelException maxLevelException)
 		{
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(null, "please enter a name & select a city", "Warning",
+			JOptionPane.showMessageDialog(null, "You have reached the max level. You can't upgrade.", "Warning",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		catch(BuildingInCoolDownException bInCoolDownException)
+		{
+			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning",
 					JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
