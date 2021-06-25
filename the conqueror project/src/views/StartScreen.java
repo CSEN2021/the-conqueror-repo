@@ -53,7 +53,8 @@ public class StartScreen extends JFrame implements ActionListener
 		theButton.setPreferredSize(new Dimension(300, 220));
 		theButton.setVerticalTextPosition(JToggleButton.TOP);
 		theButton.setHorizontalTextPosition(JToggleButton.CENTER);
-		theButton.setBackground(Color.LIGHT_GRAY);
+		theButton.setBackground(Color.DARK_GRAY);
+		theButton.setForeground(Color.white);
 		theButton.addActionListener(this);
 	}
 
@@ -137,7 +138,7 @@ public class StartScreen extends JFrame implements ActionListener
 		}
 		if (e.getSource() == startGame)
 		{
-			if (!enterYourNameField.getText().equals("") && !selectedCity.equals(""))
+			if (!enterYourNameField.getText().equals("") && !selectedCity.equals("") && (romeButton.isSelected()||spartaButton.isSelected()||cairoButton.isSelected()))
 			{
 				listener.onStartGame(enterYourNameField.getText(), selectedCity, this);
 				startGame.setEnabled(false);
