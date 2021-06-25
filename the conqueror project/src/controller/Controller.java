@@ -143,6 +143,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		
 		relocateUnitView = new RelocateUnitView(theGame, armiesToRelocate);
 		relocateUnitView.setListener(this);
+		relocateUnitView.getChooseLabel().setText("Choose an Army to relocate from :");
 	}
 
 	// InitiateArmyView listeners
@@ -504,6 +505,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		relocateUnitView = new RelocateUnitView(theGame, unitsToRelocateFrom);
 		relocateUnitView.setStageOfRelocation(1);
 		relocateUnitView.setListener(this);
+		relocateUnitView.getChooseLabel().setText("Choose a Unit to relocate :");
 	}
 
 	@Override
@@ -526,6 +528,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		relocateUnitView = new RelocateUnitView(theGame, armiesToRelocate);
 		relocateUnitView.setStageOfRelocation(2);
 		relocateUnitView.setListener(this);
+		relocateUnitView.getChooseLabel().setText("Choose an Army to Send the Unit to :");
 	}
 
 	@Override
