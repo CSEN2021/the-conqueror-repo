@@ -34,9 +34,7 @@ public class CityView extends TemplateView implements ActionListener
 
 
 
-	private JLabel buildLabel = new JLabel("Click to Build");
-	private JLabel upgradeLabel = new JLabel("Click to Upgrade");
-	private JLabel recruitLabel = new JLabel("Click to Recruit");
+	
 	
 	
 	private JButton barracksButton = new JButton("No Barracks Cost: 2000");
@@ -67,7 +65,7 @@ public class CityView extends TemplateView implements ActionListener
 	private JPanel bottomPanel = new JPanel(new BorderLayout());
 	private JPanel fillerPanel = new JPanel();
 	
-	
+	private JPanel infoPanel =  new JPanel();
 	
 	
 	
@@ -85,9 +83,7 @@ public class CityView extends TemplateView implements ActionListener
 		super(theGame);
 		
 		// components
-		setUpLabel(upgradeLabel);
-		setUpLabel(buildLabel);
-		setUpLabel(recruitLabel);
+		
 
 		setUpButton(archeryRangeButton);
 		setUpButton(archeryRangeLvlButton);
@@ -139,10 +135,10 @@ public class CityView extends TemplateView implements ActionListener
 		
 		add(midPanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
+		JLabel testingJLabel = new JLabel("SDSD");
+		bottomPanel.add(testingJLabel, BorderLayout.NORTH);
+		bottomPanel.setSize(720, 300);
 		
-		midPanel.add(buildLabel);
-		midPanel.add(upgradeLabel);
-		midPanel.add(recruitLabel);
 		
 		midPanel.add(archeryRangeButton);
 		midPanel.add(archeryRangeLvlButton);
