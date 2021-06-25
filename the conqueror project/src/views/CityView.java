@@ -34,21 +34,21 @@ public class CityView extends TemplateView implements ActionListener
 
 
 
-	private JButton buildButton = new JButton("Build");
-	private JButton upgradeButton = new JButton("Upgrade");
-	private JButton recruitButton = new JButton("Recruit Button");
-	private JButton barracksLabel = new JButton("No Barracks");
-	private JButton baracksLvlLabel = new JButton("Level : 0");
-	private JButton baracksRecruitLabel = new JButton("No unit");
-	private JButton archeryRangeLabel = new JButton("No ArcheryRange");
+	private JLabel buildButton = new JLabel("Click to Build");
+	private JLabel upgradeButton = new JLabel("Click to Upgrade");
+	private JLabel recruitButton = new JLabel("Click to Recruit");
+	private JButton barracksLabel = new JButton("No Barracks\n Click to build");
+	private JButton barracksLvlLabel = new JButton("Level : 0");
+	private JButton barracksRecruitLabel = new JButton("No unit");
+	private JButton archeryRangeLabel = new JButton("No ArcheryRange\n Click to build");
 	private JButton archeryRangeLvllLabel = new JButton("Level : 0");
 	private JButton archeryRangeRecruitLabel = new JButton("No unit");
-	private JButton stableLabel = new JButton("No Stable");
+	private JButton stableLabel = new JButton("No Stable\n Click to build");
 	private JButton stableLvlLabel = new JButton("Level : 0");
 	private JButton stableRecruitLabel = new JButton("No unit");
-	private JButton marketLabel = new JButton("No Market");
+	private JButton marketLabel = new JButton("No Market\n Click to build");
 	private JButton marketLvlLabel = new JButton("Level : 0");
-	private JButton farmLabel = new JButton("No Farm");
+	private JButton farmLabel = new JButton("No Farm\n Click to build");
 	private JButton farmLvlLabel = new JButton("Level : 0");
 	private JLabel fillerLabel = new JLabel("");
 	private JPanel midPanel = new JPanel();
@@ -73,16 +73,16 @@ public class CityView extends TemplateView implements ActionListener
 		super(theGame);
 		
 		// components
-		setUpButton(upgradeButton);
-		setUpButton(buildButton);
-		setUpButton(recruitButton);
+		setUpLabel(upgradeButton);
+		setUpLabel(buildButton);
+		setUpLabel(recruitButton);
 
 		setUpButton(archeryRangeLabel);
 		setUpButton(archeryRangeLvllLabel);
 		setUpButton(archeryRangeRecruitLabel);
 		setUpButton(barracksLabel);
-		setUpButton(baracksLvlLabel);
-		setUpButton(baracksRecruitLabel);
+		setUpButton(barracksLvlLabel);
+		setUpButton(barracksRecruitLabel);
 		setUpButton(stableLabel);
 		setUpButton(stableLvlLabel);
 		setUpButton(stableRecruitLabel);
@@ -91,11 +91,25 @@ public class CityView extends TemplateView implements ActionListener
 		setUpButton(farmLabel);
 		setUpButton(farmLvlLabel);
 		
-		//Icons
+		//adding listeners
 		
+		archeryRangeLabel.addActionListener(this);
+		stableLabel.addActionListener(this);
+		barracksLabel.addActionListener(this);
+		farmLabel.addActionListener(this);
+		marketLabel.addActionListener(this);	
 		
+		archeryRangeLvllLabel.addActionListener(this);
+		stableLvlLabel.addActionListener(this);
+		barracksLvlLabel.addActionListener(this);
+		farmLvlLabel.addActionListener(this);
+		marketLvlLabel.addActionListener(this);
 		
-		
+		archeryRangeLvllLabel.setEnabled(false);
+		stableLvlLabel.setEnabled(false);
+		barracksLvlLabel.setEnabled(false);
+		farmLvlLabel.setEnabled(false);
+		marketLvlLabel.setEnabled(false);
 		
 		// panels
 		midPanel.setLayout(new GridLayout(0, 3));
@@ -114,8 +128,8 @@ public class CityView extends TemplateView implements ActionListener
 		midPanel.add(archeryRangeLvllLabel);
 		midPanel.add(archeryRangeRecruitLabel);
 		midPanel.add(barracksLabel);
-		midPanel.add(baracksLvlLabel);
-		midPanel.add(baracksRecruitLabel);
+		midPanel.add(barracksLvlLabel);
+		midPanel.add(barracksRecruitLabel);
 		midPanel.add(stableLabel);
 		midPanel.add(stableLvlLabel);
 		midPanel.add(stableRecruitLabel);
@@ -126,6 +140,10 @@ public class CityView extends TemplateView implements ActionListener
 		midPanel.add(farmLabel);
 		midPanel.add(farmLvlLabel);
 		
+		
+		
+		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
 	}
 
 	@Override
@@ -135,23 +153,79 @@ public class CityView extends TemplateView implements ActionListener
 		if (e.getSource() == archeryRangeLabel)
 		{
 			listener.onBuild("ArcheryRange");
+			archeryRangeLabel.setEnabled(false);
+			archeryRangeLabel.setText("ArcheryRange Built");
+			archeryRangeLvllLabel.setEnabled(true);
+			archeryRangeLvllLabel.setText("Level: 1");
 		}
 		else if (e.getSource() == barracksLabel)
 		{
 			listener.onBuild("Barracks");
+			barracksLabel.setEnabled(false);
+			barracksLabel.setText("Barracks Built");
+			barracksLvlLabel.setText("Level: 1");
+			barracksLvlLabel.setEnabled(true);
 		}
 		else if (e.getSource() == stableLabel)
 		{
 			listener.onBuild("Stable");
+			stableLabel.setEnabled(false);	
+			stableLabel.setText("Stable Built");
+			stableLvlLabel.setText("Level: 1");
+			stableLvlLabel.setEnabled(true);
 		}
 		else if (e.getSource() == farmLabel)
 		{
 			listener.onBuild("Farm");
+			farmLabel.setEnabled(false);
+			farmLabel.setText("Farm Built");
+			farmLvlLabel.setText("Level: 1");
+			farmLvlLabel.setEnabled(true);
 		}
 		else if (e.getSource() == marketLabel)
 		{
 			listener.onBuild("Market");
-				
+			marketLabel.setEnabled(false);
+			marketLabel.setText("Market Built");
+			marketLvlLabel.setText("Level: 1");
+			marketLvlLabel.setEnabled(true);
+			
+		}
+		int currentLevel;
+		if (e.getSource() == marketLvlLabel)
+		{
+			listener.onUpgrade("Market");
+			currentLevel = Integer.parseInt(marketLvlLabel.getText().charAt(7) + "") + 1;
+			marketLvlLabel.setText("Level: " + currentLevel);
+			marketLvlLabel.setEnabled(false);
+		}
+		else if (e.getSource() == farmLvlLabel)
+		{
+			listener.onUpgrade("Farm");
+			currentLevel = Integer.parseInt(farmLvlLabel.getText().charAt(7) + "") + 1;
+			farmLvlLabel.setText("Level: " + currentLevel);
+			farmLvlLabel.setEnabled(false);
+		}
+		else if (e.getSource() == stableLvlLabel)
+		{
+			listener.onUpgrade("Stable");
+			currentLevel = Integer.parseInt(stableLvlLabel.getText().charAt(7) + "") + 1;
+			stableLvlLabel.setText("Level: " + currentLevel);
+			stableLvlLabel.setEnabled(false);
+		}
+		else if (e.getSource() == barracksLvlLabel)
+		{
+			listener.onUpgrade("Barracks");
+			currentLevel = Integer.parseInt(barracksLvlLabel.getText().charAt(7) + "") + 1;
+			barracksLvlLabel.setText("Level: " + currentLevel );
+			barracksLvlLabel.setEnabled(false);
+		}
+		else if (e.getSource() == archeryRangeLvllLabel)
+		{
+			listener.onUpgrade("ArcheryRange");
+			currentLevel = Integer.parseInt(archeryRangeLvllLabel.getText().charAt(7) + "") + 1;
+			archeryRangeLvllLabel.setText("Level: " + currentLevel);
+			archeryRangeLvllLabel.setEnabled(false);
 		}
 		
 		
@@ -163,6 +237,56 @@ public class CityView extends TemplateView implements ActionListener
 
 	public void setListener(CityViewListener listener) {
 		this.listener = listener;
+	}
+
+
+	public JButton getBarracksLvlLabel() {
+		return barracksLvlLabel;
+	}
+
+
+	public void setBarracksLvlLabel(JButton barracksLvlLabel) {
+		this.barracksLvlLabel = barracksLvlLabel;
+	}
+
+
+	public JButton getArcheryRangeLvllLabel() {
+		return archeryRangeLvllLabel;
+	}
+
+
+	public void setArcheryRangeLvllLabel(JButton archeryRangeLvllLabel) {
+		this.archeryRangeLvllLabel = archeryRangeLvllLabel;
+	}
+
+
+	public JButton getStableLvlLabel() {
+		return stableLvlLabel;
+	}
+
+
+	public void setStableLvlLabel(JButton stableLvlLabel) {
+		this.stableLvlLabel = stableLvlLabel;
+	}
+
+
+	public JButton getMarketLvlLabel() {
+		return marketLvlLabel;
+	}
+
+
+	public void setMarketLvlLabel(JButton marketLvlLabel) {
+		this.marketLvlLabel = marketLvlLabel;
+	}
+
+
+	public JButton getFarmLvlLabel() {
+		return farmLvlLabel;
+	}
+
+
+	public void setFarmLvlLabel(JButton farmLvlLabel) {
+		this.farmLvlLabel = farmLvlLabel;
 	}
 	
 }
