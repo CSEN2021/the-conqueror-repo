@@ -316,7 +316,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							;
 							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
-							cityView.getBarracksRecruitButton().setText("Infantry, Cost: " + (((Barracks)(theGame.findCity(currentCityName).findBuilding("Infantry"))).getRecruitmentCost()));
+							cityView.getBarracksRecruitButton().setText("Infantry, Cost: " + (((Barracks)(theGame.findCity(currentCityName).findBuilding("Barracks"))).getRecruitmentCost()));
 
 							if (currentLevel == 3)
 							{
