@@ -11,21 +11,9 @@ import exceptions.*;
 import listeners.*;
 import views.*;
 
-public class Controller implements HomeViewListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener
+public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener, RelocateUnitListener
 {
-	private StartScreen homeScreen;
-	private WorldMapView worldMapView;
-	private CityView cityView;
-	private Game theGame;
-	private InitiateArmyView initiateArmyView;
-	private City armyInitiationCity;
-
-	public Controller()
-	{
-		this.homeScreen = new StartScreen();
-		homeScreen.setListener(this);
-	}
-
+	// Main Method
 	public static void main(String[] args)
 	{
 		new Controller();
@@ -33,6 +21,23 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		// new Game(null, null);
 	}
 
+	// instance variables
+	private StartScreen startScreen;
+	private WorldMapView worldMapView;
+	private CityView cityView;
+	private Game theGame;
+	private InitiateArmyView initiateArmyView;
+	private RelocateUnitView relocateUnitView;
+	private City armyInitiationCity;
+
+	// Constructor
+	public Controller()
+	{
+		this.startScreen = new StartScreen();
+		startScreen.setListener(this);
+	}
+
+	// StartScreen Listener
 	@Override
 	public void onStartGame(String playerName, String playerCity, StartScreen startScreen)
 	{
@@ -49,8 +54,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		}
 	}
 
-	// actions performed
-
+	// WorldMapView Listener
 	@Override
 	public void onOpenCity(JButton openedButton)
 	{
@@ -98,7 +102,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 	@Override
 	public void onInitiate()
 	{
-		String[] cities = new String [theGame.getPlayer().getControlledCities().size()];
+		String[] cities = new String[theGame.getPlayer().getControlledCities().size()];
 		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
 		{
 			cities[i] = theGame.getPlayer().getControlledCities().get(i).getName();
@@ -107,6 +111,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		initiateArmyView.setListener(this);
 	}
 
+	@Override
+	public void onRelocateUnit()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	// InitiateArmyView listeners
 	@Override
 	public void onInitiateCity(String cityName)
 	{
@@ -163,13 +175,7 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 		initiateArmyView.dispose();
 	}
 
-	@Override
-	public void onRelocateUnit()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
+	// CityView listeners
 	public void onBuild(String stringBuildling)
 	{
 		String currentCityName = cityView.getCurrentCity().getName();
@@ -295,7 +301,9 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							currentLevel = Integer
 									.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-							cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: " + (((ArcheryRange)(theGame.findCity(currentCityName).findBuilding("ArcheryRange"))).getRecruitmentCost()));
+							cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: "
+									+ (((ArcheryRange) (theGame.findCity(currentCityName).findBuilding("ArcheryRange")))
+											.getRecruitmentCost()));
 							if (currentLevel == 3)
 							{
 								cityView.getArcheryRangeLvlButton().setText("Max Level");
@@ -314,9 +322,13 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 						{
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							;
-							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
+							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "")
+									+ 1;
 							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
-							cityView.getBarracksRecruitButton().setText("Infantry, Cost: " + (((Barracks)(theGame.findCity(currentCityName).findBuilding("Barracks"))).getRecruitmentCost()));
+							cityView.getBarracksRecruitButton()
+									.setText("Infantry, Cost: "
+											+ (((Barracks) (theGame.findCity(currentCityName).findBuilding("Barracks")))
+													.getRecruitmentCost()));
 
 							if (currentLevel == 3)
 							{
@@ -338,7 +350,10 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
 							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-							cityView.getStableRecruitButton().setText("Calvary, Cost: " + (((Stable)(theGame.findCity(currentCityName).findBuilding("Stable"))).getRecruitmentCost()));
+							cityView.getStableRecruitButton()
+									.setText("Calvary, Cost: "
+											+ (((Stable) (theGame.findCity(currentCityName).findBuilding("Stable")))
+													.getRecruitmentCost()));
 							if (currentLevel == 3)
 							{
 								cityView.getStableLvlButton().setText("Max Level");
@@ -411,14 +426,14 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 			worldMapView.updateStats(theGame);
 			cityView.updateStats(theGame);
 			cityView.repaint();
-		} 
+		}
 		catch (BuildingInCoolDownException buildingInCoolDownException)
 		{
 			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
-		catch (MaxRecruitedException maxRecruitedException) 
+		catch (MaxRecruitedException maxRecruitedException)
 		{
-			switch (unit) 
+			switch (unit)
 			{
 				case "Archer":
 				{
@@ -436,19 +451,31 @@ public class Controller implements HomeViewListener, WorldMapViewListener, Initi
 					break;
 				}
 			}
-			
-			
-			
-			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning", JOptionPane.ERROR_MESSAGE);
+
+			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning",
+					JOptionPane.ERROR_MESSAGE);
 		}
-		catch (NotEnoughGoldException notEnoughGoldException) 
+		catch (NotEnoughGoldException notEnoughGoldException)
 		{
-			
+
 			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
-		
-		
 
+	}
+
+	// RelocateUnitView listeners
+	@Override
+	public void onRelocateCityChosen(String cityName)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRelocateUnitChosen(String unitToBeInitiated)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

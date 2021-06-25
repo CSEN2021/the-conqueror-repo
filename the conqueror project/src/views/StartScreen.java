@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-import listeners.HomeViewListener;
+import listeners.StartScreenListener;
 
 public class StartScreen extends JFrame implements ActionListener
 {
@@ -13,11 +13,11 @@ public class StartScreen extends JFrame implements ActionListener
 	private JToggleButton romeButton = new JToggleButton("Rome");
 	private JToggleButton spartaButton = new JToggleButton("Sparta");
 	private String selectedCity = "";
-	private HomeViewListener listener;
+	private StartScreenListener listener;
 	private JTextField enterYourNameField;
 	private JLabel welcome = new JLabel("Enter Your Name");
 
-	public void setListener(HomeViewListener listener)
+	public void setListener(StartScreenListener listener)
 	{
 		this.listener = listener;
 	}

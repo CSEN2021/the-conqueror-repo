@@ -153,7 +153,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		}
 		else if (e.getSource() == reloacteButton)
 		{
-
+			listener.onRelocateUnit();
 		}
 
 	}
