@@ -2,8 +2,10 @@ package controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.awt.*;
 import javax.swing.*;
+
 import units.*;
 import buildings.*;
 import engine.*;
@@ -30,6 +32,11 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	private RelocateUnitView relocateUnitView;
 	private City armyInitiationCity;
 
+	private ArrayList<Army> allArmies;
+	private Army armyRelocateFrom;
+	private Unit unitRelocate;
+	private Army armyRelocateTo;
+	
 	// Constructor
 	public Controller()
 	{
@@ -116,8 +123,27 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onRelocateUnit()
 	{
-		// TODO Auto-generated method stub
-
+		allArmies = new ArrayList<>();
+		for(int i = 0; i< theGame.getPlayer().getControlledCities().size();i++)
+		{
+			allArmies.add(theGame.getPlayer().getControlledCities().get(i).getDefendingArmy());
+		}
+		allArmies.addAll(theGame.getPlayer().getControlledArmies());
+		
+		int totalSize = theGame.getPlayer().getControlledCities().size() + theGame.getPlayer().getControlledArmies().size();
+		String[] armiesToRelocate = new String[totalSize];
+		for(int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
+			armiesToRelocate[i] = "Defending Army of " + theGame.getPlayer().getControlledCities().get(i).getName();
+		}
+		for(int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			armiesToRelocate[i+theGame.getPlayer().getControlledCities().size()] = "Army "+ (i+1);
+		}
+		
+		relocateUnitView = new RelocateUnitView(theGame, armiesToRelocate);
+		relocateUnitView.setListener(this);
+		relocateUnitView.getChooseLabel().setText("Choose an Army to relocate from :");
 	}
 
 	// InitiateArmyView listeners
@@ -467,17 +493,58 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	// RelocateUnitView listeners
 	@Override
-	public void onRelocateCityChosen(String cityName)
+	public void onRelocateArmyFrom(int armyFrom)
 	{
-		// TODO Auto-generated method stub
-		
+		armyRelocateFrom = allArmies.get(armyFrom);
+		String[] unitsToRelocateFrom = new String[armyRelocateFrom.getUnits().size()];
+		for (int i = 0; i<unitsToRelocateFrom.length;i++)
+		{
+			unitsToRelocateFrom[i] = armyRelocateFrom.getUnits().get(i).toString();
+		}
+		relocateUnitView.dispose();
+		relocateUnitView = new RelocateUnitView(theGame, unitsToRelocateFrom);
+		relocateUnitView.setStageOfRelocation(1);
+		relocateUnitView.setListener(this);
+		relocateUnitView.getChooseLabel().setText("Choose a Unit to relocate :");
 	}
 
 	@Override
-	public void onRelocateUnitChosen(String unitToBeInitiated)
+	public void onRelocateUnitChosen(int unitToBeInitiated)
 	{
-		// TODO Auto-generated method stub
+		unitRelocate = armyRelocateFrom.getUnits().get(unitToBeInitiated);
 		
+		int totalSize = theGame.getPlayer().getControlledCities().size() + theGame.getPlayer().getControlledArmies().size();
+		String[] armiesToRelocate = new String[totalSize];
+		for(int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
+			armiesToRelocate[i] = "Defending Army of " + theGame.getPlayer().getControlledCities().get(i).getName();
+		}
+		for(int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			armiesToRelocate[i+theGame.getPlayer().getControlledCities().size()] = "Army "+ (i+1);
+		}
+		
+		relocateUnitView.dispose();
+		relocateUnitView = new RelocateUnitView(theGame, armiesToRelocate);
+		relocateUnitView.setStageOfRelocation(2);
+		relocateUnitView.setListener(this);
+		relocateUnitView.getChooseLabel().setText("Choose an Army to Send the Unit to :");
+	}
+
+	@Override
+	public void onRelocateArmyTo(int armyTo)
+	{
+		armyRelocateTo = allArmies.get(armyTo);
+		try
+		{
+			armyRelocateTo.relocateUnit(unitRelocate);
+			worldMapView.updateControlledArmies(theGame);
+			relocateUnitView.dispose();
+		}
+		catch (MaxCapacityException e)
+		{
+			JOptionPane.showMessageDialog(null, "Controlled Armies can't have more than 10 units", "Warning", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	@Override

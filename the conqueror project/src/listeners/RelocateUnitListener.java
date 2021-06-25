@@ -2,6 +2,7 @@ package listeners;
 
 public interface RelocateUnitListener
 {
-	public void onRelocateCityChosen(String cityName);
-	public void onRelocateUnitChosen(String unitToBeInitiated);
+	public void onRelocateArmyFrom(int armyFrom);
+	public void onRelocateUnitChosen(int unitToBeInitiated);
+	public void onRelocateArmyTo(int armyTo);
 }

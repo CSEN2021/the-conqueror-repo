@@ -34,10 +34,6 @@ public class CityView extends TemplateView implements ActionListener
 	}
 
 	
-
-	
-	
-	
 	private JButton barracksButton = new JButton("Build Barracks. Cost: 2000");
 	private JButton barracksLvlButton = new JButton("Build to upgrade.");
 	private JButton barracksRecruitButton = new JButton("Build Barracks to recruit");

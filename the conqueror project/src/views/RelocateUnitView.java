@@ -17,8 +17,7 @@ import listeners.RelocateUnitListener;
 public class RelocateUnitView extends JFrame implements ActionListener
 {
 	private JComboBox comboBox;
-	private Boolean isChoosingUnit = false;
-	private String choosenCity = null;
+	private int stageOfRelocation = 0;
 	private JPanel mainPanel = new JPanel();
 	private JLabel chooseLabel = new JLabel("Choose a City to initiate Army from:");
 	private RelocateUnitListener listener;
@@ -40,18 +39,7 @@ public class RelocateUnitView extends JFrame implements ActionListener
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		revalidate();
 	}
-	public void setChoosenCity(String choosenCity)
-	{
-		this.choosenCity = choosenCity;
-	}
-	public Boolean getIsChoosingUnit()
-	{
-		return isChoosingUnit;
-	}
-	public void setIsChoosingUnit(Boolean isChoosingUnit)
-	{
-		this.isChoosingUnit = isChoosingUnit;
-	}
+
 	public JLabel getChooseLabel()
 	{
 		return chooseLabel;
@@ -59,15 +47,25 @@ public class RelocateUnitView extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-//		if(e.getSource() == comboBox && isChoosingUnit == false)
-//		{
-//			listener.onInitiateCity((String)comboBox.getSelectedItem());
-//		}
-//		else {
-//			listener.onInitiateUnit((String)comboBox.getSelectedItem());
-//		}
+		if(e.getSource() == comboBox && stageOfRelocation == 0)
+		{
+			listener.onRelocateArmyFrom(comboBox.getSelectedIndex());
+		}
+		else if (e.getSource() == comboBox && stageOfRelocation == 1)
+		{
+			listener.onRelocateUnitChosen(comboBox.getSelectedIndex());
+		}
+		else 
+		{
+			listener.onRelocateArmyTo(comboBox.getSelectedIndex());
+		}
 		
 	}
+	public void setStageOfRelocation(int stageOfRelocation)
+	{
+		this.stageOfRelocation = stageOfRelocation;
+	}
+
 	public void setListener(RelocateUnitListener listener)
 	{
 		this.listener = listener;
