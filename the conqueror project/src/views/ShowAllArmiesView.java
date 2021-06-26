@@ -73,7 +73,6 @@ public class ShowAllArmiesView extends TemplateView implements ActionListener
 		ArrayList<Army> controlledArmies = theGame.getPlayer().getControlledArmies();
 		if (buttonText[0].equals("Defending"))
 		{
-			System.out.println(buttonText[3]);
 			if (buttonText[3].equals("Rome"))
 			{
 				listener.onDefendingArmySelected(theGame.findCity("Rome"));
