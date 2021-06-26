@@ -31,15 +31,18 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JButton initiateArmyButton = new JButton("Initiate an Army");
 	private JButton reloacteButton = new JButton("Relocate a unit");
 	private JButton showAllArmiesButton = new JButton("Show All Armies");
+	private JButton enterBattleCairoButton = new JButton("Enter Battle");
+	private JButton enterBattleSpartaButton = new JButton("Enter Battle");
+	private JButton enterBattleRomeButton = new JButton("Enter Battle");
 
 	private WorldMapViewListener listener;
 	private JPanel bottomPanel = new JPanel();
-	private JPanel midPanel = new JPanel();
+	private JPanel midPanel = new JPanel(null);
 	private JPanel rightPanel = new JPanel(new BorderLayout());
 	private JPanel marchingPanel = new JPanel(new BorderLayout());
 	private JTextArea controlledArmiesTextArea = new JTextArea("");
 	private JTextArea marchingArmiesTextArea = new JTextArea("");
-	private JLabel controlledArmiesLabel = new JLabel("Idle Armies :\n");
+	private JLabel controlledArmiesLabel = new JLabel("Static Armies :\n");
 	private JLabel marchingArmiesLabel = new JLabel("Attacking Armies :\n");
 
 	public void paint(Graphics g)
@@ -47,7 +50,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		Graphics2D g2D = (Graphics2D) g;
 
 		// background image
-		g2D.drawImage(new ImageIcon("resources/worldMap.png").getImage(), 0, 0, null);
+		g2D.drawImage(new ImageIcon("resources/worldMap.115.png").getImage(), 0, 0, null);
 
 		// fix buttons
 		fixPaint();
@@ -69,6 +72,10 @@ public class WorldMapView extends TemplateView implements ActionListener
 		romeButton.addActionListener(this);
 		if (!theGame.getPlayer().getControlledCities().get(0).getName().equals("Rome"))
 			romeButton.setEnabled(false);
+		
+		enterBattleCairoButton.setEnabled(false);
+		enterBattleRomeButton.setEnabled(false);
+		enterBattleSpartaButton.setEnabled(false);
 
 		endTurnButton.addActionListener(this);
 		targetButton.addActionListener(this);
@@ -84,6 +91,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 		setUpButton(reloacteButton);
 		setUpButton(initiateArmyButton);
 		setUpButton(showAllArmiesButton);
+		setUpButton(enterBattleRomeButton);
+		setUpButton(enterBattleCairoButton);
+		setUpButton(enterBattleSpartaButton);
 
 		controlledArmiesTextArea.setBackground(new Color(0x404B69));
 		controlledArmiesTextArea.setForeground(Color.white);
@@ -120,10 +130,19 @@ public class WorldMapView extends TemplateView implements ActionListener
 		marchingPanel.add(marchingArmiesLabel, BorderLayout.NORTH);
 		marchingPanel.add(marchingArmiesTextArea, BorderLayout.CENTER);
 
-		midPanel.add(cairoButton, BorderLayout.CENTER);
-		midPanel.add(spartaButton, BorderLayout.EAST);
-		midPanel.add(romeButton, BorderLayout.WEST);
-		midPanel.setOpaque(false);
+		midPanel.add(cairoButton);
+		cairoButton.setBounds(50, 90, 100, 50);
+		midPanel.add(spartaButton);
+		spartaButton.setBounds(750, 80, 100, 50);
+		midPanel.add(romeButton);
+		romeButton.setBounds(50, 550, 100, 50);
+		midPanel.add(enterBattleCairoButton);
+		enterBattleCairoButton.setBounds(160, 90, 100, 50);
+		midPanel.add(enterBattleSpartaButton);
+		enterBattleSpartaButton.setBounds(750, 140, 100, 50);
+		midPanel.add(enterBattleRomeButton);
+		enterBattleRomeButton.setBounds(160, 550, 100, 50);
+		
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		revalidate();
@@ -142,9 +161,15 @@ public class WorldMapView extends TemplateView implements ActionListener
 						+ theGame.getPlayer().getControlledArmies().get(i).getTarget() + ", Distance left is "
 						+ theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() + " ): \n" + string);
 			}
+			else if (theGame.getPlayer().getControlledArmies().get(i).getCurrentStatus() == Status.BESIEGING)
+			{
+				controlledArmiesTextArea.append("Army " + (i + 1) + " ( Besieging "
+						+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
+						+ "\n");
+			}
 			else
 			{
-				controlledArmiesTextArea.append("Army " + (i + 1) + " ( Idle at "
+				controlledArmiesTextArea.append("Army " + (i + 1) + " ( at "
 						+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
 						+ "\n");
 			}
@@ -159,6 +184,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 		cairoButton.repaint();
 		spartaButton.repaint();
 		romeButton.repaint();
+		enterBattleCairoButton.repaint();
+		enterBattleRomeButton.repaint();
+		enterBattleSpartaButton.repaint();
 		bottomPanel.repaint();
 		endTurnButton.repaint();
 		rightPanel.repaint();
@@ -195,7 +223,18 @@ public class WorldMapView extends TemplateView implements ActionListener
 		{
 			listener.onShowAllArmies();
 		}
-
+		else if (e.getSource() == enterBattleCairoButton)
+		{
+			listener.onEnterBattle("Cairo");
+		}
+		else if (e.getSource() == enterBattleRomeButton)
+		{
+			listener.onEnterBattle("Rome");
+		}
+		else if (e.getSource() == enterBattleSpartaButton)
+		{
+			listener.onEnterBattle("Sparta");
+		}
 	}
 
 	public void setListener(WorldMapViewListener listener)

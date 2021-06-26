@@ -119,6 +119,10 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			cityView.unlockRecruitButtons();
 		}
 		
+		for(int i = 0 ; i < theGame.getPlayer().getControlledArmies().size();i++)
+		{
+			
+		}
 		worldMapView.updateArmiesPanel(theGame);
 	}
 
@@ -127,6 +131,13 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	{
 		showAllArmiesView = new ShowAllArmiesView(theGame);
 		showAllArmiesView.setListener(this);
+	}
+	
+	@Override
+	public void onEnterBattle(String cityGettingAttacked)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
