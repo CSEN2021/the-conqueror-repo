@@ -41,9 +41,10 @@ public class StartScreen extends JFrame implements ActionListener
 	{
 		theButton.setIcon(new ImageIcon("resources/" + theButton.getText() + "Image.jpg"));
 		theButton.setPreferredSize(new Dimension(300, 220));
-		theButton.setVerticalTextPosition(JToggleButton.TOP);
-		theButton.setHorizontalTextPosition(JToggleButton.CENTER);
-		theButton.setBackground(Color.LIGHT_GRAY);
+		theButton.setVerticalTextPosition(JButton.TOP);
+		theButton.setHorizontalTextPosition(JButton.CENTER);
+		theButton.setBackground(Color.DARK_GRAY);
+		theButton.setForeground(Color.white);
 		theButton.addActionListener(this);
 	}
 	
