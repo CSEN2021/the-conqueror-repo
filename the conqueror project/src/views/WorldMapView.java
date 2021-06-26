@@ -242,4 +242,19 @@ public class WorldMapView extends TemplateView implements ActionListener
 		this.listener = listener;
 	}
 
+	public JButton getEnterBattleCairoButton()
+	{
+		return enterBattleCairoButton;
+	}
+
+	public JButton getEnterBattleSpartaButton()
+	{
+		return enterBattleSpartaButton;
+	}
+
+	public JButton getEnterBattleRomeButton()
+	{
+		return enterBattleRomeButton;
+	}
+
 }
