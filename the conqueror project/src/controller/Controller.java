@@ -189,6 +189,13 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 
 	}
+	
+	@Override
+	public void onBeseige()
+	{
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public void onTargetCity()
@@ -704,12 +711,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 	
 	// BattleView Listener
-	@Override
-	public void onSeige()
-	{
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void onAttack()
