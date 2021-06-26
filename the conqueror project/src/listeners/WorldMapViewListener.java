@@ -9,5 +9,5 @@ public interface WorldMapViewListener
 	public void onTargetCity(JButton openedButton);
 	public void onInitiate();
 	public void onRelocateUnit();
-	public void onShowArmies();
+	public void onShowAllArmies();
 }
