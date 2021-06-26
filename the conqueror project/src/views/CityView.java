@@ -8,14 +8,14 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Icon;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-import buildings.ArcheryRange;
+
 import engine.City;
 import engine.Game;
 import listeners.CityViewListener;
@@ -55,12 +55,10 @@ public class CityView extends TemplateView implements ActionListener
 
 	private JButton showDefendingArmy = new JButton("Show Defending Army");
 
-	private JLabel fillerLabel = new JLabel("");
+	
 	private JPanel midPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel(new BorderLayout());
-	private JPanel fillerPanel = new JPanel();
-
-	private JPanel infoPanel = new JPanel();
+	
 	JTextArea defendingArmiesTextArea = new JTextArea();
 	JLabel cityIcon;
 
@@ -142,7 +140,26 @@ public class CityView extends TemplateView implements ActionListener
 		archeryRangeRecruitButton.setEnabled(false);
 		barracksRecruitButton.setEnabled(false);
 		stableRecruitButton.setEnabled(false);
-
+		
+		archeryRangeButton.setBackground(Color.decode("#000b14"));
+		barracksButton.setBackground(Color.decode("#000b14"));
+		stableButton.setBackground(Color.decode("#000b14"));
+		farmButton.setBackground(Color.decode("#003666"));
+		marketButton.setBackground(Color.decode("#003666"));
+		
+		archeryRangeLvlButton.setBackground(Color.decode("#002c52"));
+		barracksLvlButton.setBackground(Color.decode("#002c52"));
+		stableLvlButton.setBackground(Color.decode("#002c52"));
+		farmLvlButton.setBackground(Color.decode("#002c52"));
+		marketLvlButton.setBackground(Color.decode("#002c52"));
+		
+		
+		archeryRangeRecruitButton.setBackground(Color.decode("#DA0037"));
+		barracksRecruitButton.setBackground(Color.decode("#DA0037"));
+		stableRecruitButton.setBackground(Color.decode("#DA0037"));
+		
+		showDefendingArmy.setBackground(Color.decode("#444444"));
+		
 		// panels
 		midPanel.setLayout(new GridLayout(0, 3));
 		midPanel.setPreferredSize(new Dimension(0, 200));

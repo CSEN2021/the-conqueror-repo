@@ -92,7 +92,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 		else
 		{
-			cityView.getCityIcon().setIcon(new ImageIcon("resources/sparta (1).png"));
+			cityView.getCityIcon().setIcon(new ImageIcon("resources/SpartaLogo.png"));
 		}
 		/*
 		 * if (cityView.getCurrentCity().equals("Cairo")) {
