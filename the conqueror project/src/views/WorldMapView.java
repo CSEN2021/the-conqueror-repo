@@ -42,7 +42,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JPanel marchingPanel = new JPanel(new BorderLayout());
 	private JTextArea controlledArmiesTextArea = new JTextArea("");
 	private JTextArea marchingArmiesTextArea = new JTextArea("");
-	private JLabel controlledArmiesLabel = new JLabel("Static Armies :\n");
+	private JLabel controlledArmiesLabel = new JLabel("Stationary Armies :\n");
 	private JLabel marchingArmiesLabel = new JLabel("Attacking Armies :\n");
 
 	public void paint(Graphics g)
