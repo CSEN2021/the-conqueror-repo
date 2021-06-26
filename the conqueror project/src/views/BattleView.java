@@ -109,8 +109,6 @@ public class BattleView extends TemplateView implements ActionListener  {
 	public void actionPerformed(ActionEvent e) {
 		JButton clickedButton = (JButton)e.getSource();
 		String buttonString = clickedButton.getText();
-		System.out.println(playerUnitsButtons.indexOf(clickedButton));
-		System.out.println(enemyUnitsButtons.indexOf(clickedButton));
 		
 	}
 
