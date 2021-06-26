@@ -16,10 +16,10 @@ import engine.Game;
 import units.Army;
 import units.Unit;
 
-public class ShowArmiesView extends TemplateView implements ActionListener
+public class ShowAllArmiesView extends TemplateView implements ActionListener
 {
 	
-	public ShowArmiesView(Game thegame) {
+	public ShowAllArmiesView(Game thegame) {
 		super(thegame);
 		JButton armyButton;
 		JPanel midPanel = new JPanel();

@@ -13,7 +13,7 @@ import exceptions.*;
 import listeners.*;
 import views.*;
 
-public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowArmiesViewListener
+public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowAllArmiesViewListener
 {
 	// Main Method
 	public static void main(String[] args)
@@ -31,6 +31,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	private InitiateArmyView initiateArmyView;
 	private RelocateUnitView relocateUnitView;
 	private City armyInitiationCity;
+	private ShowAllArmiesView showAllArmiesView;
+	private ShowArmyView showArmyView;
 
 	private ArrayList<Army> allArmies;
 	private Army armyRelocateFrom;
@@ -127,12 +129,16 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			cityView.getStableRecruitButton().setEnabled(true);
 		}
 	}
+	
+	@Override
+	public void onShowAllArmies() {
+		showAllArmiesView= new ShowAllArmiesView(theGame);
+	}
 
 	@Override
 	public void onTargetCity(JButton openedButton)
 	{
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -577,16 +583,18 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	
 	public void onShowDefendingArmy() {
-		// TODO Auto-generated method stub
-		
-		new ShowArmyView(theGame, cityView.getCurrentCity());
+
+		showArmyView = new ShowArmyView(theGame, cityView.getCurrentCity());
 		
 	}
 
+
+
 	@Override
-	public void onShowArmies() {
+	public void onArmySelected(int indexOfArmy)
+	{
 		// TODO Auto-generated method stub
-		new ShowArmiesView(theGame);
+		
 	}
 
 }
