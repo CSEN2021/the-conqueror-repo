@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 import engine.Game;
 import engine.Player;
@@ -92,6 +93,14 @@ public class TemplateView extends JFrame
 	}
 
 	public void setUpButton(JButton theButton)
+	{
+		theButton.setForeground(Color.WHITE);
+		theButton.setBackground(Color.DARK_GRAY);
+		theButton.setFocusable(false);
+		theButton.repaint();
+	}
+	
+	public void setUpButton(JToggleButton theButton)
 	{
 		theButton.setForeground(Color.WHITE);
 		theButton.setBackground(Color.DARK_GRAY);
