@@ -43,9 +43,27 @@ public class ShowArmyView extends TemplateView implements ActionListener
 		this.add(midPanel, BorderLayout.CENTER);
 	}
 	
-	public ShowArmyView(Game theGame, int indexOfArmy)
+	public ShowArmyView(Game theGame, Army army)
 	{
 		super(theGame);
+		JTextArea unitTextArea;
+		JPanel midPanel = new JPanel();
+		
+		ArrayList<Unit> armyUnits= army.getUnits();
+		for (int i = 0; i < armyUnits.size(); i++)
+		{
+			Unit unit = armyUnits.get(i);
+			unitTextArea = new JTextArea(" " + unit.unitInfo());
+			unitTextArea.setAlignmentX(CENTER_ALIGNMENT);
+			unitTextArea.setAlignmentY(CENTER_ALIGNMENT);
+			unitTextArea.append("\n Current Soldier Count : " + unit.getCurrentSoldierCount());
+			unitTextArea.append("\n Max Soldier Count : " + unit.getMaxSoldierCount());
+			
+			unitTextArea.setPreferredSize(new Dimension(150,100));
+			unitTextArea.setBackground(Color.LIGHT_GRAY);
+			midPanel.add(unitTextArea);
+		}
+		this.add(midPanel, BorderLayout.CENTER);
 	}
 
 	@Override

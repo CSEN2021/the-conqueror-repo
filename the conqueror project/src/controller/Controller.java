@@ -133,6 +133,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onShowAllArmies() {
 		showAllArmiesView= new ShowAllArmiesView(theGame);
+		showAllArmiesView.setListener(this);
 	}
 
 	@Override
@@ -524,6 +525,14 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	}
 
+	@Override
+	
+	public void onShowDefendingArmy() {
+
+		showArmyView = new ShowArmyView(theGame, cityView.getCurrentCity());
+		
+	}
+	
 	// RelocateUnitView listeners
 	@Override
 	public void onRelocateArmyFrom(int armyFrom)
@@ -580,20 +589,21 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 	}
 
-	@Override
 	
-	public void onShowDefendingArmy() {
 
-		showArmyView = new ShowArmyView(theGame, cityView.getCurrentCity());
+
+	// ShowAllArmiesView Listeners
+	@Override
+	public void onArmySelected(Army armyToBeViewed)
+	{
+		showArmyView = new ShowArmyView(theGame, armyToBeViewed);
 		
 	}
 
-
-
 	@Override
-	public void onArmySelected(int indexOfArmy)
-	{
+	public void onDefendingArmySelected(City city) {
 		// TODO Auto-generated method stub
+		showArmyView = new ShowArmyView(theGame, city);
 		
 	}
 
