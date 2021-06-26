@@ -81,21 +81,18 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		
 		if (cityView.getCurrentCity().getName().equals("Cairo"))
 		{
-			cityView.getCityIcon().setIcon(new ImageIcon("resources/Archer.png"));
+			cityView.getCityIcon().setIcon(new ImageIcon("resources/Cairo 2.jpg"));
 		}
-		else if (cityView.getCurrentCity().getName().equals("Roma"))
+		else if (cityView.getCurrentCity().getName().equals("Rome"))
 		{
-			cityView.getCityIcon().setIcon(new ImageIcon("resources/Archer.png"));
+			cityView.getCityIcon().setIcon(new ImageIcon("resources/Rome 2.jpg"));
 		}
 		else 
 		{
-			cityView.getCityIcon().setIcon(new ImageIcon("resources/Archer.png"));
+			cityView.getCityIcon().setIcon(new ImageIcon("resources/sparta (1).png"));
 		}
-		System.out.println(cityView.getCityIcon().getSize());
-		
 		cityView.drawDefendingArmy();
 		cityView.setListener(this);
-		
 	}
 
 	@Override
