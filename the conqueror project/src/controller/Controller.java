@@ -14,7 +14,7 @@ import listeners.*;
 import views.*;
 
 public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener,
-		CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowAllArmiesViewListener, TargetACityViewListener
+		CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowAllArmiesViewListener, TargetACityViewListener, BattleViewListener
 {
 	// Main Method
 	public static void main(String[] args)
@@ -36,6 +36,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	private ShowAllArmiesView showAllArmiesView;
 	private ShowArmyView showArmyView;
 	private TargetACityView targetACityView;
+	private BattleView battleView;
 
 	private ArrayList<Army> allArmies;
 	private Army armyRelocateFrom;
@@ -68,7 +69,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	// WorldMapView Listener
-	
+
 	@Override
 	public void onOpenCity(JButton openedButton)
 	{
@@ -115,13 +116,15 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		if (theGame.isGameOver() == true)
 		{
 			worldMapView.dispose();
-			if(theGame.getPlayer().getControlledCities().size() == theGame.getAvailableCities().size())
+			if (theGame.getPlayer().getControlledCities().size() == theGame.getAvailableCities().size())
 			{
-				JOptionPane.showMessageDialog(null, "Game Over ! :) , You Won !", "GameOver", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Game Over ! :) , You Won !", "GameOver",
+						JOptionPane.ERROR_MESSAGE);
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, "Game Over ! :( , You Lost...", "GameOver", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Game Over ! :( , You Lost...", "GameOver",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		theGame.endTurn();
@@ -176,7 +179,14 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onEnterBattle(String cityGettingAttacked)
 	{
-		// TODO Auto-generated method stub
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equals(cityGettingAttacked))
+			{
+				battleView = new BattleView(theGame, theGame.getPlayer().getControlledArmies().get(i),
+						theGame.findCity(cityGettingAttacked).getDefendingArmy());
+			}
+		}
 
 	}
 
@@ -691,6 +701,35 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		targetACityView.dispose();
 		worldMapView.updateArmiesPanel(theGame);
 
+	}
+	
+	// BattleView Listener
+	@Override
+	public void onSeige()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAttack()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onAutoResolve()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onRetreat()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

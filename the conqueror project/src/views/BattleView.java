@@ -11,13 +11,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import engine.*;
+import listeners.BattleViewListener;
 import units.*;
 
 
 public class BattleView extends TemplateView implements ActionListener  {
 	ArrayList<JButton> playerUnitsButtons = new ArrayList<>();
 	ArrayList<JButton> enemyUnitsButtons = new ArrayList<>();
-	public BattleView(Game theGame ,Army playerArmy,Army enemyArmy ) {
+	BattleViewListener listener;
+	
+	public void setListener(BattleViewListener listener)
+	{
+		this.listener = listener;
+	}
+	
+	public BattleView(Game theGame ,Army playerArmy,Army enemyArmy) {
 		super(theGame);
 		String name = "ansfna"; //dummy name remove after test
 		JPanel playerArmyPanel = new JPanel();

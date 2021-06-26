@@ -82,6 +82,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 		initiateArmyButton.addActionListener(this);
 		reloacteButton.addActionListener(this);
 		showAllArmiesButton.addActionListener(this);
+		enterBattleCairoButton.addActionListener(this);
+		enterBattleRomeButton.addActionListener(this);
+		enterBattleSpartaButton.addActionListener(this);
 
 		setUpButton(endTurnButton);
 		setUpButton(romeButton);
