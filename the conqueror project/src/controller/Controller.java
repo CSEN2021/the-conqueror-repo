@@ -68,6 +68,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	// WorldMapView Listener
+	
 	@Override
 	public void onOpenCity(JButton openedButton)
 	{
@@ -111,6 +112,11 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onEndTurn()
 	{
+		if (theGame.isGameOver() == true)
+		{
+			worldMapView.dispose();
+			JOptionPane.showMessageDialog(null, "GameOver ! :( , better luck next time", "GameOver", JOptionPane.ERROR_MESSAGE);
+		}
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
 
