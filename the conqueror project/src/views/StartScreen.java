@@ -8,7 +8,7 @@ import listeners.StartScreenListener;
 
 public class StartScreen extends JFrame implements ActionListener
 {
-	private JToggleButton startGame = new JToggleButton("Start Game");
+	private JButton startGame = new JButton("Start Game");
 	private JToggleButton cairoButton = new JToggleButton("Cairo");
 	private JToggleButton romeButton = new JToggleButton("Rome");
 	private JToggleButton spartaButton = new JToggleButton("Sparta");
