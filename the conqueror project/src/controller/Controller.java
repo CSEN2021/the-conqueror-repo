@@ -115,7 +115,14 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		if (theGame.isGameOver() == true)
 		{
 			worldMapView.dispose();
-			JOptionPane.showMessageDialog(null, "GameOver ! :( , better luck next time", "GameOver", JOptionPane.ERROR_MESSAGE);
+			if(theGame.getPlayer().getControlledCities().size() == theGame.getAvailableCities().size())
+			{
+				JOptionPane.showMessageDialog(null, "Game Over ! :) , You Won !", "GameOver", JOptionPane.ERROR_MESSAGE);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Game Over ! :( , You Lost...", "GameOver", JOptionPane.ERROR_MESSAGE);
+			}
 		}
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
