@@ -39,8 +39,8 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JPanel marchingPanel = new JPanel(new BorderLayout());
 	private JTextArea controlledArmiesTextArea = new JTextArea("");
 	private JTextArea marchingArmiesTextArea = new JTextArea("");
-	private JLabel controlledArmiesLabel = new JLabel("Controlled Armies :\n");
-	private JLabel marchingArmiesLabel = new JLabel("Marching Armies :\n");
+	private JLabel controlledArmiesLabel = new JLabel("Idle Armies :\n");
+	private JLabel marchingArmiesLabel = new JLabel("Attacking Armies :\n");
 
 	public void paint(Graphics g)
 	{
@@ -139,12 +139,12 @@ public class WorldMapView extends TemplateView implements ActionListener
 			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentStatus() == Status.MARCHING)
 			{
 				marchingArmiesTextArea.append("Army " + (i + 1) + " ( Marching to "
-						+ theGame.getPlayer().getControlledArmies().get(i).getTarget() + ", Distance left "
+						+ theGame.getPlayer().getControlledArmies().get(i).getTarget() + ", Distance left is "
 						+ theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() + " ): \n" + string);
 			}
 			else
 			{
-				controlledArmiesTextArea.append("Army " + (i + 1) + " ( at "
+				controlledArmiesTextArea.append("Army " + (i + 1) + " ( Idle at "
 						+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
 						+ "\n");
 			}

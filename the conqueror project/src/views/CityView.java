@@ -24,88 +24,82 @@ public class CityView extends TemplateView implements ActionListener
 {
 	private City currentCity;
 	private CityViewListener listener;
-	
-	
-	public City getCurrentCity() {
+
+	public City getCurrentCity()
+	{
 		return currentCity;
 	}
-	
-	
-	public void setCurrentCity(City currentCity) {
+
+	public void setCurrentCity(City currentCity)
+	{
 		this.currentCity = currentCity;
 	}
 
-	
 	private JButton barracksButton = new JButton("Build Barracks. Cost: 2000");
 	private JButton barracksLvlButton = new JButton("Build to upgrade.");
 	private JButton barracksRecruitButton = new JButton("Build Barracks to recruit");
-	
-	
+
 	private JButton archeryRangeButton = new JButton("Build an ArcheryRange. Cost: 1500");
 	private JButton archeryRangeLvlButton = new JButton("Build to upgrade.");
 	private JButton archeryRangeRecruitButton = new JButton("Build an Archeryrange to recruit");
-	
-	
+
 	private JButton stableButton = new JButton("Build a Stable. Cost: 2500");
 	private JButton stableLvlButton = new JButton("Build to upgrade.");
 	private JButton stableRecruitButton = new JButton("Build a Stable to recruit");
-	
-	
+
 	private JButton marketButton = new JButton("Build a Market. Cost: 1500");
 	private JButton marketLvlButton = new JButton("Build to upgrade.");
-	
-	
+
 	private JButton farmButton = new JButton("Build a Farm. Cost: 1000");
 	private JButton farmLvlButton = new JButton("Build to upgrade.");
-	
+
 	private JButton showDefendingArmy = new JButton("Show Defending Army");
-	
-	
+
 	private JLabel fillerLabel = new JLabel("");
 	private JPanel midPanel = new JPanel();
 	private JPanel bottomPanel = new JPanel(new BorderLayout());
 	private JPanel fillerPanel = new JPanel();
-	
-	private JPanel infoPanel =  new JPanel();
+
+	private JPanel infoPanel = new JPanel();
 	JTextArea defendingArmiesTextArea = new JTextArea();
 	JLabel cityIcon;
-	
-	public JLabel getCityIcon() {
+
+	public JLabel getCityIcon()
+	{
 		return cityIcon;
 	}
 
-
-	public void setCityIcon(JLabel cityIcon) {
+	public void setCityIcon(JLabel cityIcon)
+	{
 		this.cityIcon = cityIcon;
 	}
 
-
-	public void setUpButtonWithImage(JButton theButton, String path )
+	public void setUpButtonWithImage(JButton theButton, String path)
 	{
-		/*theButton.setIcon(new ImageIcon("resources/" + path));
-		theButton.setForeground(Color.WHITE);
-		theButton.setBackground(Color.DARK_GRAY);
-		theButton.setFocusable(false);
-		theButton.repaint();*/
-		
-		theButton.setIcon(new ImageIcon("resources/" + path) );
+		/*
+		 * theButton.setIcon(new ImageIcon("resources/" + path));
+		 * theButton.setForeground(Color.WHITE);
+		 * theButton.setBackground(Color.DARK_GRAY); theButton.setFocusable(false);
+		 * theButton.repaint();
+		 */
+
+		theButton.setIcon(new ImageIcon("resources/" + path));
 		theButton.setHorizontalTextPosition(JButton.CENTER);
 		theButton.setVerticalTextPosition(JButton.CENTER);
 		theButton.setForeground(Color.white);
 		theButton.setFont(new Font("Arial", Font.PLAIN, 40));
 	}
-	
+
 	public CityView(Game theGame)
 	{
 		super(theGame);
-		
+
 		// components
-		
 
 		setUpButton(archeryRangeButton);
 		setUpButton(archeryRangeLvlButton);
 		setUpButton(archeryRangeRecruitButton);
-		
+
 		setUpButton(barracksButton);
 		setUpButton(barracksLvlButton);
 		setUpButton(barracksRecruitButton);
@@ -116,53 +110,48 @@ public class CityView extends TemplateView implements ActionListener
 		setUpButton(marketLvlButton);
 		setUpButton(farmButton);
 		setUpButton(farmLvlButton);
-		
+
 		setUpButton(showDefendingArmy);
-		
-		//adding listeners
-		
+
+		// adding listeners
+
 		archeryRangeButton.addActionListener(this);
 		stableButton.addActionListener(this);
 		barracksButton.addActionListener(this);
 		farmButton.addActionListener(this);
-		marketButton.addActionListener(this);	
-		
+		marketButton.addActionListener(this);
+
 		archeryRangeLvlButton.addActionListener(this);
 		stableLvlButton.addActionListener(this);
 		barracksLvlButton.addActionListener(this);
 		farmLvlButton.addActionListener(this);
 		marketLvlButton.addActionListener(this);
-		
+
 		stableRecruitButton.addActionListener(this);
 		archeryRangeRecruitButton.addActionListener(this);
 		barracksRecruitButton.addActionListener(this);
-		
+
 		showDefendingArmy.addActionListener(this);
-		
-		
+
 		archeryRangeLvlButton.setEnabled(false);
 		stableLvlButton.setEnabled(false);
 		barracksLvlButton.setEnabled(false);
 		farmLvlButton.setEnabled(false);
 		marketLvlButton.setEnabled(false);
-		
+
 		archeryRangeRecruitButton.setEnabled(false);
 		barracksRecruitButton.setEnabled(false);
 		stableRecruitButton.setEnabled(false);
-		
+
 		// panels
 		midPanel.setLayout(new GridLayout(0, 3));
 		midPanel.setPreferredSize(new Dimension(0, 200));
-		
+
 		// add
-		
+
 		add(midPanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
-		
-		
-		
-		
-		
+
 		midPanel.add(archeryRangeButton);
 		midPanel.add(archeryRangeLvlButton);
 		midPanel.add(archeryRangeRecruitButton);
@@ -172,30 +161,44 @@ public class CityView extends TemplateView implements ActionListener
 		midPanel.add(stableButton);
 		midPanel.add(stableLvlButton);
 		midPanel.add(stableRecruitButton);
-		
+
 		midPanel.add(marketButton);
 		midPanel.add(marketLvlButton);
 		midPanel.add(showDefendingArmy);
 		midPanel.add(farmButton);
 		midPanel.add(farmLvlButton);
-		
+
 		cityIcon = new JLabel();
-		
-		/*JButton button = new JButton( "Centered" );
-		button.setIcon( new ImageIcon("resources/Cairo 2.jpg") );
-		button.setHorizontalTextPosition(JButton.CENTER);
-		button.setVerticalTextPosition(JButton.CENTER);
-		button.setForeground(Color.white);
-		button.setFont(new Font("Arial", Font.PLAIN, 40));
-		midPanel.add(button);
-		*/
-		
+
+		/*
+		 * JButton button = new JButton( "Centered" ); button.setIcon( new
+		 * ImageIcon("resources/Cairo 2.jpg") );
+		 * button.setHorizontalTextPosition(JButton.CENTER);
+		 * button.setVerticalTextPosition(JButton.CENTER);
+		 * button.setForeground(Color.white); button.setFont(new Font("Arial",
+		 * Font.PLAIN, 40)); midPanel.add(button);
+		 */
+
 		midPanel.add(cityIcon);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
-		
+
 	}
-	
-	
+
+	public void unlockRecruitButtons()
+	{
+		if (getBarracksButton().isEnabled() == false)
+		{
+			getBarracksRecruitButton().setEnabled(true);
+		}
+		if (getArcheryRangeButton().isEnabled() == false)
+		{
+			getArcheryRangeRecruitButton().setEnabled(true);
+		}
+		if (getStableButton().isEnabled() == false)
+		{
+			getStableRecruitButton().setEnabled(true);
+		}
+	}
 
 	public void drawDefendingArmy()
 	{
@@ -203,48 +206,49 @@ public class CityView extends TemplateView implements ActionListener
 		defendingArmiesTextArea.setBackground(Color.DARK_GRAY);
 		defendingArmiesTextArea.setForeground(Color.white);
 		JLabel fillJLabel = new JLabel();
-		fillJLabel.setPreferredSize(new Dimension(475,0));
+		fillJLabel.setPreferredSize(new Dimension(475, 0));
 		fillJLabel.setBackground(Color.DARK_GRAY);
 		fillJLabel.setOpaque(true);
-		bottomPanel.add(fillJLabel,BorderLayout.WEST);
+		bottomPanel.add(fillJLabel, BorderLayout.WEST);
 		bottomPanel.add(defendingArmiesTextArea, BorderLayout.CENTER);
 	}
-	
-	public JButton getBarracksRecruitButton() {
+
+	public JButton getBarracksRecruitButton()
+	{
 		return barracksRecruitButton;
 	}
 
-
-	public void setBarracksRecruitButton(JButton barracksRecruitButton) {
+	public void setBarracksRecruitButton(JButton barracksRecruitButton)
+	{
 		this.barracksRecruitButton = barracksRecruitButton;
 	}
 
-
-	public JButton getArcheryRangeRecruitButton() {
+	public JButton getArcheryRangeRecruitButton()
+	{
 		return archeryRangeRecruitButton;
 	}
 
-
-	public void setArcheryRangeRecruitButton(JButton archeryRangeRecruitButton) {
+	public void setArcheryRangeRecruitButton(JButton archeryRangeRecruitButton)
+	{
 		this.archeryRangeRecruitButton = archeryRangeRecruitButton;
 	}
 
-
-	public JButton getStableRecruitButton() {
+	public JButton getStableRecruitButton()
+	{
 		return stableRecruitButton;
 	}
 
-
-	public void setStableRecruitButton(JButton stableRecruitButton) {
+	public void setStableRecruitButton(JButton stableRecruitButton)
+	{
 		this.stableRecruitButton = stableRecruitButton;
 	}
 
-
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-		//Building
-		
+	public void actionPerformed(ActionEvent e)
+	{
+
+		// Building
+
 		if (e.getSource() == archeryRangeButton)
 		{
 			listener.onBuild("ArcheryRange");
@@ -265,8 +269,8 @@ public class CityView extends TemplateView implements ActionListener
 		{
 			listener.onBuild("Market");
 		}
-		
-		//Upgrading
+
+		// Upgrading
 		if (e.getSource() == marketLvlButton)
 		{
 			listener.onUpgrade("Market");
@@ -281,14 +285,14 @@ public class CityView extends TemplateView implements ActionListener
 		}
 		else if (e.getSource() == barracksLvlButton)
 		{
-			listener.onUpgrade("Barracks");		
+			listener.onUpgrade("Barracks");
 		}
 		else if (e.getSource() == archeryRangeLvlButton)
 		{
 			listener.onUpgrade("ArcheryRange");
-		}	
-		
-		//Recruiting
+		}
+
+		// Recruiting
 		if (e.getSource() == archeryRangeRecruitButton)
 		{
 			listener.onRecruit("Archer");
@@ -301,170 +305,172 @@ public class CityView extends TemplateView implements ActionListener
 		{
 			listener.onRecruit("Cavalry");
 		}
-		
-		if(e.getSource() == showDefendingArmy)
+
+		if (e.getSource() == showDefendingArmy)
 		{
 			listener.onShowDefendingArmy();
 		}
-			
+
 	}
 
-	public JButton getBarracksButton() {
+	public JButton getBarracksButton()
+	{
 		return barracksButton;
 	}
 
-
-	public void setBarracksButton(JButton barracksButton) {
+	public void setBarracksButton(JButton barracksButton)
+	{
 		this.barracksButton = barracksButton;
 	}
 
-
-	public JButton getBarracksLvlButton() {
+	public JButton getBarracksLvlButton()
+	{
 		return barracksLvlButton;
 	}
 
-
-	public void setBarracksLvlButton(JButton barracksLvlButton) {
+	public void setBarracksLvlButton(JButton barracksLvlButton)
+	{
 		this.barracksLvlButton = barracksLvlButton;
 	}
 
-
-	public JButton getArcheryRangeButton() {
+	public JButton getArcheryRangeButton()
+	{
 		return archeryRangeButton;
 	}
 
-
-	public void setArcheryRangeButton(JButton archeryRangeButton) {
+	public void setArcheryRangeButton(JButton archeryRangeButton)
+	{
 		this.archeryRangeButton = archeryRangeButton;
 	}
 
-
-	public JButton getArcheryRangeLvlButton() {
+	public JButton getArcheryRangeLvlButton()
+	{
 		return archeryRangeLvlButton;
 	}
 
-
-	public void setArcheryRangeLvlButton(JButton archeryRangeLvlButton) {
+	public void setArcheryRangeLvlButton(JButton archeryRangeLvlButton)
+	{
 		this.archeryRangeLvlButton = archeryRangeLvlButton;
 	}
 
-
-	public JButton getStableButton() {
+	public JButton getStableButton()
+	{
 		return stableButton;
 	}
 
-
-	public void setStableButton(JButton stableButton) {
+	public void setStableButton(JButton stableButton)
+	{
 		this.stableButton = stableButton;
 	}
 
-
-	public JButton getStableLvlButton() {
+	public JButton getStableLvlButton()
+	{
 		return stableLvlButton;
 	}
 
-
-	public void setStableLvlButton(JButton stableLvlButton) {
+	public void setStableLvlButton(JButton stableLvlButton)
+	{
 		this.stableLvlButton = stableLvlButton;
 	}
 
-
-	public JButton getMarketButton() {
+	public JButton getMarketButton()
+	{
 		return marketButton;
 	}
 
-
-	public void setMarketButton(JButton marketButton) {
+	public void setMarketButton(JButton marketButton)
+	{
 		this.marketButton = marketButton;
 	}
 
-
-	public JButton getMarketLvlButton() {
+	public JButton getMarketLvlButton()
+	{
 		return marketLvlButton;
 	}
 
-
-	public void setMarketLvlButton(JButton marketLvlButton) {
+	public void setMarketLvlButton(JButton marketLvlButton)
+	{
 		this.marketLvlButton = marketLvlButton;
 	}
 
-
-	public JButton getFarmButton() {
+	public JButton getFarmButton()
+	{
 		return farmButton;
 	}
 
-
-	public void setFarmButton(JButton farmButton) {
+	public void setFarmButton(JButton farmButton)
+	{
 		this.farmButton = farmButton;
 	}
 
-
-	public JButton getFarmLvlButton() {
+	public JButton getFarmLvlButton()
+	{
 		return farmLvlButton;
 	}
 
-
-	public void setFarmLvlButton(JButton farmLvlButton) {
+	public void setFarmLvlButton(JButton farmLvlButton)
+	{
 		this.farmLvlButton = farmLvlButton;
 	}
 
-
-	public CityViewListener getListener() {
+	public CityViewListener getListener()
+	{
 		return listener;
 	}
 
-	public void setListener(CityViewListener listener) {
+	public void setListener(CityViewListener listener)
+	{
 		this.listener = listener;
 	}
 
-
-	public JButton getBarracksLvlLabel() {
+	public JButton getBarracksLvlLabel()
+	{
 		return barracksLvlButton;
 	}
 
-
-	public void setBarracksLvlLabel(JButton barracksLvlLabel) {
+	public void setBarracksLvlLabel(JButton barracksLvlLabel)
+	{
 		this.barracksLvlButton = barracksLvlLabel;
 	}
 
-
-	public JButton getArcheryRangeLvllLabel() {
+	public JButton getArcheryRangeLvllLabel()
+	{
 		return archeryRangeLvlButton;
 	}
 
-
-	public void setArcheryRangeLvllLabel(JButton archeryRangeLvllLabel) {
+	public void setArcheryRangeLvllLabel(JButton archeryRangeLvllLabel)
+	{
 		this.archeryRangeLvlButton = archeryRangeLvllLabel;
 	}
 
-
-	public JButton getStableLvlLabel() {
+	public JButton getStableLvlLabel()
+	{
 		return stableLvlButton;
 	}
 
-
-	public void setStableLvlLabel(JButton stableLvlLabel) {
+	public void setStableLvlLabel(JButton stableLvlLabel)
+	{
 		this.stableLvlButton = stableLvlLabel;
 	}
 
-
-	public JButton getMarketLvlLabel() {
+	public JButton getMarketLvlLabel()
+	{
 		return marketLvlButton;
 	}
 
-
-	public void setMarketLvlLabel(JButton marketLvlLabel) {
+	public void setMarketLvlLabel(JButton marketLvlLabel)
+	{
 		this.marketLvlButton = marketLvlLabel;
 	}
 
-
-	public JButton getFarmLvlLabel() {
+	public JButton getFarmLvlLabel()
+	{
 		return farmLvlButton;
 	}
 
-
-	public void setFarmLvlLabel(JButton farmLvlLabel) {
+	public void setFarmLvlLabel(JButton farmLvlLabel)
+	{
 		this.farmLvlButton = farmLvlLabel;
 	}
-	
+
 }

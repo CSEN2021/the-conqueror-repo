@@ -114,18 +114,12 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
 
-		if (cityView.getBarracksButton().isEnabled() == false)
+		if(cityView != null)
 		{
-			cityView.getBarracksRecruitButton().setEnabled(true);
+			cityView.unlockRecruitButtons();
 		}
-		if (cityView.getArcheryRangeButton().isEnabled() == false)
-		{
-			cityView.getArcheryRangeRecruitButton().setEnabled(true);
-		}
-		if (cityView.getStableButton().isEnabled() == false)
-		{
-			cityView.getStableRecruitButton().setEnabled(true);
-		}
+		
+		worldMapView.updateArmiesPanel(theGame);
 	}
 
 	@Override
