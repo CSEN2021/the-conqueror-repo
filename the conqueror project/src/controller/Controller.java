@@ -15,9 +15,11 @@ import views.*;
 
 public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener,
 		CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowAllArmiesViewListener,
-		TargetACityViewListener, BattleViewListener {
+		TargetACityViewListener, BattleViewListener
+{
 	// Main Method
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		new Controller();
 
 		// new Game(null, null);
@@ -43,21 +45,26 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	private Army armyRelocateTo;
 
 	// Constructor
-	public Controller() {
+	public Controller()
+	{
 		this.startScreen = new StartScreen();
 		startScreen.setListener(this);
 	}
 
 	// StartScreen Listener
 	@Override
-	public void onStartGame(String playerName, String playerCity, StartScreen startScreen) {
-		try {
+	public void onStartGame(String playerName, String playerCity, StartScreen startScreen)
+	{
+		try
+		{
 			theGame = new Game(playerName, playerCity);
 
 			startScreen.dispose();
 			worldMapView = new WorldMapView(theGame);
 			worldMapView.setListener(this);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -65,20 +72,29 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	// WorldMapView Listener
 
 	@Override
-	public void onOpenCity(JButton openedButton) {
-		if (cityView == null) {
+	public void onOpenCity(JButton openedButton)
+	{
+		if (cityView == null)
+		{
 			cityView = new CityView(theGame);
-		} else {
+		}
+		else
+		{
 			cityView.setVisible(true);
 			cityView.updateStats(theGame);
 		}
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
 
-		if (cityView.getCurrentCity().getName().equals("Cairo")) {
+		if (cityView.getCurrentCity().getName().equals("Cairo"))
+		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/Cairo 2.jpg"));
-		} else if (cityView.getCurrentCity().getName().equals("Rome")) {
+		}
+		else if (cityView.getCurrentCity().getName().equals("Rome"))
+		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/Rome 2.jpg"));
-		} else {
+		}
+		else
+		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/SpartaLogo.png"));
 		}
 		/*
@@ -96,13 +112,18 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onEndTurn() {
-		if (theGame.isGameOver() == true) {
+	public void onEndTurn()
+	{
+		if (theGame.isGameOver() == true)
+		{
 			worldMapView.dispose();
-			if (theGame.getPlayer().getControlledCities().size() == theGame.getAvailableCities().size()) {
+			if (theGame.getPlayer().getControlledCities().size() == theGame.getAvailableCities().size())
+			{
 				JOptionPane.showMessageDialog(null, "Game Over ! :) , You Won !", "GameOver",
 						JOptionPane.ERROR_MESSAGE);
-			} else {
+			}
+			else
+			{
 				JOptionPane.showMessageDialog(null, "Game Over ! :( , You Lost...", "GameOver",
 						JOptionPane.ERROR_MESSAGE);
 			}
@@ -110,27 +131,37 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
 
-		if (cityView != null) {
+		if (cityView != null)
+		{
 			cityView.unlockRecruitButtons();
 		}
 
-		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++) {
-			if (theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() == 0) {
-				if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase("Cairo")) {
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			if (theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() == 0)
+			{
+				if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase("Cairo"))
+				{
 					worldMapView.getEnterBattleCairoButton().setEnabled(true);
-					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Cairo"))) {
+					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Cairo")))
+					{
 						worldMapView.getEnterBattleRomeButton().setEnabled(false);
 					}
-				} else if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation()
-						.equalsIgnoreCase("Rome")) {
+				}
+				else if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase("Rome"))
+				{
 					worldMapView.getEnterBattleRomeButton().setEnabled(true);
-					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Rome"))) {
+					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Rome")))
+					{
 						worldMapView.getEnterBattleRomeButton().setEnabled(false);
 					}
-				} else {
+				}
+				else
+				{
 					worldMapView.getEnterBattleSpartaButton().setEnabled(true);
 					worldMapView.getEnterBattleRomeButton().setEnabled(true);
-					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Sparta"))) {
+					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Sparta")))
+					{
 						worldMapView.getEnterBattleRomeButton().setEnabled(false);
 					}
 				}
@@ -140,15 +171,19 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onShowAllArmies() {
+	public void onShowAllArmies()
+	{
 		showAllArmiesView = new ShowAllArmiesView(theGame);
 		showAllArmiesView.setListener(this);
 	}
 
 	@Override
-	public void onEnterBattle(String cityGettingAttacked) {
-		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++) {
-			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equals(cityGettingAttacked)) {
+	public void onEnterBattle(String cityGettingAttacked)
+	{
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equals(cityGettingAttacked))
+			{
 				battleView = new BattleView(theGame, theGame.getPlayer().getControlledArmies().get(i),
 						theGame.findCity(cityGettingAttacked));
 			}
@@ -159,18 +194,22 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onBeseige() {
+	public void onBeseige()
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onTargetCity() {
+	public void onTargetCity()
+	{
 		ArrayList<City> availableCities = theGame.getAvailableCities();
 		String[] targetableCities = new String[availableCities.size()
 				- theGame.getPlayer().getControlledCities().size()];
-		for (int i = 0; i < availableCities.size(); i++) {
-			if (!theGame.getPlayer().getControlledCities().contains(availableCities.get(i))) {
+		for (int i = 0; i < availableCities.size(); i++)
+		{
+			if (!theGame.getPlayer().getControlledCities().contains(availableCities.get(i)))
+			{
 				targetableCities[i] = availableCities.get(i).getName();
 			}
 		}
@@ -181,9 +220,11 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onInitiate() {
+	public void onInitiate()
+	{
 		String[] cities = new String[theGame.getPlayer().getControlledCities().size()];
-		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++) {
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
 			cities[i] = theGame.getPlayer().getControlledCities().get(i).getName();
 		}
 		initiateArmyView = new InitiateArmyView(theGame, cities);
@@ -191,9 +232,11 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onRelocateUnit() {
+	public void onRelocateUnit()
+	{
 		allArmies = new ArrayList<>();
-		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++) {
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
 			allArmies.add(theGame.getPlayer().getControlledCities().get(i).getDefendingArmy());
 		}
 		allArmies.addAll(theGame.getPlayer().getControlledArmies());
@@ -201,10 +244,12 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		int totalSize = theGame.getPlayer().getControlledCities().size()
 				+ theGame.getPlayer().getControlledArmies().size();
 		String[] armiesToRelocate = new String[totalSize];
-		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++) {
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
 			armiesToRelocate[i] = "Defending Army of " + theGame.getPlayer().getControlledCities().get(i).getName();
 		}
-		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++) {
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
 			armiesToRelocate[i + theGame.getPlayer().getControlledCities().size()] = "Army " + (i + 1);
 		}
 
@@ -215,16 +260,23 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	// InitiateArmyView listeners
 	@Override
-	public void onInitiateCity(String cityName) {
+	public void onInitiateCity(String cityName)
+	{
 		armyInitiationCity = theGame.findCity(cityName);
 		ArrayList<Unit> units = armyInitiationCity.getDefendingArmy().getUnits();
 		String[] unitsArray = new String[units.size()];
-		for (int i = 0; i < units.size(); i++) {
-			if (units.get(i) instanceof Archer) {
+		for (int i = 0; i < units.size(); i++)
+		{
+			if (units.get(i) instanceof Archer)
+			{
 				unitsArray[i] = "Archer " + units.get(i).getLevel();
-			} else if (units.get(i) instanceof Infantry) {
+			}
+			else if (units.get(i) instanceof Infantry)
+			{
 				unitsArray[i] = "Infantry " + units.get(i).getLevel();
-			} else {
+			}
+			else
+			{
 				unitsArray[i] = "Cavalry " + units.get(i).getLevel();
 			}
 		}
@@ -236,7 +288,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onInitiateUnit(String unitToBeInitiated) {
+	public void onInitiateUnit(String unitToBeInitiated)
+	{
 		Unit actualUnitToInitiate;
 		String nameSearch;
 		int levelSearch;
@@ -245,11 +298,13 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			nameSearch = unitToBeInitiated.substring(0, 6);
 			levelSearch = Integer.parseInt("" + unitToBeInitiated.charAt(7));
-		} else if (unitToBeInitiated.length() == 10) // infantry
+		}
+		else if (unitToBeInitiated.length() == 10) // infantry
 		{
 			nameSearch = unitToBeInitiated.substring(0, 8);
 			levelSearch = Integer.parseInt("" + unitToBeInitiated.charAt(9));
-		} else // cavalry
+		}
+		else // cavalry
 		{
 			nameSearch = unitToBeInitiated.substring(0, 7);
 			levelSearch = Integer.parseInt("" + unitToBeInitiated.charAt(8));
@@ -261,194 +316,240 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	// CityView listeners
-	public void onBuild(String stringBuildling) {
+	public void onBuild(String stringBuildling)
+	{
 		String currentCityName = cityView.getCurrentCity().getName();
-		try {
+		try
+		{
 			theGame.getPlayer().build(stringBuildling, currentCityName);
-			switch (stringBuildling) {
-			case "Farm": {
-				cityView.getFarmButton().setEnabled(false);
-				cityView.getFarmButton().setText("Farm Built");
-				cityView.getFarmLvlButton().setText("Level: 1 Cost: 500");
-				cityView.getFarmLvlButton().setEnabled(true);
-				break;
-			}
-			case "Market": {
-				cityView.getMarketButton().setEnabled(false);
-				cityView.getMarketButton().setText("Market Built");
-				cityView.getMarketLvlButton().setText("Level: 1 Cost: 700");
-				cityView.getMarketLvlButton().setEnabled(true);
-				break;
-			}
-			case "ArcheryRange": {
-				cityView.getArcheryRangeButton().setEnabled(false);
-				cityView.getArcheryRangeButton().setText("ArcheryRange Built");
-				cityView.getArcheryRangeLvlButton().setEnabled(true);
-				cityView.getArcheryRangeLvlButton().setText("Level: 1 Cost: 1500");
+			switch (stringBuildling)
+			{
+				case "Farm":
+				{
+					cityView.getFarmButton().setEnabled(false);
+					cityView.getFarmButton().setText("Farm Built");
+					cityView.getFarmLvlButton().setText("Level: 1 Cost: 500");
+					cityView.getFarmLvlButton().setEnabled(true);
+					break;
+				}
+				case "Market":
+				{
+					cityView.getMarketButton().setEnabled(false);
+					cityView.getMarketButton().setText("Market Built");
+					cityView.getMarketLvlButton().setText("Level: 1 Cost: 700");
+					cityView.getMarketLvlButton().setEnabled(true);
+					break;
+				}
+				case "ArcheryRange":
+				{
+					cityView.getArcheryRangeButton().setEnabled(false);
+					cityView.getArcheryRangeButton().setText("ArcheryRange Built");
+					cityView.getArcheryRangeLvlButton().setEnabled(true);
+					cityView.getArcheryRangeLvlButton().setText("Level: 1 Cost: 1500");
 
-				cityView.getArcheryRangeRecruitButton().setEnabled(true);
-				cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: 400");
-				break;
-			}
-			case "Barracks": {
-				cityView.getBarracksButton().setEnabled(false);
-				cityView.getBarracksButton().setText("Barracks Built");
-				cityView.getBarracksLvlButton().setText("Level: 1 Cost: 1000");
-				cityView.getBarracksLvlButton().setEnabled(true);
+					cityView.getArcheryRangeRecruitButton().setEnabled(true);
+					cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: 400");
+					break;
+				}
+				case "Barracks":
+				{
+					cityView.getBarracksButton().setEnabled(false);
+					cityView.getBarracksButton().setText("Barracks Built");
+					cityView.getBarracksLvlButton().setText("Level: 1 Cost: 1000");
+					cityView.getBarracksLvlButton().setEnabled(true);
 
-				cityView.getBarracksRecruitButton().setEnabled(true);
-				cityView.getBarracksRecruitButton().setText("Infantry, Cost: 500");
-				break;
-			}
-			case "Stable": {
-				cityView.getStableButton().setEnabled(false);
-				cityView.getStableButton().setText("Stable Built");
-				cityView.getStableLvlButton().setText("Level: 1 Cost: 1500");
-				cityView.getStableLvlButton().setEnabled(true);
+					cityView.getBarracksRecruitButton().setEnabled(true);
+					cityView.getBarracksRecruitButton().setText("Infantry, Cost: 500");
+					break;
+				}
+				case "Stable":
+				{
+					cityView.getStableButton().setEnabled(false);
+					cityView.getStableButton().setText("Stable Built");
+					cityView.getStableLvlButton().setText("Level: 1 Cost: 1500");
+					cityView.getStableLvlButton().setEnabled(true);
 
-				cityView.getStableRecruitButton().setEnabled(true);
-				cityView.getStableRecruitButton().setText("Calvary, Cost: 600");
-				break;
+					cityView.getStableRecruitButton().setEnabled(true);
+					cityView.getStableRecruitButton().setText("Calvary, Cost: 600");
+					break;
+				}
 			}
-			}
-		} catch (NotEnoughGoldException e) {
+		}
+		catch (NotEnoughGoldException e)
+		{
 			JOptionPane.showMessageDialog(null, "You don't have enough gold!", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
 		worldMapView.updateStats(theGame);
 	}
 
-	public void onUpgrade(String stringBuildling) {
+	public void onUpgrade(String stringBuildling)
+	{
 		// TODO Auto-generated method stub
 		String currentCityName = cityView.getCurrentCity().getName();
 		ArrayList<EconomicBuilding> economicBuildings = theGame.findCity(currentCityName).getEconomicalBuildings();
 		ArrayList<MilitaryBuilding> militaryBuildings = theGame.findCity(currentCityName).getMilitaryBuildings();
 
-		try {
+		try
+		{
 			int currentLevel;
-			switch (stringBuildling) {
-			case "Farm": {
-				for (int i = 0; i < economicBuildings.size(); i++) {
-					if (economicBuildings.get(i) instanceof Farm) {
-						theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
-						currentLevel = Integer.parseInt(cityView.getFarmLvlButton().getText().charAt(7) + "") + 1;
-						cityView.getFarmLvlButton().setText("Level: " + currentLevel + " Cost: 500");
-						if (currentLevel == 3) {
-							cityView.getFarmLvlButton().setText("Max Level");
+			switch (stringBuildling)
+			{
+				case "Farm":
+				{
+					for (int i = 0; i < economicBuildings.size(); i++)
+					{
+						if (economicBuildings.get(i) instanceof Farm)
+						{
+							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
+							currentLevel = Integer.parseInt(cityView.getFarmLvlButton().getText().charAt(7) + "") + 1;
+							cityView.getFarmLvlButton().setText("Level: " + currentLevel + " Cost: 500");
+							if (currentLevel == 3)
+							{
+								cityView.getFarmLvlButton().setText("Max Level");
+							}
+							break;
 						}
-						break;
 					}
+					break;
 				}
-				break;
-			}
-			case "Market": {
-				for (int i = 0; i < economicBuildings.size(); i++) {
-					if (economicBuildings.get(i) instanceof Market) {
-						theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
-						currentLevel = Integer.parseInt(cityView.getMarketLvlLabel().getText().charAt(7) + "") + 1;
-						cityView.getMarketLvlButton().setText("Level: " + currentLevel + " Cost: 700");
-						if (currentLevel == 3) {
-							cityView.getMarketLvlButton().setText("Max Level");
+				case "Market":
+				{
+					for (int i = 0; i < economicBuildings.size(); i++)
+					{
+						if (economicBuildings.get(i) instanceof Market)
+						{
+							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
+							currentLevel = Integer.parseInt(cityView.getMarketLvlLabel().getText().charAt(7) + "") + 1;
+							cityView.getMarketLvlButton().setText("Level: " + currentLevel + " Cost: 700");
+							if (currentLevel == 3)
+							{
+								cityView.getMarketLvlButton().setText("Max Level");
+							}
+							break;
 						}
-						break;
 					}
+					break;
 				}
-				break;
-			}
-			case "ArcheryRange": {
-				for (int i = 0; i < militaryBuildings.size(); i++) {
-					if (militaryBuildings.get(i) instanceof ArcheryRange) {
-						theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
-						currentLevel = Integer.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "")
-								+ 1;
-						cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-						cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: "
-								+ (((ArcheryRange) (theGame.findCity(currentCityName).findBuilding("ArcheryRange")))
-										.getRecruitmentCost()));
-						if (currentLevel == 3) {
-							cityView.getArcheryRangeLvlButton().setText("Max Level");
+				case "ArcheryRange":
+				{
+					for (int i = 0; i < militaryBuildings.size(); i++)
+					{
+						if (militaryBuildings.get(i) instanceof ArcheryRange)
+						{
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
+							currentLevel = Integer
+									.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
+							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: "
+									+ (((ArcheryRange) (theGame.findCity(currentCityName).findBuilding("ArcheryRange")))
+											.getRecruitmentCost()));
+							if (currentLevel == 3)
+							{
+								cityView.getArcheryRangeLvlButton().setText("Max Level");
+							}
+							break;
 						}
-						break;
 					}
-				}
-				break;
+					break;
 
-			}
-			case "Barracks": {
-				for (int i = 0; i < militaryBuildings.size(); i++) {
-					if (militaryBuildings.get(i) instanceof Barracks) {
-						theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
-						;
-						currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "") + 1;
-						cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
-						cityView.getBarracksRecruitButton()
-								.setText("Infantry, Cost: "
-										+ (((Barracks) (theGame.findCity(currentCityName).findBuilding("Barracks")))
-												.getRecruitmentCost()));
-
-						if (currentLevel == 3) {
-							cityView.getBarracksLvlButton().setText("Max Level");
-						}
-						break;
-					}
 				}
-				break;
+				case "Barracks":
+				{
+					for (int i = 0; i < militaryBuildings.size(); i++)
+					{
+						if (militaryBuildings.get(i) instanceof Barracks)
+						{
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
+							;
+							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "")
+									+ 1;
+							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
+							cityView.getBarracksRecruitButton()
+									.setText("Infantry, Cost: "
+											+ (((Barracks) (theGame.findCity(currentCityName).findBuilding("Barracks")))
+													.getRecruitmentCost()));
 
-			}
-			case "Stable": {
-				for (int i = 0; i < militaryBuildings.size(); i++) {
-					if (militaryBuildings.get(i) instanceof Stable) {
-						theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
-						;
-						currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
-						cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
-						cityView.getStableRecruitButton()
-								.setText("Calvary, Cost: "
-										+ (((Stable) (theGame.findCity(currentCityName).findBuilding("Stable")))
-												.getRecruitmentCost()));
-						if (currentLevel == 3) {
-							cityView.getStableLvlButton().setText("Max Level");
+							if (currentLevel == 3)
+							{
+								cityView.getBarracksLvlButton().setText("Max Level");
+							}
+							break;
 						}
-						break;
 					}
+					break;
+
 				}
-				break;
-			}
+				case "Stable":
+				{
+					for (int i = 0; i < militaryBuildings.size(); i++)
+					{
+						if (militaryBuildings.get(i) instanceof Stable)
+						{
+							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
+							;
+							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
+							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							cityView.getStableRecruitButton()
+									.setText("Calvary, Cost: "
+											+ (((Stable) (theGame.findCity(currentCityName).findBuilding("Stable")))
+													.getRecruitmentCost()));
+							if (currentLevel == 3)
+							{
+								cityView.getStableLvlButton().setText("Max Level");
+							}
+							break;
+						}
+					}
+					break;
+				}
 
 			}
 			cityView.updateStats(theGame);
 			worldMapView.updateStats(theGame);
 
-		} catch (MaxLevelException maxLevelException) {
+		}
+		catch (MaxLevelException maxLevelException)
+		{
 			// TODO: handle exception
-			switch (stringBuildling) {
-			case "Farm": {
-				cityView.getFarmLvlButton().setEnabled(false);
-				break;
-			}
-			case "Market": {
-				cityView.getMarketLvlButton().setEnabled(false);
-				break;
-			}
-			case "Stable": {
-				cityView.getStableLvlButton().setEnabled(false);
-				break;
-			}
-			case "Barracks": {
-				cityView.getBarracksLvlButton().setEnabled(false);
-				break;
-			}
-			case "ArcheryRange": {
-				cityView.getArcheryRangeLvlButton().setEnabled(false);
-				break;
-			}
+			switch (stringBuildling)
+			{
+				case "Farm":
+				{
+					cityView.getFarmLvlButton().setEnabled(false);
+					break;
+				}
+				case "Market":
+				{
+					cityView.getMarketLvlButton().setEnabled(false);
+					break;
+				}
+				case "Stable":
+				{
+					cityView.getStableLvlButton().setEnabled(false);
+					break;
+				}
+				case "Barracks":
+				{
+					cityView.getBarracksLvlButton().setEnabled(false);
+					break;
+				}
+				case "ArcheryRange":
+				{
+					cityView.getArcheryRangeLvlButton().setEnabled(false);
+					break;
+				}
 			}
 
 			JOptionPane.showMessageDialog(null, "You have reached the max level. You can't upgrade.", "Warning",
 					JOptionPane.ERROR_MESSAGE);
-		} catch (BuildingInCoolDownException bInCoolDownException) {
+		}
+		catch (BuildingInCoolDownException bInCoolDownException)
+		{
 			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning", JOptionPane.ERROR_MESSAGE);
-		} catch (NotEnoughGoldException notEnoughGoldException) {
+		}
+		catch (NotEnoughGoldException notEnoughGoldException)
+		{
 			// TODO: handle exception
 			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
@@ -456,34 +557,46 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		worldMapView.updateStats(theGame);
 	}
 
-	public void onRecruit(String unit) {
-		try {
+	public void onRecruit(String unit)
+	{
+		try
+		{
 			theGame.getPlayer().recruitUnit(unit, cityView.getCurrentCity().getName());
 			cityView.drawDefendingArmy();
 			worldMapView.updateStats(theGame);
 			cityView.updateStats(theGame);
 			cityView.repaint();
-		} catch (BuildingInCoolDownException buildingInCoolDownException) {
+		}
+		catch (BuildingInCoolDownException buildingInCoolDownException)
+		{
 			JOptionPane.showMessageDialog(null, "Building is in cool down.", "Warning", JOptionPane.ERROR_MESSAGE);
-		} catch (MaxRecruitedException maxRecruitedException) {
-			switch (unit) {
-			case "Archer": {
-				cityView.getArcheryRangeRecruitButton().setEnabled(false);
-				break;
-			}
-			case "Infantry": {
-				cityView.getBarracksRecruitButton().setEnabled(false);
-				break;
-			}
-			case "Cavalry": {
-				cityView.getStableRecruitButton().setEnabled(false);
-				break;
-			}
+		}
+		catch (MaxRecruitedException maxRecruitedException)
+		{
+			switch (unit)
+			{
+				case "Archer":
+				{
+					cityView.getArcheryRangeRecruitButton().setEnabled(false);
+					break;
+				}
+				case "Infantry":
+				{
+					cityView.getBarracksRecruitButton().setEnabled(false);
+					break;
+				}
+				case "Cavalry":
+				{
+					cityView.getStableRecruitButton().setEnabled(false);
+					break;
+				}
 			}
 
 			JOptionPane.showMessageDialog(null, "You have reached max recruited count for this turn.", "Warning",
 					JOptionPane.ERROR_MESSAGE);
-		} catch (NotEnoughGoldException notEnoughGoldException) {
+		}
+		catch (NotEnoughGoldException notEnoughGoldException)
+		{
 
 			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
@@ -492,7 +605,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	@Override
 
-	public void onShowDefendingArmy() {
+	public void onShowDefendingArmy()
+	{
 
 		showArmyView = new ShowArmyView(theGame, cityView.getCurrentCity());
 
@@ -500,10 +614,12 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	// RelocateUnitView listeners
 	@Override
-	public void onRelocateArmyFrom(int armyFrom) {
+	public void onRelocateArmyFrom(int armyFrom)
+	{
 		armyRelocateFrom = allArmies.get(armyFrom);
 		String[] unitsToRelocateFrom = new String[armyRelocateFrom.getUnits().size()];
-		for (int i = 0; i < unitsToRelocateFrom.length; i++) {
+		for (int i = 0; i < unitsToRelocateFrom.length; i++)
+		{
 			unitsToRelocateFrom[i] = armyRelocateFrom.getUnits().get(i).toString();
 		}
 		relocateUnitView.dispose();
@@ -514,16 +630,19 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onRelocateUnitChosen(int unitToBeInitiated) {
+	public void onRelocateUnitChosen(int unitToBeInitiated)
+	{
 		unitRelocate = armyRelocateFrom.getUnits().get(unitToBeInitiated);
 
 		int totalSize = theGame.getPlayer().getControlledCities().size()
 				+ theGame.getPlayer().getControlledArmies().size();
 		String[] armiesToRelocate = new String[totalSize];
-		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++) {
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
 			armiesToRelocate[i] = "Defending Army of " + theGame.getPlayer().getControlledCities().get(i).getName();
 		}
-		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++) {
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
 			armiesToRelocate[i + theGame.getPlayer().getControlledCities().size()] = "Army " + (i + 1);
 		}
 
@@ -535,13 +654,17 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onRelocateArmyTo(int armyTo) {
+	public void onRelocateArmyTo(int armyTo)
+	{
 		armyRelocateTo = allArmies.get(armyTo);
-		try {
+		try
+		{
 			armyRelocateTo.relocateUnit(unitRelocate);
 			worldMapView.updateArmiesPanel(theGame);
 			relocateUnitView.dispose();
-		} catch (MaxCapacityException e) {
+		}
+		catch (MaxCapacityException e)
+		{
 			JOptionPane.showMessageDialog(null, "Controlled Armies can't have more than 10 units", "Warning",
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -549,12 +672,14 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	// ShowAllArmiesView Listeners
 	@Override
-	public void onArmySelected(Army armyToBeViewed) {
+	public void onArmySelected(Army armyToBeViewed)
+	{
 		showArmyView = new ShowArmyView(theGame, armyToBeViewed);
 	}
 
 	@Override
-	public void onDefendingArmySelected(City city) {
+	public void onDefendingArmySelected(City city)
+	{
 
 		showArmyView = new ShowArmyView(theGame, city);
 
@@ -562,11 +687,13 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	// TargetACityView Listener
 	@Override
-	public void onCityTargeted(String targetedCity) {
+	public void onCityTargeted(String targetedCity)
+	{
 		targetACityView.dispose();
 		this.targetedCity = targetedCity;
 		String[] attackingArmies = new String[theGame.getPlayer().getControlledArmies().size()];
-		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++) {
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
 			attackingArmies[i] = "Army " + (i + 1);
 		}
 		targetACityView = new TargetACityView(theGame, attackingArmies);
@@ -577,7 +704,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	public void onArmyTargeting(int marchingArmyIndx) {
+	public void onArmyTargeting(int marchingArmyIndx)
+	{
 		Army marchingArmy = theGame.getPlayer().getControlledArmies().get(marchingArmyIndx);
 		theGame.targetCity(marchingArmy, targetedCity);
 		targetACityView.dispose();
@@ -588,8 +716,10 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	// BattleView Listener
 
 	@Override
-	public void onAttack() {
-		try {
+	public void onAttack()
+	{
+		try
+		{
 			Army playerArmy = null;
 			Unit attackingUnit = null;
 			Unit targetUnit = null;
@@ -603,44 +733,52 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			Army enemtArmy = targetCity.getDefendingArmy();
 
 			// getting the player's army
-			for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++) {
-				if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equals(targetCityName)) {
+			for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+			{
+				if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equals(targetCityName))
+				{
 					playerArmy = theGame.getPlayer().getControlledArmies().get(i);
 				}
 			}
 			// getting the attacking unit from the player's army
-			for (int i = 0; i < battleView.getPlayerUnitsButtons().size(); i++) {
-				if (battleView.getPlayerUnitsButtons().get(i).isSelected()) {
+			for (int i = 0; i < battleView.getPlayerUnitsButtons().size(); i++)
+			{
+				if (battleView.getPlayerUnitsButtons().get(i).isSelected())
+				{
 					attackingUnit = playerArmy.getUnits().get(i);
 					attackingUnitButton = battleView.getPlayerUnitsButtons().get(i);
 				}
 			}
 
 			// getting the attacking unit from the player's army
-			for (int i = 0; i < battleView.getEnemyUnitsButtons().size(); i++) {
-				if (battleView.getEnemyUnitsButtons().get(i).isSelected()) {
+			for (int i = 0; i < battleView.getEnemyUnitsButtons().size(); i++)
+			{
+				if (battleView.getEnemyUnitsButtons().get(i).isSelected())
+				{
 					targetUnit = enemtArmy.getUnits().get(i);
 					targetUnitButton = battleView.getEnemyUnitsButtons().get(i);
 				}
 			}
 
 			attackingUnit.attack(targetUnit);
-			
-			
-			
-		} catch (Exception e) {
+
+		}
+		catch (Exception e)
+		{
 			System.out.println("friendly fireeee,friendly fireeeee");
 		}
 
 	}
 
 	@Override
-	public void onAutoResolve() {
+	public void onAutoResolve()
+	{
 
 	}
 
 	@Override
-	public void onRetreat() {
+	public void onRetreat()
+	{
 
 	}
 
