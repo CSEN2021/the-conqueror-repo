@@ -89,6 +89,21 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/sparta (1).png"));
 		}
+		/*
+		if (cityView.getCurrentCity().equals("Cairo"))
+		{
+			cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(), "CairoArcher.jpg");
+		}
+		else if (cityView.getCurrentCity().equals("Rome"))
+		{
+			cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(), "RomeArcher.jpg");
+		}
+		else 
+		{
+			cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(), "RomeArcher.jpg");
+		}
+		*/
+		cityView.getCityIcon().setText("TEST");
 		cityView.drawDefendingArmy();
 		cityView.setListener(this);
 	}

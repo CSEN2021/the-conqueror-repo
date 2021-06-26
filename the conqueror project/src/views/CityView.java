@@ -3,6 +3,7 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,13 +80,19 @@ public class CityView extends TemplateView implements ActionListener
 	}
 
 
-	public void setUpButton2(JButton theButton, String path )
+	public void setUpButtonWithImage(JButton theButton, String path )
 	{
-		theButton.setIcon(new ImageIcon("resources/" + path));
+		/*theButton.setIcon(new ImageIcon("resources/" + path));
 		theButton.setForeground(Color.WHITE);
 		theButton.setBackground(Color.DARK_GRAY);
 		theButton.setFocusable(false);
-		theButton.repaint();
+		theButton.repaint();*/
+		
+		theButton.setIcon(new ImageIcon("resources/" + path) );
+		theButton.setHorizontalTextPosition(JButton.CENTER);
+		theButton.setVerticalTextPosition(JButton.CENTER);
+		theButton.setForeground(Color.white);
+		theButton.setFont(new Font("Arial", Font.PLAIN, 40));
 	}
 	
 	public CityView(Game theGame)
@@ -98,6 +105,7 @@ public class CityView extends TemplateView implements ActionListener
 		setUpButton(archeryRangeButton);
 		setUpButton(archeryRangeLvlButton);
 		setUpButton(archeryRangeRecruitButton);
+		
 		setUpButton(barracksButton);
 		setUpButton(barracksLvlButton);
 		setUpButton(barracksRecruitButton);
@@ -173,13 +181,21 @@ public class CityView extends TemplateView implements ActionListener
 		
 		cityIcon = new JLabel();
 		
-		
-		
+		/*JButton button = new JButton( "Centered" );
+		button.setIcon( new ImageIcon("resources/Cairo 2.jpg") );
+		button.setHorizontalTextPosition(JButton.CENTER);
+		button.setVerticalTextPosition(JButton.CENTER);
+		button.setForeground(Color.white);
+		button.setFont(new Font("Arial", Font.PLAIN, 40));
+		midPanel.add(button);
+		*/
 		
 		midPanel.add(cityIcon);
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		
 	}
+	
+	
 
 	public void drawDefendingArmy()
 	{
