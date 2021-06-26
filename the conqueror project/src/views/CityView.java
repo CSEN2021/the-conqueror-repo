@@ -200,7 +200,10 @@ public class CityView extends TemplateView implements ActionListener
 	public void drawDefendingArmy()
 	{
 		defendingArmiesTextArea.setText(currentCity.getDefendingArmy().toString());
-		bottomPanel.add(defendingArmiesTextArea, BorderLayout.NORTH);
+		defendingArmiesTextArea.setBackground(Color.DARK_GRAY);
+		defendingArmiesTextArea.setForeground(Color.white);
+		
+		bottomPanel.add(defendingArmiesTextArea, BorderLayout.CENTER);
 	}
 	
 	public JButton getBarracksRecruitButton() {
