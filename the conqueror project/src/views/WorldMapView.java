@@ -98,9 +98,11 @@ public class WorldMapView extends TemplateView implements ActionListener
 		controlledArmiesTextArea.setBackground(new Color(0x404B69));
 		controlledArmiesTextArea.setForeground(Color.white);
 		controlledArmiesTextArea.setPreferredSize(new Dimension(350, 350));
+		controlledArmiesTextArea.setEditable(false);
 		marchingArmiesTextArea.setBackground(new Color(0xF73859));
 		marchingArmiesTextArea.setForeground(Color.white);
 		marchingArmiesTextArea.setPreferredSize(new Dimension(350, 300));
+		marchingArmiesTextArea.setEditable(false);
 
 		setUpLabel(controlledArmiesLabel);
 		setUpLabel(marchingArmiesLabel);
