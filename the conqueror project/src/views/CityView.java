@@ -222,6 +222,7 @@ public class CityView extends TemplateView implements ActionListener
 		defendingArmiesTextArea.setText(currentCity.getDefendingArmy().toString());
 		defendingArmiesTextArea.setBackground(Color.DARK_GRAY);
 		defendingArmiesTextArea.setForeground(Color.white);
+		defendingArmiesTextArea.setEditable(false);
 		JLabel fillJLabel = new JLabel();
 		fillJLabel.setPreferredSize(new Dimension(475, 0));
 		fillJLabel.setBackground(Color.DARK_GRAY);
