@@ -11,5 +11,5 @@ public interface WorldMapViewListener
 	public void onRelocateUnit();
 	public void onShowAllArmies();
 	public void onEnterBattle(String cityGettingAttacked);
-	public void onBeseige();
+	public void onBeseige(String besiegedCity);
 }

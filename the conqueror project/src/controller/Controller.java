@@ -21,8 +21,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	public static void main(String[] args)
 	{
 		new Controller();
-
-		// new Game(null, null);
 	}
 
 	// instance variables
@@ -114,6 +112,43 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onEndTurn()
 	{
+		for(int i = 0; i < theGame.getAvailableCities().size(); i++)
+		{
+			if(theGame.getAvailableCities().get(i).getTurnsUnderSiege() == 3 && battleView == null)
+			{
+				onEnterBattle(theGame.getAvailableCities().get(i).getName());
+			}
+		}
+		
+		if(battleView != null)
+		{
+			JOptionPane.showMessageDialog(null, "Finish your battle before ending turn !", "Finish the Battle",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		else
+		{
+			if(worldMapView.getBeseigeCairoButton().isEnabled() && !theGame.findCity("Cairo").isUnderSiege())
+			{
+				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Finish the Battle",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if(worldMapView.getBeseigeCairoButton().isEnabled() && !theGame.findCity("Cairo").isUnderSiege())
+			{
+				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Finish the Battle",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			if(worldMapView.getBeseigeCairoButton().isEnabled() && !theGame.findCity("Cairo").isUnderSiege())
+			{
+				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Finish the Battle",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+		}
+		theGame.endTurn();
 		if (theGame.isGameOver() == true)
 		{
 			worldMapView.dispose();
@@ -128,7 +163,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		theGame.endTurn();
+		
+		
 		worldMapView.updateStats(theGame);
 
 		if (cityView != null)
@@ -143,25 +179,30 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase("Cairo"))
 				{
 					worldMapView.getEnterBattleCairoButton().setEnabled(true);
+					worldMapView.getBeseigeCairoButton().setEnabled(true);
 					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Cairo")))
 					{
 						worldMapView.getEnterBattleRomeButton().setEnabled(false);
+						worldMapView.getBeseigeCairoButton().setEnabled(false);
 					}
 				}
 				else if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase("Rome"))
 				{
 					worldMapView.getEnterBattleRomeButton().setEnabled(true);
+					worldMapView.getBeseigeRomeButton().setEnabled(true);
 					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Rome")))
 					{
 						worldMapView.getEnterBattleRomeButton().setEnabled(false);
+						worldMapView.getBeseigeRomeButton().setEnabled(false);
 					}
 				}
 				else
 				{
 					worldMapView.getEnterBattleSpartaButton().setEnabled(true);
-					worldMapView.getEnterBattleRomeButton().setEnabled(true);
+					worldMapView.getBeseigeSpartaButton().setEnabled(true);
 					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Sparta")))
 					{
+						worldMapView.getBeseigeSpartaButton().setEnabled(false);
 						worldMapView.getEnterBattleRomeButton().setEnabled(false);
 					}
 				}
@@ -188,15 +229,33 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 						theGame.findCity(cityGettingAttacked));
 			}
 		}
-
+		worldMapView.updateArmiesPanel(theGame);
 		battleView.setListener(this);
 
 	}
 
 	@Override
-	public void onBeseige()
+	public void onBeseige(String besiegedCity)
 	{
-		// TODO Auto-generated method stub
+		for(int i =0 ;i <theGame.getPlayer().getControlledArmies().size();i++)
+		{
+			if(theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase(besiegedCity))
+			{
+				try
+				{
+					theGame.getPlayer().laySiege(theGame.getPlayer().getControlledArmies().get(i), theGame.findCity(besiegedCity));
+					worldMapView.updateArmiesPanel(theGame);
+				}
+				catch (TargetNotReachedException e)
+				{
+					JOptionPane.showMessageDialog(null, "Can't besiege city before reaching it", "Warning", JOptionPane.ERROR_MESSAGE);
+				}
+				catch (FriendlyCityException e)
+				{
+					JOptionPane.showMessageDialog(null, "Can't besiege friendly city", "Warning", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
 
 	}
 
