@@ -88,7 +88,7 @@ public class TemplateView extends JFrame
 		foodLabel.repaint();
 		playerNameLabel.repaint();
 		turnCountLabel.repaint();
-		// topPanel.repaint();
+		topPanel.repaint();
 	}
 
 	public void setUpButton(JButton theButton)

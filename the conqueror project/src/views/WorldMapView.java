@@ -85,22 +85,22 @@ public class WorldMapView extends TemplateView implements ActionListener
 		setUpButton(initiateArmyButton);
 		setUpButton(showAllArmiesButton);
 
-		controlledArmiesTextArea.setBackground(new Color(0x3E4149));
+		controlledArmiesTextArea.setBackground(new Color(0x404B69));
 		controlledArmiesTextArea.setForeground(Color.white);
 		controlledArmiesTextArea.setPreferredSize(new Dimension(350, 350));
-		marchingArmiesTextArea.setBackground(new Color(0x3E4149));
+		marchingArmiesTextArea.setBackground(new Color(0xF73859));
 		marchingArmiesTextArea.setForeground(Color.white);
 		marchingArmiesTextArea.setPreferredSize(new Dimension(350, 300));
 
 		setUpLabel(controlledArmiesLabel);
 		setUpLabel(marchingArmiesLabel);
 		controlledArmiesLabel.setBackground(controlledArmiesTextArea.getBackground());
-		marchingArmiesLabel.setBackground(controlledArmiesTextArea.getBackground());
+		marchingArmiesLabel.setBackground(marchingArmiesTextArea.getBackground());
 
 		// panels
 
-		bottomPanel.setBackground(new Color(0x39A6A3));
-		rightPanel.setBackground(new Color(0x3E4149));
+		bottomPanel.setBackground(new Color(0x3E4149));
+		rightPanel.setBackground(new Color(0x39A6A3));
 
 		// add
 		add(rightPanel, BorderLayout.EAST);
@@ -139,7 +139,8 @@ public class WorldMapView extends TemplateView implements ActionListener
 			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentStatus() == Status.MARCHING)
 			{
 				marchingArmiesTextArea.append("Army " + (i + 1) + " ( Marching to "
-						+ theGame.getPlayer().getControlledArmies().get(i).getTarget() + " ): \n" + string + "\n");
+						+ theGame.getPlayer().getControlledArmies().get(i).getTarget() + ", Distance left "
+						+ theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() + " ): \n" + string);
 			}
 			else
 			{
