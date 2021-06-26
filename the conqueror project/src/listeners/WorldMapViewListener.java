@@ -10,4 +10,5 @@ public interface WorldMapViewListener
 	public void onInitiate();
 	public void onRelocateUnit();
 	public void onShowAllArmies();
+	public void onEnterBattle(String cityGettingAttacked);
 }

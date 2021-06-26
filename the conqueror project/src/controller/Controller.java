@@ -68,6 +68,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	// WorldMapView Listener
+	
 	@Override
 	public void onOpenCity(JButton openedButton)
 	{
@@ -111,14 +112,50 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onEndTurn()
 	{
+		if (theGame.isGameOver() == true)
+		{
+			worldMapView.dispose();
+			JOptionPane.showMessageDialog(null, "GameOver ! :( , better luck next time", "GameOver", JOptionPane.ERROR_MESSAGE);
+		}
 		theGame.endTurn();
 		worldMapView.updateStats(theGame);
 
-		if(cityView != null)
+		if (cityView != null)
 		{
 			cityView.unlockRecruitButtons();
 		}
-		
+
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			if (theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() == 0)
+			{
+				if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase("Cairo"))
+				{
+					worldMapView.getEnterBattleCairoButton().setEnabled(true);
+					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Cairo")))
+					{
+						worldMapView.getEnterBattleRomeButton().setEnabled(false);
+					}
+				}
+				else if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equalsIgnoreCase("Rome"))
+				{
+					worldMapView.getEnterBattleRomeButton().setEnabled(true);
+					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Rome")))
+					{
+						worldMapView.getEnterBattleRomeButton().setEnabled(false);
+					}
+				}
+				else
+				{
+					worldMapView.getEnterBattleSpartaButton().setEnabled(true);
+					worldMapView.getEnterBattleRomeButton().setEnabled(true);
+					if (theGame.getPlayer().getControlledCities().contains(theGame.findCity("Sparta")))
+					{
+						worldMapView.getEnterBattleRomeButton().setEnabled(false);
+					}
+				}
+			}
+		}
 		worldMapView.updateArmiesPanel(theGame);
 	}
 
@@ -127,6 +164,13 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	{
 		showAllArmiesView = new ShowAllArmiesView(theGame);
 		showAllArmiesView.setListener(this);
+	}
+
+	@Override
+	public void onEnterBattle(String cityGettingAttacked)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override
