@@ -13,7 +13,8 @@ import exceptions.*;
 import listeners.*;
 import views.*;
 
-public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener, CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowAllArmiesViewListener
+public class Controller implements StartScreenListener, WorldMapViewListener, InitiateArmyViewListener,
+		CityViewListener, RelocateUnitListener, ShowArmyViewListener, ShowAllArmiesViewListener, TargetACityViewListener
 {
 	// Main Method
 	public static void main(String[] args)
@@ -31,14 +32,16 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	private InitiateArmyView initiateArmyView;
 	private RelocateUnitView relocateUnitView;
 	private City armyInitiationCity;
+	private String targetedCity;
 	private ShowAllArmiesView showAllArmiesView;
 	private ShowArmyView showArmyView;
+	private TargetACityView targetACityView;
 
 	private ArrayList<Army> allArmies;
 	private Army armyRelocateFrom;
 	private Unit unitRelocate;
 	private Army armyRelocateTo;
-	
+
 	// Constructor
 	public Controller()
 	{
@@ -53,7 +56,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		try
 		{
 			theGame = new Game(playerName, playerCity);
-			
+
 			startScreen.dispose();
 			worldMapView = new WorldMapView(theGame);
 			worldMapView.setListener(this);
@@ -78,7 +81,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			cityView.updateStats(theGame);
 		}
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
-		
+
 		if (cityView.getCurrentCity().getName().equals("Cairo"))
 		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/Cairo 2.jpg"));
@@ -87,24 +90,19 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/Rome 2.jpg"));
 		}
-		else 
+		else
 		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/sparta (1).png"));
 		}
 		/*
-		if (cityView.getCurrentCity().equals("Cairo"))
-		{
-			cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(), "CairoArcher.jpg");
-		}
-		else if (cityView.getCurrentCity().equals("Rome"))
-		{
-			cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(), "RomeArcher.jpg");
-		}
-		else 
-		{
-			cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(), "RomeArcher.jpg");
-		}
-		*/
+		 * if (cityView.getCurrentCity().equals("Cairo")) {
+		 * cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(),
+		 * "CairoArcher.jpg"); } else if (cityView.getCurrentCity().equals("Rome")) {
+		 * cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(),
+		 * "RomeArcher.jpg"); } else {
+		 * cityView.setUpButton2(cityView.getArcheryRangeRecruitButton(),
+		 * "RomeArcher.jpg"); }
+		 */
 		cityView.getCityIcon().setText("TEST");
 		cityView.drawDefendingArmy();
 		cityView.setListener(this);
@@ -129,17 +127,31 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			cityView.getStableRecruitButton().setEnabled(true);
 		}
 	}
-	
+
 	@Override
-	public void onShowAllArmies() {
-		showAllArmiesView= new ShowAllArmiesView(theGame);
+	public void onShowAllArmies()
+	{
+		showAllArmiesView = new ShowAllArmiesView(theGame);
 		showAllArmiesView.setListener(this);
 	}
 
 	@Override
-	public void onTargetCity(JButton openedButton)
+	public void onTargetCity()
 	{
-		
+		ArrayList<City> availableCities = theGame.getAvailableCities();
+		String[] targetableCities = new String[availableCities.size()
+				- theGame.getPlayer().getControlledCities().size()];
+		for (int i = 0; i < availableCities.size(); i++)
+		{
+			if (!theGame.getPlayer().getControlledCities().contains(availableCities.get(i)))
+			{
+				targetableCities[i] = availableCities.get(i).getName();
+			}
+		}
+		targetACityView = new TargetACityView(theGame, targetableCities);
+		targetACityView.setListener(this);
+		targetACityView.getChooseLabel().setText("Choose a City to Target");
+		targetACityView.setTitle("Target A City");
 	}
 
 	@Override
@@ -158,23 +170,24 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	public void onRelocateUnit()
 	{
 		allArmies = new ArrayList<>();
-		for(int i = 0; i< theGame.getPlayer().getControlledCities().size();i++)
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
 		{
 			allArmies.add(theGame.getPlayer().getControlledCities().get(i).getDefendingArmy());
 		}
 		allArmies.addAll(theGame.getPlayer().getControlledArmies());
-		
-		int totalSize = theGame.getPlayer().getControlledCities().size() + theGame.getPlayer().getControlledArmies().size();
+
+		int totalSize = theGame.getPlayer().getControlledCities().size()
+				+ theGame.getPlayer().getControlledArmies().size();
 		String[] armiesToRelocate = new String[totalSize];
-		for(int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
 		{
 			armiesToRelocate[i] = "Defending Army of " + theGame.getPlayer().getControlledCities().get(i).getName();
 		}
-		for(int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
-			armiesToRelocate[i+theGame.getPlayer().getControlledCities().size()] = "Army "+ (i+1);
+			armiesToRelocate[i + theGame.getPlayer().getControlledCities().size()] = "Army " + (i + 1);
 		}
-		
+
 		relocateUnitView = new RelocateUnitView(theGame, armiesToRelocate);
 		relocateUnitView.setListener(this);
 		relocateUnitView.getChooseLabel().setText("Choose an Army to relocate from :");
@@ -233,7 +246,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 		actualUnitToInitiate = armyInitiationCity.getDefendingArmy().findUnit(nameSearch, levelSearch);
 		theGame.getPlayer().initiateArmy(armyInitiationCity, actualUnitToInitiate);
-		worldMapView.updateControlledArmies(theGame);
+		worldMapView.updateArmiesPanel(theGame);
 		initiateArmyView.dispose();
 	}
 
@@ -526,20 +539,21 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	}
 
 	@Override
-	
-	public void onShowDefendingArmy() {
+
+	public void onShowDefendingArmy()
+	{
 
 		showArmyView = new ShowArmyView(theGame, cityView.getCurrentCity());
-		
+
 	}
-	
+
 	// RelocateUnitView listeners
 	@Override
 	public void onRelocateArmyFrom(int armyFrom)
 	{
 		armyRelocateFrom = allArmies.get(armyFrom);
 		String[] unitsToRelocateFrom = new String[armyRelocateFrom.getUnits().size()];
-		for (int i = 0; i<unitsToRelocateFrom.length;i++)
+		for (int i = 0; i < unitsToRelocateFrom.length; i++)
 		{
 			unitsToRelocateFrom[i] = armyRelocateFrom.getUnits().get(i).toString();
 		}
@@ -554,18 +568,19 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	public void onRelocateUnitChosen(int unitToBeInitiated)
 	{
 		unitRelocate = armyRelocateFrom.getUnits().get(unitToBeInitiated);
-		
-		int totalSize = theGame.getPlayer().getControlledCities().size() + theGame.getPlayer().getControlledArmies().size();
+
+		int totalSize = theGame.getPlayer().getControlledCities().size()
+				+ theGame.getPlayer().getControlledArmies().size();
 		String[] armiesToRelocate = new String[totalSize];
-		for(int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
 		{
 			armiesToRelocate[i] = "Defending Army of " + theGame.getPlayer().getControlledCities().get(i).getName();
 		}
-		for(int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
-			armiesToRelocate[i+theGame.getPlayer().getControlledCities().size()] = "Army "+ (i+1);
+			armiesToRelocate[i + theGame.getPlayer().getControlledCities().size()] = "Army " + (i + 1);
 		}
-		
+
 		relocateUnitView.dispose();
 		relocateUnitView = new RelocateUnitView(theGame, armiesToRelocate);
 		relocateUnitView.setStageOfRelocation(2);
@@ -580,31 +595,57 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		try
 		{
 			armyRelocateTo.relocateUnit(unitRelocate);
-			worldMapView.updateControlledArmies(theGame);
+			worldMapView.updateArmiesPanel(theGame);
 			relocateUnitView.dispose();
 		}
 		catch (MaxCapacityException e)
 		{
-			JOptionPane.showMessageDialog(null, "Controlled Armies can't have more than 10 units", "Warning", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Controlled Armies can't have more than 10 units", "Warning",
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
-	
-
 
 	// ShowAllArmiesView Listeners
 	@Override
 	public void onArmySelected(Army armyToBeViewed)
 	{
 		showArmyView = new ShowArmyView(theGame, armyToBeViewed);
-		
 	}
 
 	@Override
-	public void onDefendingArmySelected(City city) {
-		// TODO Auto-generated method stub
+	public void onDefendingArmySelected(City city)
+	{
+
 		showArmyView = new ShowArmyView(theGame, city);
-		
+
+	}
+
+	// TargetACityView Listener
+	@Override
+	public void onCityTargeted(String targetedCity)
+	{
+		targetACityView.dispose();
+		this.targetedCity = targetedCity;
+		String[] attackingArmies = new String[theGame.getPlayer().getControlledArmies().size()];
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			attackingArmies[i] = "Army " + (i + 1);
+		}
+		targetACityView = new TargetACityView(theGame, attackingArmies);
+		targetACityView.setListener(this);
+		targetACityView.setIsChoosingUnit(true);
+		targetACityView.getChooseLabel().setText("Choose an Army to March with");
+		targetACityView.setTitle("Pick an Army");
+	}
+
+	@Override
+	public void onArmyTargeting(int marchingArmyIndx)
+	{
+		Army marchingArmy = theGame.getPlayer().getControlledArmies().get(marchingArmyIndx);
+		theGame.targetCity(marchingArmy, targetedCity);
+		targetACityView.dispose();
+		worldMapView.updateArmiesPanel(theGame);
+
 	}
 
 }

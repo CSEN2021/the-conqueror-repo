@@ -24,7 +24,6 @@ public class InitiateArmyView extends JFrame implements ActionListener
 		comboBox = new JComboBox(forComboBox);
 		comboBox.addActionListener(this);
 		comboBox.setPreferredSize(new Dimension(300,20));
-		//theGame.findCity(getName());
 		
 		add(chooseLabel,BorderLayout.NORTH);
 		add(mainPanel,BorderLayout.CENTER);

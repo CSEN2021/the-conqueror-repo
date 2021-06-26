@@ -5,17 +5,20 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import engine.Game;
 import listeners.WorldMapViewListener;
+import units.Status;
 
 public class WorldMapView extends TemplateView implements ActionListener
 {
@@ -28,12 +31,16 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JButton initiateArmyButton = new JButton("Initiate an Army");
 	private JButton reloacteButton = new JButton("Relocate a unit");
 	private JButton showAllArmiesButton = new JButton("Show All Armies");
-	
+
 	private WorldMapViewListener listener;
 	private JPanel bottomPanel = new JPanel();
 	private JPanel midPanel = new JPanel();
-	private JPanel rightPanel = new JPanel();
-	private JTextArea armyTextArea = new JTextArea("Controlled Armies :\n");
+	private JPanel rightPanel = new JPanel(new BorderLayout());
+	private JPanel marchingPanel = new JPanel(new BorderLayout());
+	private JTextArea controlledArmiesTextArea = new JTextArea("");
+	private JTextArea marchingArmiesTextArea = new JTextArea("");
+	private JLabel controlledArmiesLabel = new JLabel("Controlled Armies :\n");
+	private JLabel marchingArmiesLabel = new JLabel("Marching Armies :\n");
 
 	public void paint(Graphics g)
 	{
@@ -50,6 +57,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 	{
 		super(theGame);
 		this.theGame = theGame;
+
 		// components
 
 		cairoButton.addActionListener(this);
@@ -76,14 +84,22 @@ public class WorldMapView extends TemplateView implements ActionListener
 		setUpButton(reloacteButton);
 		setUpButton(initiateArmyButton);
 		setUpButton(showAllArmiesButton);
-		
-		armyTextArea.setBackground(new Color(0x3E4149));
-		armyTextArea.setForeground(Color.white);
-		armyTextArea.setPreferredSize(new Dimension(350, 720));
+
+		controlledArmiesTextArea.setBackground(new Color(0x3E4149));
+		controlledArmiesTextArea.setForeground(Color.white);
+		controlledArmiesTextArea.setPreferredSize(new Dimension(350, 350));
+		marchingArmiesTextArea.setBackground(new Color(0x3E4149));
+		marchingArmiesTextArea.setForeground(Color.white);
+		marchingArmiesTextArea.setPreferredSize(new Dimension(350, 300));
+
+		setUpLabel(controlledArmiesLabel);
+		setUpLabel(marchingArmiesLabel);
+		controlledArmiesLabel.setBackground(controlledArmiesTextArea.getBackground());
+		marchingArmiesLabel.setBackground(controlledArmiesTextArea.getBackground());
 
 		// panels
 
-		bottomPanel.setBackground(new Color(0x3E4149));
+		bottomPanel.setBackground(new Color(0x39A6A3));
 		rightPanel.setBackground(new Color(0x3E4149));
 
 		// add
@@ -97,7 +113,12 @@ public class WorldMapView extends TemplateView implements ActionListener
 		bottomPanel.add(targetButton);
 		bottomPanel.add(endTurnButton);
 
-		rightPanel.add(armyTextArea);
+		rightPanel.add(controlledArmiesLabel, BorderLayout.NORTH);
+		rightPanel.add(controlledArmiesTextArea, BorderLayout.CENTER);
+		rightPanel.add(marchingPanel, BorderLayout.SOUTH);
+
+		marchingPanel.add(marchingArmiesLabel, BorderLayout.NORTH);
+		marchingPanel.add(marchingArmiesTextArea, BorderLayout.CENTER);
 
 		midPanel.add(cairoButton, BorderLayout.CENTER);
 		midPanel.add(spartaButton, BorderLayout.EAST);
@@ -108,14 +129,24 @@ public class WorldMapView extends TemplateView implements ActionListener
 		revalidate();
 	}
 
-	public void updateControlledArmies(Game theGame)
+	public void updateArmiesPanel(Game theGame)
 	{
-		armyTextArea.setText("Controlled Armies :\n");
+		controlledArmiesTextArea.setText("");
+		marchingArmiesTextArea.setText("");
 		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
 			String string = theGame.getPlayer().getControlledArmies().get(i).toString();
-			armyTextArea.append("Army " + (i + 1) + " ( at "
-					+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string + "\n");
+			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentStatus() == Status.MARCHING)
+			{
+				marchingArmiesTextArea.append("Army " + (i + 1) + " ( Marching to "
+						+ theGame.getPlayer().getControlledArmies().get(i).getTarget() + " ): \n" + string + "\n");
+			}
+			else
+			{
+				controlledArmiesTextArea.append("Army " + (i + 1) + " ( at "
+						+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
+						+ "\n");
+			}
 		}
 		repaint();
 	}
@@ -130,7 +161,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		bottomPanel.repaint();
 		endTurnButton.repaint();
 		rightPanel.repaint();
-		armyTextArea.repaint();
+		controlledArmiesTextArea.repaint();
 		targetButton.repaint();
 		reloacteButton.repaint();
 		initiateArmyButton.repaint();
@@ -149,7 +180,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		}
 		else if (e.getSource() == targetButton)
 		{
-
+			listener.onTargetCity();
 		}
 		else if (e.getSource() == initiateArmyButton)
 		{
