@@ -141,45 +141,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 		
 		
 	}
-//	public static void main(String[] args) {
-//		Game theGame = null;
-//		Army theArmy = new Army("7amada");
-//		String theCity = null;
-//		theArmy.getUnits().add(Archer.create("1"));
-//		
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		theArmy.getUnits().add(Archer.create("1"));
-//		
-//		
-//		
-//		try {
-//			theGame = new Game("ahmed", "cairo");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		BattleView battleView = new BattleView(theGame,theArmy, );
-//	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == attackButton) {

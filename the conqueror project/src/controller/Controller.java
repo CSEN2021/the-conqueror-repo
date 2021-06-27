@@ -848,7 +848,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		    
 		    initialSoldierCount=targetUnit.getCurrentSoldierCount();
 			attackingUnit.attack(targetUnit);
-			finalSoldierCount=targetUnit.getCurrentSoldierCount();
+			finalSoldierCount = targetUnit.getCurrentSoldierCount();
 			attackerUnitText =  attackingUnit.getCurrentSoldierCount() + " lvl " + attackingUnit.getLevel() +" "+ attackingUnit.toString().split(" ")[0];
 			finalTargetUnitText =  finalSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
 			initialTargetUnitText =  initialSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
@@ -859,6 +859,19 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			if(targetUnit.getCurrentSoldierCount()==0) {
 				targetUnitButton.setEnabled(false);
 				battleView.getPlayerUnitsButtons().remove(targetUnitButton);
+			}
+			
+			if (playerArmy.getUnits().size() == 0)
+			{
+				theGame.getPlayer().getControlledArmies().remove(playerArmy);
+				JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
+				battleView.dispose();
+			}
+			else if(enemyArmy.getUnits().size() == 0)
+			{
+				theGame.occupy(playerArmy, playerArmy.getCurrentLocation());
+				JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
+				battleView.dispose();
 			}
 			
 			
@@ -877,6 +890,35 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onAutoResolve()
 	{
+		Army playerArmy = null;
+		String targetCityName = battleView.getEnemyLabel().getText().split(" ")[3];
+		City targetCity = theGame.findCity(targetCityName);
+		Army enemyArmy = targetCity.getDefendingArmy();
+		
+		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
+		{
+			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equals(targetCityName))
+			{
+				playerArmy = theGame.getPlayer().getControlledArmies().get(i);
+			}
+		}
+		
+		try {
+			theGame.autoResolve(playerArmy, enemyArmy);
+		} catch (FriendlyFireException e) {
+			e.printStackTrace();
+		}
+		
+		if (playerArmy.getUnits().size() == 0)
+		{
+			JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
+			battleView.dispose();
+		}
+		else if(enemyArmy.getUnits().size() == 0)
+		{
+			JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
+			battleView.dispose();
+		}
 		
 	}
 
