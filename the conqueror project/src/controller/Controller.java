@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 import java.awt.*;
 import javax.swing.*;
 
@@ -720,17 +721,19 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	{
 		try
 		{
+			int initialSoldierCount;
+			int finalSoldierCount;
 			Army playerArmy = null;
 			Unit attackingUnit = null;
 			Unit targetUnit = null;
-			JToggleButton attackingUnitButton;
-			JToggleButton targetUnitButton;
+			JToggleButton attackingUnitButton = null;
+			JToggleButton targetUnitButton = null;
 
 			// getting the target city then using it to get the enemy army (defending army
 			// of said city)
 			String targetCityName = battleView.getEnemyLabel().getText().split(" ")[3];
 			City targetCity = theGame.findCity(targetCityName);
-			Army enemtArmy = targetCity.getDefendingArmy();
+			Army enemyArmy = targetCity.getDefendingArmy();
 
 			// getting the player's army
 			for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
@@ -755,17 +758,59 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			{
 				if (battleView.getEnemyUnitsButtons().get(i).isSelected())
 				{
-					targetUnit = enemtArmy.getUnits().get(i);
+					targetUnit = enemyArmy.getUnits().get(i);
 					targetUnitButton = battleView.getEnemyUnitsButtons().get(i);
 				}
 			}
-
+			
+			initialSoldierCount=targetUnit.getCurrentSoldierCount();
 			attackingUnit.attack(targetUnit);
+			finalSoldierCount=targetUnit.getCurrentSoldierCount();
+			String  attackerUnitText =  attackingUnit.getCurrentSoldierCount() + " lvl " + attackingUnit.getLevel() +" "+ attackingUnit.toString().split(" ")[0];
+			String  finalTargetUnitText =  finalSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
+			String  initialTargetUnitText =  initialSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
+			targetUnitButton.setText(finalTargetUnitText);
+			
+			battleView.getBattleLog().append(attackerUnitText + " unit from the player's army attacked "+ initialTargetUnitText + " unit from the target's army. The target's unit lost " + (initialSoldierCount-finalSoldierCount) + " troops !! \n");
+			
+			if(targetUnit.getCurrentSoldierCount()==0) {
+				targetUnitButton.setEnabled(false);
+				battleView.getEnemyUnitsButtons().remove(targetUnitButton);
+			}
+			
+			
+			// COUNTERATTACK
+			Random rand = new Random();
+			int enemyRandomIndex = rand.nextInt(enemyArmy.getUnits().size());
+		    attackingUnit = enemyArmy.getUnits().get(enemyRandomIndex);
+		    int playerRandomIndex = rand.nextInt(playerArmy.getUnits().size());
+		    targetUnit = playerArmy.getUnits().get(playerRandomIndex);
+		    targetUnitButton = battleView.getPlayerUnitsButtons().get(playerRandomIndex);
+		    
+		    initialSoldierCount=targetUnit.getCurrentSoldierCount();
+			attackingUnit.attack(targetUnit);
+			finalSoldierCount=targetUnit.getCurrentSoldierCount();
+			attackerUnitText =  attackingUnit.getCurrentSoldierCount() + " lvl " + attackingUnit.getLevel() +" "+ attackingUnit.toString().split(" ")[0];
+			finalTargetUnitText =  finalSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
+			initialTargetUnitText =  initialSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
+			targetUnitButton.setText(finalTargetUnitText);
+			
+			battleView.getBattleLog().append(attackerUnitText + " unit from the target's army attacked "+ initialTargetUnitText + " unit from the player's army. The player's unit lost " + (initialSoldierCount-finalSoldierCount) + " troops !! \n");
+			
+			if(targetUnit.getCurrentSoldierCount()==0) {
+				targetUnitButton.setEnabled(false);
+				battleView.getPlayerUnitsButtons().remove(targetUnitButton);
+			}
+			
+			
+			battleView.repaint();
+			
 
 		}
 		catch (Exception e)
 		{
-			System.out.println("friendly fireeee,friendly fireeeee");
+			JOptionPane.showMessageDialog(null, "the target unit is already dead,choose another target!!", "Warning",
+					JOptionPane.ERROR_MESSAGE); 
 		}
 
 	}
@@ -773,7 +818,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onAutoResolve()
 	{
-
+		
 	}
 
 	@Override

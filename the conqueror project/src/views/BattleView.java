@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import engine.*;
 import listeners.BattleViewListener;
+
 import units.*;
 
 
@@ -22,7 +23,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 	ButtonGroup enemyUnitsButtonGroup = new ButtonGroup();
 	
 	
-	JPanel playerArmyPanel = new JPanel(new GridLayout(0,1));
+	JPanel playerArmyPanel = new JPanel();
 	JPanel enemyArmyPanel = new JPanel(new GridLayout(0,2));
 	JPanel middlePanel = new JPanel(null);
 	JPanel restPanel = new JPanel(null);
@@ -30,7 +31,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 	JLabel enemyLabel;
 	JLabel chooseAttackingUnitMsg = new JLabel("choose attacking unit");
 	JLabel chooseTargetUnitMsg = new JLabel("choose unit to target");
-	JPanel battleLogPanel = new JPanel();
+	JTextArea battleLog = new JTextArea();
 	JPanel battleOptionsPanel = new JPanel(new GridLayout(0,3));
 	JButton attackButton = new JButton("manual attack");
 	JButton autoResolveButton = new JButton("auto resolve the battle");
@@ -45,6 +46,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 	
 	public BattleView(Game theGame ,Army playerArmy,City targetCity) {
 		super(theGame);
+		//this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		String name = targetCity.getName(); 
 		enemyLabel = new JLabel("target city : " + name);
 		Army enemyArmy = targetCity.getDefendingArmy();
@@ -71,15 +73,16 @@ public class BattleView extends TemplateView implements ActionListener  {
 		enemyArmyPanel.setBackground(Color.gray);
 		middlePanel.setBackground(Color.lightGray);
 		middlePanel.setBounds(301,0,664,650);
-		battleLogPanel.setBounds(0,0,664,600);
+		battleLog.setBounds(0,0,664,600);
 		battleOptionsPanel.setBounds(0,601,664,40);
 		
-		battleLogPanel.setBackground(Color.lightGray);
+		battleLog.setBackground(Color.lightGray);
+		battleLog.setEditable(false);
 		battleOptionsPanel.setBackground(Color.gray);
 		battleOptionsPanel.add(playerLabel);
 		
 		middlePanel.add(battleOptionsPanel,BorderLayout.SOUTH);
-		middlePanel.add(battleLogPanel,BorderLayout.CENTER);
+		middlePanel.add(battleLog,BorderLayout.CENTER);
 		
 		playerArmyPanel.add(playerLabel);                                                //labels on both armies
 		playerArmyPanel.add(chooseAttackingUnitMsg);                                                //labels on both armies
@@ -92,12 +95,20 @@ public class BattleView extends TemplateView implements ActionListener  {
 		battleOptionsPanel.add(attackButton);
 		battleOptionsPanel.add(autoResolveButton);
 		battleOptionsPanel.add(retreatButton);
+		
+		
+		attackButton.addActionListener(this);
+		retreatButton.addActionListener(this);
+		autoResolveButton.addActionListener(this);
+		
+		
 		//playerArmy.getUnits().get(i).toString().split(" ")[0] to get unit type as a string
+		//playerArmy.getUnits().get(i).unitInfo()+" , current soldier count is " + 
 		JToggleButton unitButton;
 		
 		String buttonString;
 		for(int i = 0;i<playerArmy.getUnits().size();i++) {
-			  buttonString = playerArmy.getUnits().get(i).unitInfo()+" , current soldier count is " + playerArmy.getUnits().get(i).getCurrentSoldierCount();
+			  buttonString = playerArmy.getUnits().get(i).getCurrentSoldierCount() + " lvl " + playerArmy.getUnits().get(i).getLevel() +" "+ playerArmy.getUnits().get(i).toString().split(" ")[0];
 			  unitButton = new JToggleButton(buttonString);
 			  unitButton.addActionListener(this);
 			  playerUnitsButtons.add(unitButton);
@@ -109,7 +120,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 		}
 		
 		for(int i = 0;i<enemyArmy.getUnits().size();i++) {
-			  buttonString = enemyArmy.getUnits().get(i).unitInfo()+" , current soldier count is " + enemyArmy.getUnits().get(i).getCurrentSoldierCount() ; //there is a way to fix this using lvl for level and count for current soldier count as shorthandd terms to save space
+			  buttonString = enemyArmy.getUnits().get(i).getCurrentSoldierCount() + " lvl " + enemyArmy.getUnits().get(i).getLevel() +" "+ enemyArmy.getUnits().get(i).toString().split(" ")[0] ; 
 			  unitButton = new JToggleButton(buttonString);
 			  unitButton.addActionListener(this);
 			  enemyUnitsButtons.add(unitButton);
@@ -263,13 +274,15 @@ public class BattleView extends TemplateView implements ActionListener  {
 		this.chooseTargetUnitMsg = chooseTargetUnitMsg;
 	}
 
-	public JPanel getBattleLogPanel() {
-		return battleLogPanel;
+	public JTextArea getBattleLog() {
+		return battleLog;
 	}
 
-	public void setBattleLogPanel(JPanel battleLogPanel) {
-		this.battleLogPanel = battleLogPanel;
+	public void setBattleLog(JTextArea battleLog) {
+		this.battleLog = battleLog;
 	}
+
+	
 	
 	
 	
