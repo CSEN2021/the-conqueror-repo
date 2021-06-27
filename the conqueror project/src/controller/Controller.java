@@ -67,7 +67,26 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			e.printStackTrace();
 		}
+		Army testArmy = new Army("Sparta");
+		ArrayList <Unit> units = new ArrayList<>();
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		units.add(Cavalry.create("3",testArmy));
+		testArmy.setUnits(units);
 		
+		theGame.getPlayer().getControlledArmies().add(testArmy);
+		worldMapView.updateArmiesPanel(theGame);
 		
 	}
 
@@ -80,6 +99,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		cityView = new CityView(theGame, theGame.findCity(openedButton.getText()));
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
 
+		
+		
 		if (cityView.getCurrentCity().getName().equals("Cairo"))
 		{
 			cityView.getCityIcon().setIcon(new ImageIcon("resources/Cairo 2.jpg"));
