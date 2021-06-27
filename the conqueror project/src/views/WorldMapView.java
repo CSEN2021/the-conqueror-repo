@@ -181,7 +181,8 @@ public class WorldMapView extends TemplateView implements ActionListener
 			{
 				marchingArmiesTextArea.append("Army " + (i + 1) + " ( Marching to "
 						+ theGame.getPlayer().getControlledArmies().get(i).getTarget() + ", Distance left is "
-						+ theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() + " ): \n" + string);
+						+ theGame.getPlayer().getControlledArmies().get(i).getDistancetoTarget() + " ): \n" + string
+						+ '\n');
 			}
 			else if (theGame.getPlayer().getControlledArmies().get(i).getCurrentStatus() == Status.BESIEGING)
 			{
