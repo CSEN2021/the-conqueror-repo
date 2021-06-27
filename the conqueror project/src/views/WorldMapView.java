@@ -34,6 +34,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JButton enterBattleCairoButton = new JButton("Enter Battle");
 	private JButton enterBattleSpartaButton = new JButton("Enter Battle");
 	private JButton enterBattleRomeButton = new JButton("Enter Battle");
+	private JButton beseigeCairoButton = new JButton("Beseige");
+	private JButton beseigeSpartaButton = new JButton("Beseige");
+	private JButton beseigeRomeButton = new JButton("Beseige");
 
 	private WorldMapViewListener listener;
 	private JPanel bottomPanel = new JPanel();
@@ -42,7 +45,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JPanel marchingPanel = new JPanel(new BorderLayout());
 	private JTextArea controlledArmiesTextArea = new JTextArea("");
 	private JTextArea marchingArmiesTextArea = new JTextArea("");
-	private JLabel controlledArmiesLabel = new JLabel("Stationary Armies :\n");
+	private JLabel controlledArmiesLabel = new JLabel("Idle Armies :\n");
 	private JLabel marchingArmiesLabel = new JLabel("Attacking Armies :\n");
 
 	public void paint(Graphics g)
@@ -72,10 +75,13 @@ public class WorldMapView extends TemplateView implements ActionListener
 		romeButton.addActionListener(this);
 		if (!theGame.getPlayer().getControlledCities().get(0).getName().equals("Rome"))
 			romeButton.setEnabled(false);
-		
+
 		enterBattleCairoButton.setEnabled(false);
 		enterBattleRomeButton.setEnabled(false);
 		enterBattleSpartaButton.setEnabled(false);
+		beseigeCairoButton.setEnabled(false);
+		beseigeSpartaButton.setEnabled(false);
+		beseigeRomeButton.setEnabled(false);
 
 		endTurnButton.addActionListener(this);
 		targetButton.addActionListener(this);
@@ -85,6 +91,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 		enterBattleCairoButton.addActionListener(this);
 		enterBattleRomeButton.addActionListener(this);
 		enterBattleSpartaButton.addActionListener(this);
+		beseigeCairoButton.addActionListener(this);
+		beseigeSpartaButton.addActionListener(this);
+		beseigeRomeButton.addActionListener(this);
 
 		setUpButton(endTurnButton);
 		setUpButton(romeButton);
@@ -97,6 +106,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 		setUpButton(enterBattleRomeButton);
 		setUpButton(enterBattleCairoButton);
 		setUpButton(enterBattleSpartaButton);
+		setUpButton(beseigeRomeButton);
+		setUpButton(beseigeCairoButton);
+		setUpButton(beseigeSpartaButton);
 
 		controlledArmiesTextArea.setBackground(new Color(0x404B69));
 		controlledArmiesTextArea.setForeground(Color.white);
@@ -138,16 +150,21 @@ public class WorldMapView extends TemplateView implements ActionListener
 		midPanel.add(cairoButton);
 		cairoButton.setBounds(50, 90, 100, 50);
 		midPanel.add(spartaButton);
-		spartaButton.setBounds(750, 80, 100, 50);
+		spartaButton.setBounds(750, 90, 100, 50);
 		midPanel.add(romeButton);
-		romeButton.setBounds(50, 550, 100, 50);
+		romeButton.setBounds(50, 500, 100, 50);
 		midPanel.add(enterBattleCairoButton);
-		enterBattleCairoButton.setBounds(160, 90, 100, 50);
+		enterBattleCairoButton.setBounds(0, 140, 100, 50);
 		midPanel.add(enterBattleSpartaButton);
-		enterBattleSpartaButton.setBounds(750, 140, 100, 50);
+		enterBattleSpartaButton.setBounds(700, 140, 100, 50);
 		midPanel.add(enterBattleRomeButton);
-		enterBattleRomeButton.setBounds(160, 550, 100, 50);
-		
+		enterBattleRomeButton.setBounds(0, 550, 100, 50);
+		midPanel.add(beseigeCairoButton);
+		beseigeCairoButton.setBounds(100, 140, 100, 50);
+		midPanel.add(beseigeSpartaButton);
+		beseigeSpartaButton.setBounds(800, 140, 100, 50);
+		midPanel.add(beseigeRomeButton);
+		beseigeRomeButton.setBounds(100, 550, 100, 50);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		revalidate();
@@ -168,15 +185,27 @@ public class WorldMapView extends TemplateView implements ActionListener
 			}
 			else if (theGame.getPlayer().getControlledArmies().get(i).getCurrentStatus() == Status.BESIEGING)
 			{
-				controlledArmiesTextArea.append("Army " + (i + 1) + " ( Besieging "
-						+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
-						+ "\n");
+				marchingArmiesTextArea.append("Army " + (i + 1) + " ( Besieging "
+						+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " for "
+						+ theGame.findCity(theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation())
+								.getTurnsUnderSiege()
+						+ " turns ): \n" + string + "\n");
 			}
 			else
 			{
-				controlledArmiesTextArea.append("Army " + (i + 1) + " ( at "
-						+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
-						+ "\n");
+				if (!theGame.getPlayer().getControlledCities().contains(
+						(theGame.findCity(theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation()))))
+				{
+					marchingArmiesTextArea.append("Army " + (i + 1) + " ( Attacking "
+							+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
+							+ "\n");
+				}
+				else
+				{
+					controlledArmiesTextArea.append("Army " + (i + 1) + " ( at "
+							+ theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation() + " ): \n" + string
+							+ "\n");
+				}
 			}
 		}
 		repaint();
@@ -192,6 +221,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 		enterBattleCairoButton.repaint();
 		enterBattleRomeButton.repaint();
 		enterBattleSpartaButton.repaint();
+		beseigeCairoButton.repaint();
+		beseigeRomeButton.repaint();
+		beseigeSpartaButton.repaint();
 		bottomPanel.repaint();
 		endTurnButton.repaint();
 		rightPanel.repaint();
@@ -240,6 +272,18 @@ public class WorldMapView extends TemplateView implements ActionListener
 		{
 			listener.onEnterBattle("Sparta");
 		}
+		else if (e.getSource() == beseigeCairoButton)
+		{
+			listener.onBeseige("Cairo");
+		}
+		else if (e.getSource() == beseigeRomeButton)
+		{
+			listener.onBeseige("Rome");
+		}
+		else if (e.getSource() == beseigeSpartaButton)
+		{
+			listener.onBeseige("Sparta");
+		}
 	}
 
 	public void setListener(WorldMapViewListener listener)
@@ -262,4 +306,18 @@ public class WorldMapView extends TemplateView implements ActionListener
 		return enterBattleRomeButton;
 	}
 
+	public JButton getBeseigeCairoButton()
+	{
+		return beseigeCairoButton;
+	}
+
+	public JButton getBeseigeSpartaButton()
+	{
+		return beseigeSpartaButton;
+	}
+
+	public JButton getBeseigeRomeButton()
+	{
+		return beseigeRomeButton;
+	}
 }
