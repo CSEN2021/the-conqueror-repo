@@ -15,7 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-
+import buildings.ArcheryRange;
+import buildings.Barracks;
+import buildings.Building;
+import buildings.Farm;
+import buildings.Market;
+import buildings.Stable;
 import engine.City;
 import engine.Game;
 import listeners.CityViewListener;
@@ -88,11 +93,110 @@ public class CityView extends TemplateView implements ActionListener
 		theButton.setFont(new Font("Arial", Font.PLAIN, 40));
 	}
 
-	public CityView(Game theGame)
+	public CityView(Game theGame, City theCity)
 	{
 		super(theGame);
 
 		// components
+		currentCity = theCity;
+		int currentLevel;
+		Building currentBuilding;
+		archeryRangeLvlButton.setEnabled(false);
+		stableLvlButton.setEnabled(false);
+		barracksLvlButton.setEnabled(false);
+		farmLvlButton.setEnabled(false);
+		marketLvlButton.setEnabled(false);
+
+		archeryRangeRecruitButton.setEnabled(false);
+		barracksRecruitButton.setEnabled(false);
+		stableRecruitButton.setEnabled(false);
+
+		
+		
+		for (int i = 0; i < currentCity.getMilitaryBuildings().size(); i++)
+		{
+			currentBuilding = currentCity.getMilitaryBuildings().get(i);
+			
+			
+			if (currentBuilding instanceof ArcheryRange)
+			{
+					currentLevel = currentBuilding.getLevel();
+					archeryRangeLvlButton.setText("Level: " + currentLevel + " Cost: " +  currentBuilding.getUpgradeCost());
+					archeryRangeRecruitButton.setText("Archer, Cost: " + (((ArcheryRange) (currentBuilding)).getRecruitmentCost()));
+					archeryRangeLvlButton.setEnabled(true);
+					archeryRangeButton.setEnabled(false);
+					archeryRangeRecruitButton.setEnabled(true);
+					if (currentLevel == 3)
+					{
+						archeryRangeLvlButton.setText("Max Level");
+					}
+					
+			}
+			else if (currentBuilding instanceof Barracks)
+			{
+					System.out.println("222222");
+					currentLevel = currentBuilding.getLevel();
+					barracksLvlButton.setText("Level: " + currentLevel + " Cost: " +  currentBuilding.getUpgradeCost());
+					
+					barracksRecruitButton.setText("Infantry, Cost: " + (((Barracks) (currentBuilding)).getRecruitmentCost()));
+					barracksLvlButton.setEnabled(true);
+					barracksButton.setEnabled(false);
+					barracksRecruitButton.setEnabled(true);
+					if (currentLevel == 3)
+					{
+						barracksLvlButton.setText("Max Level");
+					}
+					
+			} else if (currentBuilding instanceof Stable)
+			{
+				System.out.println("3333");
+				currentLevel = currentBuilding.getLevel();
+				
+				stableLvlButton.setText("Level: " + currentLevel + " Cost: " +  currentBuilding.getUpgradeCost());
+				stableRecruitButton.setText("");
+				stableRecruitButton.setText("Cavalry, Cost: " + (((Stable) (currentBuilding)).getRecruitmentCost()));
+				stableLvlButton.setEnabled(true);
+				stableButton.setEnabled(false);
+				stableRecruitButton.setEnabled(true);
+				if (currentLevel == 3)
+				{
+					stableLvlButton.setText("Max Level");
+				}
+				
+			}
+			
+		}
+		
+		for (int i = 0; i < currentCity.getEconomicalBuildings().size(); i++)
+		{
+			currentBuilding = currentCity.getEconomicalBuildings().get(i);
+			if (currentBuilding instanceof Farm)
+			{
+					currentLevel = currentBuilding.getLevel();
+					farmLvlButton.setText("Level: " + currentLevel + " Cost: " +  currentBuilding.getUpgradeCost());
+					
+					farmLvlButton.setEnabled(true);
+					farmButton.setEnabled(false);
+					if (currentLevel == 3)
+					{
+						farmLvlButton.setText("Max Level");
+					}
+					
+			}
+			else if (currentBuilding instanceof Market)
+			{
+				currentLevel = currentBuilding.getLevel();
+				marketLvlButton.setText("Level: " + currentLevel + " Cost: " +  currentBuilding.getUpgradeCost());
+				
+				marketLvlButton.setEnabled(true);
+				marketButton.setEnabled(false);
+				if (currentLevel == 3)
+				{
+					marketLvlButton.setText("Max Level");
+				}
+				
+		}
+		}
 
 		setUpButton(archeryRangeButton);
 		setUpButton(archeryRangeLvlButton);
@@ -131,16 +235,7 @@ public class CityView extends TemplateView implements ActionListener
 
 		showDefendingArmy.addActionListener(this);
 
-		archeryRangeLvlButton.setEnabled(false);
-		stableLvlButton.setEnabled(false);
-		barracksLvlButton.setEnabled(false);
-		farmLvlButton.setEnabled(false);
-		marketLvlButton.setEnabled(false);
-
-		archeryRangeRecruitButton.setEnabled(false);
-		barracksRecruitButton.setEnabled(false);
-		stableRecruitButton.setEnabled(false);
-		
+				
 		archeryRangeButton.setBackground(Color.decode("#000b14"));
 		barracksButton.setBackground(Color.decode("#000b14"));
 		stableButton.setBackground(Color.decode("#000b14"));
@@ -197,7 +292,7 @@ public class CityView extends TemplateView implements ActionListener
 		 */
 
 		midPanel.add(cityIcon);
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		
 
 	}
 

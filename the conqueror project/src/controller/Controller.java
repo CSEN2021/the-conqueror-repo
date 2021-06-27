@@ -48,6 +48,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	{
 		this.startScreen = new StartScreen();
 		startScreen.setListener(this);
+		
 	}
 
 	// StartScreen Listener
@@ -66,6 +67,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 	// WorldMapView Listener
@@ -73,15 +76,8 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onOpenCity(JButton openedButton)
 	{
-		if (cityView == null)
-		{
-			cityView = new CityView(theGame);
-		}
-		else
-		{
-			cityView.setVisible(true);
-			cityView.updateStats(theGame);
-		}
+		
+		cityView = new CityView(theGame, theGame.findCity(openedButton.getText()));
 		cityView.setCurrentCity(theGame.findCity(openedButton.getText()));
 
 		if (cityView.getCurrentCity().getName().equals("Cairo"))
@@ -422,7 +418,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 					cityView.getArcheryRangeButton().setEnabled(false);
 					cityView.getArcheryRangeButton().setText("ArcheryRange Built");
 					cityView.getArcheryRangeLvlButton().setEnabled(true);
-					cityView.getArcheryRangeLvlButton().setText("Level: 1 Cost: 1500");
+					cityView.getArcheryRangeLvlButton().setText("Level: 1 Cost: 800");
 
 					cityView.getArcheryRangeRecruitButton().setEnabled(true);
 					cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: 400");
@@ -480,7 +476,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 						{
 							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getFarmLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getFarmLvlButton().setText("Level: " + currentLevel + " Cost: 500");
+							cityView.getFarmLvlButton().setText("Level: " + currentLevel + " Cost: " +  economicBuildings.get(i).getUpgradeCost());
 							if (currentLevel == 3)
 							{
 								cityView.getFarmLvlButton().setText("Max Level");
@@ -498,7 +494,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 						{
 							theGame.getPlayer().upgradeBuilding(economicBuildings.get(i));
 							currentLevel = Integer.parseInt(cityView.getMarketLvlLabel().getText().charAt(7) + "") + 1;
-							cityView.getMarketLvlButton().setText("Level: " + currentLevel + " Cost: 700");
+							cityView.getMarketLvlButton().setText("Level: " + currentLevel + " Cost: " + economicBuildings.get(i).getUpgradeCost());
 							if (currentLevel == 3)
 							{
 								cityView.getMarketLvlButton().setText("Max Level");
@@ -517,7 +513,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							currentLevel = Integer
 									.parseInt(cityView.getArcheryRangeLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							cityView.getArcheryRangeLvlButton().setText("Level: " + currentLevel + " Cost: " + militaryBuildings.get(i).getUpgradeCost());
 							cityView.getArcheryRangeRecruitButton().setText("Archer, Cost: "
 									+ (((ArcheryRange) (theGame.findCity(currentCityName).findBuilding("ArcheryRange")))
 											.getRecruitmentCost()));
@@ -541,7 +537,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 							;
 							currentLevel = Integer.parseInt(cityView.getBarracksLvlButton().getText().charAt(7) + "")
 									+ 1;
-							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: 1000");
+							cityView.getBarracksLvlButton().setText("Level: " + currentLevel + " Cost: " + militaryBuildings.get(i).getUpgradeCost());
 							cityView.getBarracksRecruitButton()
 									.setText("Infantry, Cost: "
 											+ (((Barracks) (theGame.findCity(currentCityName).findBuilding("Barracks")))
@@ -566,7 +562,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 2000");
+							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: " + militaryBuildings.get(i).getUpgradeCost());
 							cityView.getStableRecruitButton()
 									.setText("Calvary, Cost: "
 											+ (((Stable) (theGame.findCity(currentCityName).findBuilding("Stable")))
