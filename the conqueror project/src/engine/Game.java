@@ -46,12 +46,12 @@ public class Game
 	}
 
 	// methods
-	
+
 	public City findCity(String cityName)
 	{
-		for(int i = 0; i < availableCities.size(); i++)
+		for (int i = 0; i < availableCities.size(); i++)
 		{
-			if(availableCities.get(i).getName().equalsIgnoreCase(cityName))
+			if (availableCities.get(i).getName().equalsIgnoreCase(cityName))
 				return availableCities.get(i);
 		}
 		return null;
@@ -209,21 +209,20 @@ public class Game
 		if (player.getControlledArmies().contains(attacker) && player.getControlledArmies().contains(defender))
 			throw new FriendlyFireException();
 		boolean attackerTurn = true;
-		
-		
+
 		while (attacker.getUnits().size() != 0 && defender.getUnits().size() != 0)
 		{
 			if (attackerTurn)
 			{
-				System.out.println(attacker.getUnits().size());
-				attacker.getUnits().get((int) Math.random() * attacker.getUnits().size())
-						.attack(defender.getUnits().get((int) Math.random() * defender.getUnits().size()));
+				int x = (int) (Math.random() * defender.getUnits().size());
+				int y = (int) (Math.random() * attacker.getUnits().size());
+				attacker.getUnits().get(y).attack(defender.getUnits().get(x));
 			}
 			else
 			{
-//				System.out.println(defender.getUnits().size());
-				defender.getUnits().get((int) Math.random() * defender.getUnits().size())
-						.attack(attacker.getUnits().get((int) Math.random() * attacker.getUnits().size()));
+				int x = (int) (Math.random() * defender.getUnits().size());
+				int y = (int) (Math.random() * attacker.getUnits().size());
+				defender.getUnits().get(x).attack(attacker.getUnits().get(y));
 			}
 			attackerTurn = !attackerTurn;
 		}
