@@ -46,6 +46,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 	
 	public BattleView(Game theGame ,Army playerArmy,City targetCity) {
 		super(theGame);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		String name = targetCity.getName(); 
 		enemyLabel = new JLabel("target city : " + name);
 		Army enemyArmy = targetCity.getDefendingArmy();

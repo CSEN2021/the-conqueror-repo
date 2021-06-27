@@ -158,7 +158,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			if (theGame.getPlayer().getControlledCities().get(i).getName().equals("Rome"))
 				worldMapView.getRomeButton().setEnabled(true);
 		}
-		/*
+		
 		for(int i = 0; i < theGame.getAvailableCities().size(); i++)
 		{
 			if(theGame.getAvailableCities().get(i).getTurnsUnderSiege() == 3 && battleView == null)
@@ -198,7 +198,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			}
 			
 		}
-		*/
+		
 		theGame.endTurn();
 		if (theGame.isGameOver() == true)
 		{
@@ -895,26 +895,40 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			
 			
 			// COUNTERATTACK
-			Random rand = new Random();
-			int enemyRandomIndex = rand.nextInt(enemyArmy.getUnits().size());
-		    attackingUnit = enemyArmy.getUnits().get(enemyRandomIndex);
-		    int playerRandomIndex = rand.nextInt(playerArmy.getUnits().size());
-		    targetUnit = playerArmy.getUnits().get(playerRandomIndex);
-		    targetUnitButton = battleView.getPlayerUnitsButtons().get(playerRandomIndex);
-		    
-		    initialSoldierCount=targetUnit.getCurrentSoldierCount();
-			attackingUnit.attack(targetUnit);
-			finalSoldierCount = targetUnit.getCurrentSoldierCount();
-			attackerUnitText =  attackingUnit.getCurrentSoldierCount() + " lvl " + attackingUnit.getLevel() +" "+ attackingUnit.toString().split(" ")[0];
-			finalTargetUnitText =  finalSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
-			initialTargetUnitText =  initialSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
-			targetUnitButton.setText(finalTargetUnitText);
-			
-			battleView.getBattleLog().append(attackerUnitText + " unit from the target's army attacked "+ initialTargetUnitText + " unit from the player's army. The player's unit lost " + (initialSoldierCount-finalSoldierCount) + " troops !! \n");
-			
-			if(targetUnit.getCurrentSoldierCount()==0) {
-				targetUnitButton.setEnabled(false);
-				battleView.getPlayerUnitsButtons().remove(targetUnitButton);
+			if(enemyArmy.getUnits().size()!=0) {
+				Random rand = new Random();
+				int enemyRandomIndex;
+				int playerRandomIndex;
+				if(enemyArmy.getUnits().size()<=1) {
+					enemyRandomIndex=0;
+				}else {
+					enemyRandomIndex = rand.nextInt(enemyArmy.getUnits().size());
+				}
+				
+				if(playerArmy.getUnits().size()<=1) {
+					playerRandomIndex=0;
+				}else {
+					playerRandomIndex = rand.nextInt(playerArmy.getUnits().size());
+				}
+				
+			    attackingUnit = enemyArmy.getUnits().get(enemyRandomIndex);
+			    targetUnit = playerArmy.getUnits().get(playerRandomIndex);
+			    targetUnitButton = battleView.getPlayerUnitsButtons().get(playerRandomIndex);
+			    
+			    initialSoldierCount=targetUnit.getCurrentSoldierCount();
+				attackingUnit.attack(targetUnit);
+				finalSoldierCount = targetUnit.getCurrentSoldierCount();
+				attackerUnitText =  attackingUnit.getCurrentSoldierCount() + " lvl " + attackingUnit.getLevel() +" "+ attackingUnit.toString().split(" ")[0];
+				finalTargetUnitText =  finalSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
+				initialTargetUnitText =  initialSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
+				targetUnitButton.setText(finalTargetUnitText);
+				
+				battleView.getBattleLog().append(attackerUnitText + " unit from the target's army attacked "+ initialTargetUnitText + " unit from the player's army. The player's unit lost " + (initialSoldierCount-finalSoldierCount) + " troops !! \n");
+				
+				if(targetUnit.getCurrentSoldierCount()==0) {
+					targetUnitButton.setEnabled(false);
+					battleView.getPlayerUnitsButtons().remove(targetUnitButton);
+				}
 			}
 			
 			if (playerArmy.getUnits().size() == 0)
@@ -922,6 +936,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				theGame.getPlayer().getControlledArmies().remove(playerArmy);
 				JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
 				battleView.dispose();
+				battleView = null;
 				if(targetCityName.equalsIgnoreCase("Rome"))
 				{
 					worldMapView.getBeseigeRomeButton().setEnabled(false);
@@ -943,6 +958,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				theGame.occupy(playerArmy, playerArmy.getCurrentLocation());
 				JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
 				battleView.dispose();
+				battleView = null;
 				if(targetCityName.equalsIgnoreCase("Rome"))
 				{
 					worldMapView.getBeseigeRomeButton().setEnabled(false);
@@ -960,6 +976,9 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				}
 			}
 			
+			System.out.println(playerArmy.getUnits().size());
+			System.out.println(enemyArmy.getUnits().size());
+			
 			
 			battleView.repaint();
 			
@@ -967,6 +986,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "the target unit is already dead,choose another target!!", "Warning",
 					JOptionPane.ERROR_MESSAGE); 
 		}
@@ -999,6 +1019,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
 			battleView.dispose();
+			battleView = null;
 			if(targetCityName.equalsIgnoreCase("Rome"))
 			{
 				worldMapView.getBeseigeRomeButton().setEnabled(false);
@@ -1019,6 +1040,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
 			battleView.dispose();
+			battleView = null;
 			if(targetCityName.equalsIgnoreCase("Rome"))
 			{
 				worldMapView.getBeseigeRomeButton().setEnabled(false);
