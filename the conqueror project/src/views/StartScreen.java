@@ -148,7 +148,8 @@ public class StartScreen extends JFrame implements ActionListener
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, "please enter a name & select a city","Warning", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "please enter a name & select a city", "Warning",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		else

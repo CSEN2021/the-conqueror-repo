@@ -84,8 +84,26 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		units.add(Cavalry.create("3",testArmy));
 		units.add(Cavalry.create("3",testArmy));
 		testArmy.setUnits(units);
+		Army testArmy2 = new Army("Sparta");
+		ArrayList <Unit> units2 = new ArrayList<>();
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		units2.add(Cavalry.create("3",testArmy));
+		testArmy2.setUnits(units2);
 		
 		theGame.getPlayer().getControlledArmies().add(testArmy);
+		theGame.getPlayer().getControlledArmies().add(testArmy2);
 		worldMapView.updateArmiesPanel(theGame);
 		
 	}
@@ -140,7 +158,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			if (theGame.getPlayer().getControlledCities().get(i).getName().equals("Rome"))
 				worldMapView.getRomeButton().setEnabled(true);
 		}
-		
+		/*
 		for(int i = 0; i < theGame.getAvailableCities().size(); i++)
 		{
 			if(theGame.getAvailableCities().get(i).getTurnsUnderSiege() == 3 && battleView == null)
@@ -180,6 +198,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			}
 			
 		}
+		*/
 		theGame.endTurn();
 		if (theGame.isGameOver() == true)
 		{
@@ -300,11 +319,14 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		ArrayList<City> availableCities = theGame.getAvailableCities();
 		String[] targetableCities = new String[availableCities.size()
 				- theGame.getPlayer().getControlledCities().size()];
+
+		int emptyIndx = 0;
 		for (int i = 0; i < availableCities.size(); i++)
 		{
 			if (!theGame.getPlayer().getControlledCities().contains(availableCities.get(i)))
 			{
-				targetableCities[i] = availableCities.get(i).getName();
+				targetableCities[emptyIndx] = availableCities.get(i).getName();
+				emptyIndx++;
 			}
 		}
 		targetACityView = new TargetACityView(theGame, targetableCities);

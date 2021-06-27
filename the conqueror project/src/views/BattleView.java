@@ -46,7 +46,6 @@ public class BattleView extends TemplateView implements ActionListener  {
 	
 	public BattleView(Game theGame ,Army playerArmy,City targetCity) {
 		super(theGame);
-		//this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		String name = targetCity.getName(); 
 		enemyLabel = new JLabel("target city : " + name);
 		Army enemyArmy = targetCity.getDefendingArmy();
@@ -59,11 +58,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 		enemyLabel.setPreferredSize(new Dimension(300,30));
 		chooseAttackingUnitMsg.setPreferredSize(new Dimension(300,30));
 		chooseTargetUnitMsg.setPreferredSize(new Dimension(300,30));
-//		playerLabel.setFont(new Font("Serif", Font.BOLD, 20));
 
-//		enemyLabel.setFont(new Font("Serif", Font.BOLD, 20));
-//		playerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//		enemyLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		restPanel.setBackground(Color.gray);
 		add(restPanel,BorderLayout.CENTER);
