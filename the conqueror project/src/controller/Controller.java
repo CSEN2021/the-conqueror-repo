@@ -130,19 +130,19 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			if(worldMapView.getBeseigeCairoButton().isEnabled() && !theGame.findCity("Cairo").isUnderSiege())
 			{
-				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Finish the Battle",
+				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Engage the Enemy",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if(worldMapView.getBeseigeCairoButton().isEnabled() && !theGame.findCity("Cairo").isUnderSiege())
+			if(worldMapView.getBeseigeSpartaButton().isEnabled() && !theGame.findCity("Sparta").isUnderSiege())
 			{
-				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Finish the Battle",
+				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Engage the Enemy",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if(worldMapView.getBeseigeCairoButton().isEnabled() && !theGame.findCity("Cairo").isUnderSiege())
+			if(worldMapView.getBeseigeRomeButton().isEnabled() && !theGame.findCity("Rome").isUnderSiege())
 			{
-				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Finish the Battle",
+				JOptionPane.showMessageDialog(null, "Enter Battle or Besige the Targeted Cities !", "Engage the Enemy",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
