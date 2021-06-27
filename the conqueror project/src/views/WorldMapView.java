@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import engine.Game;
@@ -45,6 +46,9 @@ public class WorldMapView extends TemplateView implements ActionListener
 	private JPanel marchingPanel = new JPanel(new BorderLayout());
 	private JTextArea controlledArmiesTextArea = new JTextArea("");
 	private JTextArea marchingArmiesTextArea = new JTextArea("");
+	JScrollPane controlledScrollPane = new JScrollPane(controlledArmiesTextArea);
+	JScrollPane marchingScrollPane = new JScrollPane(marchingArmiesTextArea);
+	
 	private JLabel controlledArmiesLabel = new JLabel("Idle Armies :\n");
 	private JLabel marchingArmiesLabel = new JLabel("Attacking Armies :\n");
 
@@ -112,11 +116,13 @@ public class WorldMapView extends TemplateView implements ActionListener
 
 		controlledArmiesTextArea.setBackground(new Color(0x404B69));
 		controlledArmiesTextArea.setForeground(Color.white);
-		controlledArmiesTextArea.setPreferredSize(new Dimension(350, 350));
+		controlledScrollPane.setPreferredSize(new Dimension(350, 350));
+		controlledScrollPane.setViewportView(controlledArmiesTextArea);
 		controlledArmiesTextArea.setEditable(false);
 		marchingArmiesTextArea.setBackground(new Color(0xF73859));
 		marchingArmiesTextArea.setForeground(Color.white);
-		marchingArmiesTextArea.setPreferredSize(new Dimension(350, 300));
+		marchingScrollPane.setPreferredSize(new Dimension(350, 300));
+		marchingScrollPane.setViewportView(marchingArmiesTextArea);
 		marchingArmiesTextArea.setEditable(false);
 
 		setUpLabel(controlledArmiesLabel);
@@ -125,7 +131,7 @@ public class WorldMapView extends TemplateView implements ActionListener
 		marchingArmiesLabel.setBackground(marchingArmiesTextArea.getBackground());
 
 		// panels
-
+		
 		bottomPanel.setBackground(new Color(0x3E4149));
 		rightPanel.setBackground(new Color(0x39A6A3));
 
@@ -141,11 +147,11 @@ public class WorldMapView extends TemplateView implements ActionListener
 		bottomPanel.add(endTurnButton);
 
 		rightPanel.add(controlledArmiesLabel, BorderLayout.NORTH);
-		rightPanel.add(controlledArmiesTextArea, BorderLayout.CENTER);
+		rightPanel.add(controlledScrollPane, BorderLayout.CENTER);
 		rightPanel.add(marchingPanel, BorderLayout.SOUTH);
 
 		marchingPanel.add(marchingArmiesLabel, BorderLayout.NORTH);
-		marchingPanel.add(marchingArmiesTextArea, BorderLayout.CENTER);
+		marchingPanel.add(marchingScrollPane, BorderLayout.CENTER);
 
 		midPanel.add(cairoButton);
 		cairoButton.setBounds(50, 90, 100, 50);

@@ -32,6 +32,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 	JLabel chooseAttackingUnitMsg = new JLabel("choose attacking unit");
 	JLabel chooseTargetUnitMsg = new JLabel("choose unit to target");
 	JTextArea battleLog = new JTextArea();
+	JScrollPane scrollPane = new JScrollPane(battleLog);
 	JPanel battleOptionsPanel = new JPanel(new GridLayout(0,3));
 	JButton attackButton = new JButton("manual attack");
 	JButton autoResolveButton = new JButton("auto resolve the battle");
@@ -51,6 +52,7 @@ public class BattleView extends TemplateView implements ActionListener  {
 		enemyLabel = new JLabel("target city : " + name);
 		Army enemyArmy = targetCity.getDefendingArmy();
 		
+		
 		setUpLabel(playerLabel);
 		setUpLabel(enemyLabel);
 		setUpLabel(chooseAttackingUnitMsg);
@@ -69,16 +71,18 @@ public class BattleView extends TemplateView implements ActionListener  {
 		enemyArmyPanel.setBackground(Color.gray);
 		middlePanel.setBackground(Color.lightGray);
 		middlePanel.setBounds(301,0,664,650);
-		battleLog.setBounds(0,0,664,600);
+		scrollPane.setBounds(0,0,664,600);
 		battleOptionsPanel.setBounds(0,601,664,40);
 		
 		battleLog.setBackground(Color.lightGray);
 		battleLog.setEditable(false);
 		battleOptionsPanel.setBackground(Color.gray);
 		battleOptionsPanel.add(playerLabel);
+		scrollPane.setViewportView(battleLog);
+		
 		
 		middlePanel.add(battleOptionsPanel,BorderLayout.SOUTH);
-		middlePanel.add(battleLog,BorderLayout.CENTER);
+		middlePanel.add(scrollPane,BorderLayout.CENTER);
 		
 		playerArmyPanel.add(playerLabel);                                                //labels on both armies
 		playerArmyPanel.add(chooseAttackingUnitMsg);                                                //labels on both armies

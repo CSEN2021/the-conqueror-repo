@@ -514,7 +514,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 
 	public void onUpgrade(String stringBuildling)
 	{
-		// TODO Auto-generated method stub
+		
 		String currentCityName = cityView.getCurrentCity().getName();
 		ArrayList<EconomicBuilding> economicBuildings = theGame.findCity(currentCityName).getEconomicalBuildings();
 		ArrayList<MilitaryBuilding> militaryBuildings = theGame.findCity(currentCityName).getMilitaryBuildings();
@@ -640,7 +640,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 		catch (MaxLevelException maxLevelException)
 		{
-			// TODO: handle exception
 			switch (stringBuildling)
 			{
 				case "Farm":
@@ -679,7 +678,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 		catch (NotEnoughGoldException notEnoughGoldException)
 		{
-			// TODO: handle exception
 			JOptionPane.showMessageDialog(null, "You don't have enough gold.", "Warning", JOptionPane.ERROR_MESSAGE);
 		}
 		cityView.updateStats(theGame);
@@ -899,7 +897,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 			String  initialTargetUnitText =  initialSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
 			targetUnitButton.setText(finalTargetUnitText);
 			
-			battleView.getBattleLog().append(attackerUnitText + " unit from the player's army attacked "+ initialTargetUnitText + " unit from the target's army. The target's unit lost " + (initialSoldierCount-finalSoldierCount) + " troops !! \n");
+			battleView.getBattleLog().append(attackerUnitText + " unit from the player's army attacked "+ initialTargetUnitText + " unit from the target's army. The target's unit lost " + (initialSoldierCount-finalSoldierCount) + "\ntroops !! \n");
 			
 			if(targetUnit.getCurrentSoldierCount()==0) {
 				targetUnitButton.setEnabled(false);
@@ -936,7 +934,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				initialTargetUnitText =  initialSoldierCount + " lvl " + targetUnit.getLevel() +" "+ targetUnit.toString().split(" ")[0];
 				targetUnitButton.setText(finalTargetUnitText);
 				
-				battleView.getBattleLog().append(attackerUnitText + " unit from the target's army attacked "+ initialTargetUnitText + " unit from the player's army. The player's unit lost " + (initialSoldierCount-finalSoldierCount) + " troops !! \n");
+				battleView.getBattleLog().append(attackerUnitText + " unit from the target's army attacked "+ initialTargetUnitText + " unit from the player's army. The player's unit lost " + (initialSoldierCount-finalSoldierCount) + "\ntroops !! \n");
 				
 				if(targetUnit.getCurrentSoldierCount()==0) {
 					targetUnitButton.setEnabled(false);
@@ -987,8 +985,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				}
 			}
 			
-			System.out.println(playerArmy.getUnits().size());
-			System.out.println(enemyArmy.getUnits().size());
+			
 			
 			
 			battleView.repaint();
@@ -997,7 +994,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			
 			JOptionPane.showMessageDialog(null, "the target unit is already dead,choose another target!!", "Warning",
 					JOptionPane.ERROR_MESSAGE); 
 		}
