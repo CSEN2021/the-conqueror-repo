@@ -67,7 +67,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			e.printStackTrace();
 		}
-		/* for testing
+		/*
 		Army testArmy = new Army("Sparta");
 		ArrayList <Unit> units = new ArrayList<>();
 		units.add(Cavalry.create("3",testArmy));
@@ -276,6 +276,15 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onEnterBattle(String cityGettingAttacked)
 	{
+		if(battleView != null)
+		{
+			if(battleView.isVisible())
+			{
+				JOptionPane.showMessageDialog(null, "Finish your battle before ending turn !", "Finish the Battle",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
 		theGame.findCity(cityGettingAttacked).setTurnsUnderSiege(-1);
 		theGame.findCity(cityGettingAttacked).setUnderSiege(false);
 		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
@@ -940,7 +949,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				theGame.getPlayer().getControlledArmies().remove(playerArmy);
 				JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
 				battleView.dispose();
-				battleView = null;
 				if(targetCityName.equalsIgnoreCase("Rome"))
 				{
 					worldMapView.getBeseigeRomeButton().setEnabled(false);
@@ -962,7 +970,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				theGame.occupy(playerArmy, playerArmy.getCurrentLocation());
 				JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
 				battleView.dispose();
-				battleView = null;
 				if(targetCityName.equalsIgnoreCase("Rome"))
 				{
 					worldMapView.getBeseigeRomeButton().setEnabled(false);
@@ -1023,7 +1030,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
 			battleView.dispose();
-			battleView = null;
 			if(targetCityName.equalsIgnoreCase("Rome"))
 			{
 				worldMapView.getBeseigeRomeButton().setEnabled(false);
@@ -1044,7 +1050,6 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
 			battleView.dispose();
-			battleView = null;
 			if(targetCityName.equalsIgnoreCase("Rome"))
 			{
 				worldMapView.getBeseigeRomeButton().setEnabled(false);
