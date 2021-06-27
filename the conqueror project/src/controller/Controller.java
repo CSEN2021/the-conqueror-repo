@@ -104,7 +104,10 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		testArmy2.setUnits(units2);
 		theGame.getPlayer().getControlledArmies().add(testArmy);
 		theGame.getPlayer().getControlledArmies().add(testArmy2);
+		theGame.getPlayer().setFood(1000000000);
+		theGame.getPlayer().setTreasury(1000000000);
 		*/
+		
 		worldMapView.updateArmiesPanel(theGame);
 		
 	}
