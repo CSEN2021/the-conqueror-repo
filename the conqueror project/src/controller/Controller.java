@@ -67,6 +67,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			e.printStackTrace();
 		}
+		/* for testing
 		Army testArmy = new Army("Sparta");
 		ArrayList <Unit> units = new ArrayList<>();
 		units.add(Cavalry.create("3",testArmy));
@@ -101,9 +102,9 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		units2.add(Cavalry.create("3",testArmy));
 		units2.add(Cavalry.create("3",testArmy));
 		testArmy2.setUnits(units2);
-		
 		theGame.getPlayer().getControlledArmies().add(testArmy);
 		theGame.getPlayer().getControlledArmies().add(testArmy2);
+		*/
 		worldMapView.updateArmiesPanel(theGame);
 		
 	}
