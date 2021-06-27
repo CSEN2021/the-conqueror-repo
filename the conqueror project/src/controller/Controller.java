@@ -113,6 +113,17 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onEndTurn()
 	{
+		for (int i = 0; i < theGame.getPlayer().getControlledCities().size(); i++)
+		{
+	
+			if (theGame.getPlayer().getControlledCities().get(i).getName().equals("Cairo"))
+				worldMapView.getCairoButton().setEnabled(true);
+			if (theGame.getPlayer().getControlledCities().get(i).getName().equals("Sparta"))
+				worldMapView.getSpartaButton().setEnabled(true);
+			if (theGame.getPlayer().getControlledCities().get(i).getName().equals("Rome"))
+				worldMapView.getRomeButton().setEnabled(true);
+		}
+		
 		for(int i = 0; i < theGame.getAvailableCities().size(); i++)
 		{
 			if(theGame.getAvailableCities().get(i).getTurnsUnderSiege() == 3 && battleView == null)
@@ -123,9 +134,12 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		
 		if(battleView != null)
 		{
-			JOptionPane.showMessageDialog(null, "Finish your battle before ending turn !", "Finish the Battle",
-					JOptionPane.ERROR_MESSAGE);
-			return;
+			if(battleView.isVisible())
+			{
+				JOptionPane.showMessageDialog(null, "Finish your battle before ending turn !", "Finish the Battle",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 		}
 		else
 		{
@@ -222,12 +236,15 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 	@Override
 	public void onEnterBattle(String cityGettingAttacked)
 	{
+		theGame.findCity(cityGettingAttacked).setTurnsUnderSiege(-1);
+		theGame.findCity(cityGettingAttacked).setUnderSiege(false);
 		for (int i = 0; i < theGame.getPlayer().getControlledArmies().size(); i++)
 		{
 			if (theGame.getPlayer().getControlledArmies().get(i).getCurrentLocation().equals(cityGettingAttacked))
 			{
 				battleView = new BattleView(theGame, theGame.getPlayer().getControlledArmies().get(i),
 						theGame.findCity(cityGettingAttacked));
+				theGame.getPlayer().getControlledArmies().get(i).setCurrentStatus(Status.IDLE);
 			}
 		}
 		worldMapView.updateArmiesPanel(theGame);
@@ -549,7 +566,7 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 							theGame.getPlayer().upgradeBuilding(militaryBuildings.get(i));
 							;
 							currentLevel = Integer.parseInt(cityView.getStableLvlButton().getText().charAt(7) + "") + 1;
-							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 1500");
+							cityView.getStableLvlButton().setText("Level: " + currentLevel + " Cost: 2000");
 							cityView.getStableRecruitButton()
 									.setText("Calvary, Cost: "
 											+ (((Stable) (theGame.findCity(currentCityName).findBuilding("Stable")))
@@ -866,12 +883,42 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 				theGame.getPlayer().getControlledArmies().remove(playerArmy);
 				JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
 				battleView.dispose();
+				if(targetCityName.equalsIgnoreCase("Rome"))
+				{
+					worldMapView.getBeseigeRomeButton().setEnabled(false);
+					worldMapView.getEnterBattleRomeButton().setEnabled(false);
+				}
+				if(targetCityName.equalsIgnoreCase("Cairo"))
+				{
+					worldMapView.getEnterBattleCairoButton().setEnabled(false);
+					worldMapView.getBeseigeCairoButton().setEnabled(false);
+				}
+				if(targetCityName.equalsIgnoreCase("Sparta"))
+				{
+					worldMapView.getBeseigeSpartaButton().setEnabled(false);
+					worldMapView.getEnterBattleSpartaButton().setEnabled(false);
+				}
 			}
 			else if(enemyArmy.getUnits().size() == 0)
 			{
 				theGame.occupy(playerArmy, playerArmy.getCurrentLocation());
 				JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
 				battleView.dispose();
+				if(targetCityName.equalsIgnoreCase("Rome"))
+				{
+					worldMapView.getBeseigeRomeButton().setEnabled(false);
+					worldMapView.getEnterBattleRomeButton().setEnabled(false);
+				}
+				if(targetCityName.equalsIgnoreCase("Cairo"))
+				{
+					worldMapView.getEnterBattleCairoButton().setEnabled(false);
+					worldMapView.getBeseigeCairoButton().setEnabled(false);
+				}
+				if(targetCityName.equalsIgnoreCase("Sparta"))
+				{
+					worldMapView.getBeseigeSpartaButton().setEnabled(false);
+					worldMapView.getEnterBattleSpartaButton().setEnabled(false);
+				}
 			}
 			
 			
@@ -913,11 +960,41 @@ public class Controller implements StartScreenListener, WorldMapViewListener, In
 		{
 			JOptionPane.showMessageDialog(null, "YOU LOST,The target's defending army killed your army...", "better luck next time",JOptionPane.INFORMATION_MESSAGE); 
 			battleView.dispose();
+			if(targetCityName.equalsIgnoreCase("Rome"))
+			{
+				worldMapView.getBeseigeRomeButton().setEnabled(false);
+				worldMapView.getEnterBattleRomeButton().setEnabled(false);
+			}
+			if(targetCityName.equalsIgnoreCase("Cairo"))
+			{
+				worldMapView.getEnterBattleCairoButton().setEnabled(false);
+				worldMapView.getBeseigeCairoButton().setEnabled(false);
+			}
+			if(targetCityName.equalsIgnoreCase("Sparta"))
+			{
+				worldMapView.getBeseigeSpartaButton().setEnabled(false);
+				worldMapView.getEnterBattleSpartaButton().setEnabled(false);
+			}
 		}
 		else if(enemyArmy.getUnits().size() == 0)
 		{
 			JOptionPane.showMessageDialog(null, "YOU WON! " + targetCityName + " is yours :)!", "congrats!!!!",JOptionPane.INFORMATION_MESSAGE); 
 			battleView.dispose();
+			if(targetCityName.equalsIgnoreCase("Rome"))
+			{
+				worldMapView.getBeseigeRomeButton().setEnabled(false);
+				worldMapView.getEnterBattleRomeButton().setEnabled(false);
+			}
+			if(targetCityName.equalsIgnoreCase("Cairo"))
+			{
+				worldMapView.getEnterBattleCairoButton().setEnabled(false);
+				worldMapView.getBeseigeCairoButton().setEnabled(false);
+			}
+			if(targetCityName.equalsIgnoreCase("Sparta"))
+			{
+				worldMapView.getBeseigeSpartaButton().setEnabled(false);
+				worldMapView.getEnterBattleSpartaButton().setEnabled(false);
+			}
 		}
 		
 	}

@@ -320,4 +320,19 @@ public class WorldMapView extends TemplateView implements ActionListener
 	{
 		return beseigeRomeButton;
 	}
+
+	public JButton getCairoButton()
+	{
+		return cairoButton;
+	}
+
+	public JButton getSpartaButton()
+	{
+		return spartaButton;
+	}
+
+	public JButton getRomeButton()
+	{
+		return romeButton;
+	}
 }
